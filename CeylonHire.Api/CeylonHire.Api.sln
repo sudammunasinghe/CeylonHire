@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.14.37012.4 d17.14
+VisualStudioVersion = 17.14.37012.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CeylonHire.Api", "CeylonHire.Api.csproj", "{D499A7E4-D9BB-46F9-8570-5295AE6EF124}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CeylonHire.Application", "..\CeylonHire.Application\CeylonHire.Application.csproj", "{797306A0-B771-441B-9996-94197F79A6BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{D499A7E4-D9BB-46F9-8570-5295AE6EF124}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D499A7E4-D9BB-46F9-8570-5295AE6EF124}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D499A7E4-D9BB-46F9-8570-5295AE6EF124}.Release|Any CPU.Build.0 = Release|Any CPU
+		{797306A0-B771-441B-9996-94197F79A6BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{797306A0-B771-441B-9996-94197F79A6BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{797306A0-B771-441B-9996-94197F79A6BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{797306A0-B771-441B-9996-94197F79A6BA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
