@@ -1,6 +1,19 @@
+using CeylonHire.Application.Interfaces.IRepositories;
+using CeylonHire.Application.Interfaces.IServices;
+using CeylonHire.Application.Services;
+using CeylonHire.Infrastructure.Persistence;
+using CeylonHire.Infrastructure.Persistence.Sql.Helpers;
+using CeylonHire.Infrastructure.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// ================================== Register Services ===================================================
+builder.Services.AddScoped<IDbConnectionFactory, DbConnectionFactory>();
+builder.Services.AddSingleton<ISqlQueryLoader, SqlQueryLoader>();
+
+builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

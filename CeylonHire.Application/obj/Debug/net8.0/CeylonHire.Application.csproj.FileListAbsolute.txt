@@ -1,0 +1,16 @@
+D:\MyProjects\CeylonHire\CeylonHire.Application\bin\Debug\net8.0\CeylonHire.Application.deps.json
+D:\MyProjects\CeylonHire\CeylonHire.Application\bin\Debug\net8.0\CeylonHire.Application.dll
+D:\MyProjects\CeylonHire\CeylonHire.Application\bin\Debug\net8.0\CeylonHire.Application.pdb
+D:\MyProjects\CeylonHire\CeylonHire.Application\bin\Debug\net8.0\CeylonHire.Domain.dll
+D:\MyProjects\CeylonHire\CeylonHire.Application\bin\Debug\net8.0\CeylonHire.Domain.pdb
+D:\MyProjects\CeylonHire\CeylonHire.Application\obj\Debug\net8.0\CeylonHire.Application.csproj.AssemblyReference.cache
+D:\MyProjects\CeylonHire\CeylonHire.Application\obj\Debug\net8.0\CeylonHire.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\MyProjects\CeylonHire\CeylonHire.Application\obj\Debug\net8.0\CeylonHire.Application.AssemblyInfoInputs.cache
+D:\MyProjects\CeylonHire\CeylonHire.Application\obj\Debug\net8.0\CeylonHire.Application.AssemblyInfo.cs
+D:\MyProjects\CeylonHire\CeylonHire.Application\obj\Debug\net8.0\CeylonHire.Application.csproj.CoreCompileInputs.cache
+D:\MyProjects\CeylonHire\CeylonHire.Application\obj\Debug\net8.0\CeylonHire.Application.sourcelink.json
+D:\MyProjects\CeylonHire\CeylonHire.Application\obj\Debug\net8.0\CeylonHi.6C5E5267.Up2Date
+D:\MyProjects\CeylonHire\CeylonHire.Application\obj\Debug\net8.0\CeylonHire.Application.dll
+D:\MyProjects\CeylonHire\CeylonHire.Application\obj\Debug\net8.0\refint\CeylonHire.Application.dll
+D:\MyProjects\CeylonHire\CeylonHire.Application\obj\Debug\net8.0\CeylonHire.Application.pdb
+D:\MyProjects\CeylonHire\CeylonHire.Application\obj\Debug\net8.0\ref\CeylonHire.Application.dll
