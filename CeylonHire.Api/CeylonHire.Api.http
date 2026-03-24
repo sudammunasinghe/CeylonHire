@@ -1,0 +1,6 @@
+@CeylonHire.Api_HostAddress = http://localhost:5082
+
+GET {{CeylonHire.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
