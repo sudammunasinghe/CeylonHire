@@ -10,4 +10,14 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CeylonHire.Application\CeylonHire.Application.csproj" />
+    <ProjectReference Include="..\CeylonHire.Infrastructure\CeylonHire.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Middleware\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+
 </Project>

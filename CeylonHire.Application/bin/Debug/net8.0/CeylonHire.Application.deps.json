@@ -1,0 +1,39 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v8.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v8.0": {
+      "CeylonHire.Application/1.0.0": {
+        "dependencies": {
+          "CeylonHire.Domain": "1.0.0"
+        },
+        "runtime": {
+          "CeylonHire.Application.dll": {}
+        }
+      },
+      "CeylonHire.Domain/1.0.0": {
+        "runtime": {
+          "CeylonHire.Domain.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "CeylonHire.Application/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "CeylonHire.Domain/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
