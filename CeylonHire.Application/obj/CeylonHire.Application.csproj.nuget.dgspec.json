@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\MyProjects\\CeylonHire\\CeylonHire.APi\\CeylonHire.Api.csproj": {}
+    "D:\\MyProjects\\CeylonHire\\CeylonHire.Application\\CeylonHire.Application.csproj": {}
   },
   "projects": {
-    "D:\\MyProjects\\CeylonHire\\CeylonHire.APi\\CeylonHire.Api.csproj": {
+    "D:\\MyProjects\\CeylonHire\\CeylonHire.Application\\CeylonHire.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\MyProjects\\CeylonHire\\CeylonHire.APi\\CeylonHire.Api.csproj",
-        "projectName": "CeylonHire.Api",
-        "projectPath": "D:\\MyProjects\\CeylonHire\\CeylonHire.APi\\CeylonHire.Api.csproj",
+        "projectUniqueName": "D:\\MyProjects\\CeylonHire\\CeylonHire.Application\\CeylonHire.Application.csproj",
+        "projectName": "CeylonHire.Application",
+        "projectPath": "D:\\MyProjects\\CeylonHire\\CeylonHire.Application\\CeylonHire.Application.csproj",
         "packagesPath": "C:\\Users\\Sudam\\.nuget\\packages\\",
-        "outputPath": "D:\\MyProjects\\CeylonHire\\CeylonHire.APi\\obj\\",
+        "outputPath": "D:\\MyProjects\\CeylonHire\\CeylonHire.Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -49,12 +49,6 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "dependencies": {
-            "Swashbuckle.AspNetCore": {
-              "target": "Package",
-              "version": "[6.6.2, )"
-            }
-          },
           "imports": [
             "net461",
             "net462",
@@ -67,9 +61,6 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
-            "Microsoft.AspNetCore.App": {
-              "privateAssets": "none"
-            },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
