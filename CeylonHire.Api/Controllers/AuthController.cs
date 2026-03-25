@@ -1,4 +1,7 @@
-﻿using CeylonHire.Application.Interfaces.IServices;
+﻿using CeylonHire.Api.Models;
+using CeylonHire.Api.Models.JobSeeker;
+using CeylonHire.Application.DTOs.ApiResponse;
+using CeylonHire.Application.Interfaces.IServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CeylonHire.Api.Controllers
@@ -11,6 +14,17 @@ namespace CeylonHire.Api.Controllers
         public AuthController(IAuthService authService)
         {
             _authService = authService;
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<ApiResponse<string>>> RegisterNewJobseekerAsync([FromForm] JobSeekerProfileDto dto)
+        {
+            var result = await _authService.RegisterNewJobseekerAsync(dto);
+            return Ok(new ApiResponse<string>
+            {
+                Success = true,
+                Message = result
+            });
         }
     }
 }

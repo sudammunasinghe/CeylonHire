@@ -10,6 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 // ================================== Register Services ===================================================
 builder.Services.AddScoped<IDbConnectionFactory, DbConnectionFactory>();
 builder.Services.AddSingleton<ISqlQueryLoader, SqlQueryLoader>();
+builder.Services.AddScoped<IPasswordService, PasswordService>();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
