@@ -16,3 +16,6 @@ D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\obj\Debug\net8.0\CeylonHire.I
 D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\obj\Debug\net8.0\refint\CeylonHire.Infrastructure.dll
 D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\obj\Debug\net8.0\CeylonHire.Infrastructure.pdb
 D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\obj\Debug\net8.0\ref\CeylonHire.Infrastructure.dll
+D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\User\Insert_JobSeekerProfile.sql
+D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\User\Insert_NewUser.sql
+D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\User\Select_UserByEmail.sql

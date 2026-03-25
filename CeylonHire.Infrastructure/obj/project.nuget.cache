@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "bTrRGpADfpY=",
+  "dgSpecHash": "ryV2NC1hWjk=",
   "success": true,
   "projectFilePath": "D:\\MyProjects\\CeylonHire\\CeylonHire.Infrastructure\\CeylonHire.Infrastructure.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Sudam\\.nuget\\packages\\bcrypt.net-next\\4.1.0\\bcrypt.net-next.4.1.0.nupkg.sha512",
     "C:\\Users\\Sudam\\.nuget\\packages\\dapper\\2.1.72\\dapper.2.1.72.nupkg.sha512",
     "C:\\Users\\Sudam\\.nuget\\packages\\microsoft.bcl.cryptography\\8.0.0\\microsoft.bcl.cryptography.8.0.0.nupkg.sha512",
     "C:\\Users\\Sudam\\.nuget\\packages\\microsoft.data.sqlclient\\7.0.0\\microsoft.data.sqlclient.7.0.0.nupkg.sha512",

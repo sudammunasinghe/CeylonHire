@@ -7,11 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CeylonHire.Domain\CeylonHire.Domain.csproj" />
+    <PackageReference Include="BCrypt.Net-Next" Version="4.1.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\" />
+    <ProjectReference Include="..\CeylonHire.Domain\CeylonHire.Domain.csproj" />
   </ItemGroup>
 
 </Project>
