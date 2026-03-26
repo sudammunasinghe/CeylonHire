@@ -4,10 +4,11 @@
 	[PasswordHash],
 	[RoleId]
 )
-VALUES(
+VALUES
+(
 	@Email,
 	@PasswordHash,
 	@RoleId
-)
+);
 
 SELECT CAST(SCOPE_IDENTITY() AS INT);

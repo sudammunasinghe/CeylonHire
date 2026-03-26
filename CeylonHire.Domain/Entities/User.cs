@@ -1,10 +1,4 @@
-﻿using CeylonHire.Api.Models;
-using CeylonHire.Domain.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CeylonHire.Domain.Exceptions;
 
 namespace CeylonHire.Domain.Entities
 {
@@ -21,7 +15,7 @@ namespace CeylonHire.Domain.Entities
 
         public static void ValidateEmail(string? email)
         {
-            if(string.IsNullOrWhiteSpace(email))
+            if (string.IsNullOrWhiteSpace(email))
                 throw new DomainException("Email is required.");
         }
 

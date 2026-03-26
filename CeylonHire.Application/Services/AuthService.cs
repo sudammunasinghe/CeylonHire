@@ -1,8 +1,9 @@
-﻿using CeylonHire.Api.Models;
-using CeylonHire.Api.Models.JobSeeker;
+﻿using CeylonHire.Api.Models.JobSeeker;
+using CeylonHire.Application.DTOs.CompanyProfile;
 using CeylonHire.Application.Interfaces.IRepositories;
 using CeylonHire.Application.Interfaces.IServices;
 using CeylonHire.Domain.Entities;
+using CeylonHire.Domain.Enums;
 
 namespace CeylonHire.Application.Services
 {
@@ -16,13 +17,15 @@ namespace CeylonHire.Application.Services
             _passwordService = passwordService;
         }
 
+        /// <summary>
+        /// Register a new jobseeker with the provided details in the JobSeekerProfileDto.
+        /// </summary>
+        /// <param name="dto">An object conataining jobseeker profile details.</param>
+        /// <returns></returns>
         public async Task<string> RegisterNewJobseekerAsync(JobSeekerProfileDto dto)
         {
-            var user = 
-                await _userRepository.GetUserByEmailAsync(dto.Email);
-
-            if(user != null)
-                throw new Exception("Email already exists.");
+            var newUser = 
+                await CreateNewUserAsync(dto.Email, dto.Password, RoleEnum.Jobseeker);
 
             var jobseekerProfileInfo = JobSeekerProfile.Create(
                 dto.FirstName,
@@ -33,16 +36,62 @@ namespace CeylonHire.Application.Services
                 dto.CVUrl
             );
 
-            var newUser = User.Create(
-                dto.Email,
-                dto.Password,
-                2
+            var jobseekerProfileId =
+                await _userRepository.RegisterNewJobseekerAsync(newUser, jobseekerProfileInfo);
+
+            if (jobseekerProfileId > 0)
+                return "Registration successful.";
+            return "Registration failed.";
+        }
+
+
+        /// <summary>
+        /// Register a new company with the provided details in the CompanyProfileDto.
+        /// </summary>
+        /// <param name="dto">An object containing company profile details.</param>
+        /// <returns></returns>
+        public async Task<string> RegisterNewCompanyAsync(CompanyProfileDto dto)
+        {
+            var newUser = 
+                await CreateNewUserAsync(dto.Email, dto.Password, RoleEnum.Employer);
+
+            var companyProfileInfo = CompanyProfile.Create(
+                dto.CompanyName,
+                dto.Description,
+                dto.WebSite,
+                dto.LogoUrl
             );
-            newUser.PasswordHash = _passwordService.HashPassword(dto.Password);
-            var jobseekerProfileId =  await _userRepository.RegisterNewJobseekerAsync(newUser, jobseekerProfileInfo);
-            if(jobseekerProfileId == null)
-                return "Registration failed.";
-            return "Registration successful.";
+
+            var companyProfileId =
+                await _userRepository.RegisterNewCompanyAsync(newUser, companyProfileInfo);
+
+            if (companyProfileId > 0)
+                return "Registration successful.";
+            return "Registration failed.";
+        }
+
+        /// <summary>
+        /// Creates a new user with the specified email, password, and role.
+        /// </summary>
+        /// <param name="email">The email of the new user.</param>
+        /// <param name="password">The password of the new user.</param>
+        /// <param name="role">The role of the new user.</param>
+        /// <returns><see cref="User"/>An object containing the newly created user details.</returns>
+        /// <exception cref="Exception">Thrown when the email already exists.</exception>
+        private async Task<User> CreateNewUserAsync(string? email, string? password, RoleEnum role)
+        {
+            var user = 
+                    await _userRepository.GetUserByEmailAsync(email);
+            if(user != null)
+                throw new Exception("Email already exists.");
+
+            var newUser = User.Create(
+                email,
+                password,
+                (int)role
+            );
+            newUser.PasswordHash = _passwordService.HashPassword(password);
+            return newUser;
         }
     }
 }

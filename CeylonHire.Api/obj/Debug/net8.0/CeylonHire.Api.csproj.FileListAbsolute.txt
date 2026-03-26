@@ -84,6 +84,7 @@ D:\MyProjects\CeylonHire\CeylonHire.APi\obj\Debug\net8.0\CeylonHire.Api.pdb
 D:\MyProjects\CeylonHire\CeylonHire.APi\obj\Debug\net8.0\CeylonHire.Api.genruntimeconfig.cache
 D:\MyProjects\CeylonHire\CeylonHire.APi\obj\Debug\net8.0\ref\CeylonHire.Api.dll
 D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\BCrypt.Net-Next.dll
-D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\User\Insert_JobSeekerProfile.sql
 D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\User\Insert_NewUser.sql
 D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\User\Select_UserByEmail.sql
+D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\CompanyProfile\Insert_CompanyProfile.sql
+D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\JobSeeker\Insert_JobSeekerProfile.sql

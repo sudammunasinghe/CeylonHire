@@ -1,4 +1,4 @@
-﻿namespace CeylonHire.Api.Models
+﻿namespace CeylonHire.Domain.Entities
 {
     public class BaseEntity
     {

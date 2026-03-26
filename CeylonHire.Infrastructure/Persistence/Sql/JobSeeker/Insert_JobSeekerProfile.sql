@@ -20,6 +20,6 @@ VALUES(
 	@DateOfBirth,
 	@ExperienceYears,
 	@CVUrl
-)
+);
 
 SELECT CAST(SCOPE_IDENTITY() AS INT);

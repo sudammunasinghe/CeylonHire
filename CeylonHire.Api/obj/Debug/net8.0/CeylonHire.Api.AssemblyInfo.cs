@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CeylonHire.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d1e5fd2292a76a7b528f2cdd487e24eb017c6c82")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+5b92aa437fca25c78faa8b27e4bbb1265521e0c3")]
 [assembly: System.Reflection.AssemblyProductAttribute("CeylonHire.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CeylonHire.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

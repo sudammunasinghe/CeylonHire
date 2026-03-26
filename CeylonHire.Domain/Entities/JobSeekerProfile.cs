@@ -1,7 +1,5 @@
-﻿using CeylonHire.Domain.Entities;
-using CeylonHire.Domain.Exceptions;
-
-namespace CeylonHire.Api.Models
+﻿using CeylonHire.Domain.Exceptions;
+namespace CeylonHire.Domain.Entities
 {
     public class JobSeekerProfile : BaseEntity
     {
