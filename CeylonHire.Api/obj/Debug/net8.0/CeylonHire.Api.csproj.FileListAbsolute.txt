@@ -88,3 +88,4 @@ D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\User\In
 D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\User\Select_UserByEmail.sql
 D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\CompanyProfile\Insert_CompanyProfile.sql
 D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\JobSeeker\Insert_JobSeekerProfile.sql
+D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

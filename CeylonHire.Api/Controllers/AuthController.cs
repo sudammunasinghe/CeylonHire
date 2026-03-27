@@ -46,5 +46,12 @@ namespace CeylonHire.Api.Controllers
                 Message = result
             });
         }
+
+        [HttpPost("login")]
+        public async Task<ActionResult<ApiResponse<string>>> Login(string email, string password)
+        {
+            var token = await _authService.Login(email, password);
+            return Ok(new { tokenId = token });
+        }
     }
 }
