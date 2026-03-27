@@ -84,7 +84,13 @@ builder.Services.AddSwaggerGen(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+//========================================= Build App =====================================================
+
 var app = builder.Build();
+
+//==================================Register Global Exception =============================================
+
+app.UseMiddleware<CeylonHire.Api.Middleware.GlobalExceptionMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

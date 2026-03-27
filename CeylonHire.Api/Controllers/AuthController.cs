@@ -47,6 +47,12 @@ namespace CeylonHire.Api.Controllers
             });
         }
 
+        /// <summary>
+        /// Authenticates a user with the provided email and password.
+        /// </summary>
+        /// <param name="email">The email of the user.</param>
+        /// <param name="password">The password of the user.</param>
+        /// <returns>Returns a JWT token if the login is successful.</returns>
         [HttpPost("login")]
         public async Task<ActionResult<ApiResponse<string>>> Login(string email, string password)
         {

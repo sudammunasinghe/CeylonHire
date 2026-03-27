@@ -1,5 +1,6 @@
 ﻿using CeylonHire.Api.Models.JobSeeker;
 using CeylonHire.Application.DTOs.CompanyProfile;
+using CeylonHire.Application.Exceptions;
 using CeylonHire.Application.Interfaces.IRepositories;
 using CeylonHire.Application.Interfaces.IServices;
 using CeylonHire.Domain.Entities;
@@ -72,13 +73,20 @@ namespace CeylonHire.Application.Services
             return "Registration failed.";
         }
 
+        /// <summary>
+        /// Authenticates a user with the provided email and password.
+        /// </summary>
+        /// <param name="email">The email of the user.</param>
+        /// <param name="password">The password of the user.</param>
+        /// <returns>Returns a JWT token if the login is successful.</returns>
+        /// <exception cref="UnauthorizedAccessException">Thrown when the credentials are invalid.</exception>
         public async Task<string> Login(string email, string password)
         {
             var user =
                 await _userRepository.GetUserByEmailAsync(email);
 
             if (user == null || !_passwordService.VerifyPassword(password, user.PasswordHash))
-                throw new Exception("Invalid Credentials ...");
+                throw new UnauthorizedAccessException("Invalid Credentials ...");
             return _tokenGeneratorService.GenerateToken(user);
         }
 
@@ -89,13 +97,13 @@ namespace CeylonHire.Application.Services
         /// <param name="password">The password of the new user.</param>
         /// <param name="role">The role of the new user.</param>
         /// <returns><see cref="User"/>An object containing the newly created user details.</returns>
-        /// <exception cref="Exception">Thrown when the email already exists.</exception>
+        /// <exception cref="DupplicateEmailException">Thrown when the email already exists.</exception>
         private async Task<User> CreateNewUserAsync(string? email, string? password, RoleEnum role)
         {
             var user =
                     await _userRepository.GetUserByEmailAsync(email);
             if (user != null)
-                throw new Exception("Email already exists.");
+                throw new DupplicateEmailException("Email already exists.");
 
             var newUser = User.Create(
                 email,

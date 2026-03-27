@@ -16,6 +16,12 @@ namespace CeylonHire.Infrastructure.Security
         {
             _configuration = configuration;
         }
+
+        /// <summary>
+        /// generates a JWT token for the given user, including claims for the user's ID, email, and role. The token is signed using a symmetric security key and is set to expire in 3 hours.
+        /// </summary>
+        /// <param name="user">The user for whom the token is being generated.</param>
+        /// <returns>Returns a JWT token as a string.</returns>
         public string GenerateToken(User user)
         {
             var claims = new[]

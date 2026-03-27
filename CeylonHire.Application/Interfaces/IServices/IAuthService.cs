@@ -19,6 +19,12 @@ namespace CeylonHire.Application.Interfaces.IServices
         /// <returns></returns>
         Task<string> RegisterNewCompanyAsync(CompanyProfileDto dto);
 
+        /// <summary>
+        /// Authenticates a user with the provided email and password.
+        /// </summary>
+        /// <param name="email">The email of the user.</param>
+        /// <param name="password">The password of the user.</param>
+        /// <returns>Returns a JWT token if the login is successful.</returns>
         Task<string> Login(string email, string password);
     }
 }
