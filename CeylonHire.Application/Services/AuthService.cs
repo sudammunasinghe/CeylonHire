@@ -11,10 +11,12 @@ namespace CeylonHire.Application.Services
     {
         private readonly IUserRepository _userRepository;
         private readonly IPasswordService _passwordService;
-        public AuthService(IUserRepository userRepository, IPasswordService passwordService)
+        private readonly ITokenGeneratorService _tokenGeneratorService;
+        public AuthService(IUserRepository userRepository, IPasswordService passwordService, ITokenGeneratorService tokenGeneratorService)
         {
             _userRepository = userRepository;
             _passwordService = passwordService;
+            _tokenGeneratorService = tokenGeneratorService;
         }
 
         /// <summary>
@@ -24,7 +26,7 @@ namespace CeylonHire.Application.Services
         /// <returns></returns>
         public async Task<string> RegisterNewJobseekerAsync(JobSeekerProfileDto dto)
         {
-            var newUser = 
+            var newUser =
                 await CreateNewUserAsync(dto.Email, dto.Password, RoleEnum.Jobseeker);
 
             var jobseekerProfileInfo = JobSeekerProfile.Create(
@@ -40,7 +42,7 @@ namespace CeylonHire.Application.Services
                 await _userRepository.RegisterNewJobseekerAsync(newUser, jobseekerProfileInfo);
 
             if (jobseekerProfileId > 0)
-                return "Registration successful.";
+                return _tokenGeneratorService.GenerateToken(newUser);
             return "Registration failed.";
         }
 
@@ -52,7 +54,7 @@ namespace CeylonHire.Application.Services
         /// <returns></returns>
         public async Task<string> RegisterNewCompanyAsync(CompanyProfileDto dto)
         {
-            var newUser = 
+            var newUser =
                 await CreateNewUserAsync(dto.Email, dto.Password, RoleEnum.Employer);
 
             var companyProfileInfo = CompanyProfile.Create(
@@ -66,8 +68,18 @@ namespace CeylonHire.Application.Services
                 await _userRepository.RegisterNewCompanyAsync(newUser, companyProfileInfo);
 
             if (companyProfileId > 0)
-                return "Registration successful.";
+                return _tokenGeneratorService.GenerateToken(newUser);
             return "Registration failed.";
+        }
+
+        public async Task<string> Login(string email, string password)
+        {
+            var user =
+                await _userRepository.GetUserByEmailAsync(email);
+
+            if (user == null || !_passwordService.VerifyPassword(password, user.PasswordHash))
+                throw new Exception("Invalid Credentials ...");
+            return _tokenGeneratorService.GenerateToken(user);
         }
 
         /// <summary>
@@ -80,9 +92,9 @@ namespace CeylonHire.Application.Services
         /// <exception cref="Exception">Thrown when the email already exists.</exception>
         private async Task<User> CreateNewUserAsync(string? email, string? password, RoleEnum role)
         {
-            var user = 
+            var user =
                     await _userRepository.GetUserByEmailAsync(email);
-            if(user != null)
+            if (user != null)
                 throw new Exception("Email already exists.");
 
             var newUser = User.Create(

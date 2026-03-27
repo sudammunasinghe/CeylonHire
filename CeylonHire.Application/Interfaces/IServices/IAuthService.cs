@@ -18,5 +18,7 @@ namespace CeylonHire.Application.Interfaces.IServices
         /// <param name="dto">An object containing company profile details.</param>
         /// <returns></returns>
         Task<string> RegisterNewCompanyAsync(CompanyProfileDto dto);
+
+        Task<string> Login(string email, string password);
     }
 }
