@@ -2,7 +2,7 @@
 
 namespace CeylonHire.Infrastructure.Security
 {
-    public class PasswordService : IPasswordService
+    public class HashingService : IHashingService
     {
         /// <summary>
         /// Hashes the provided password using a secure hashing algorithm.
@@ -23,6 +23,27 @@ namespace CeylonHire.Infrastructure.Security
         public bool VerifyPassword(string? password, string? hashPassword)
         {
             return BCrypt.Net.BCrypt.Verify(password, hashPassword);
+        }
+
+        /// <summary>
+        /// hashes the provided password reset token using a secure hashing algorithm and return the hashed token.
+        /// </summary>
+        /// <param name="token">The password reset token.</param>
+        /// <returns>Returns the hashed password reset token.</returns>
+        public string HashPasswordResetToken(string? token)
+        {
+            return BCrypt.Net.BCrypt.HashPassword(token);
+        }
+
+        /// <summary>
+        /// verifies if the provided password reset token matches the hashed token.
+        /// </summary>
+        /// <param name="token">The password reset token.</param>
+        /// <param name="hashToken">The hashed token to compare with.</param>
+        /// <returns>Returns true if the token matches the hashed token, otherwise false.</returns>
+        public bool VerifyPasswordResetToken(string? token, string? hashToken)
+        {
+            return BCrypt.Net.BCrypt.Verify(token, hashToken);
         }
     }
 }

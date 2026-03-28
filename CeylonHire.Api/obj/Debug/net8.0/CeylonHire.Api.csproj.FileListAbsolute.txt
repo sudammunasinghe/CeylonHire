@@ -92,3 +92,7 @@ D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Microsoft.AspNetCore.Au
 D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Newtonsoft.Json.dll
 D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\SendGrid.dll
 D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\StarkbankEcdsa.dll
+D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\User\Update_UserForSavePasswordResetToken.sql
+D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\BouncyCastle.Cryptography.dll
+D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\MailKit.dll
+D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\MimeKit.dll

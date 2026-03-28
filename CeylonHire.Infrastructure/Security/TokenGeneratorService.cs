@@ -22,7 +22,7 @@ namespace CeylonHire.Infrastructure.Security
         /// </summary>
         /// <param name="user">The user for whom the token is being generated.</param>
         /// <returns>Returns a JWT token as a string.</returns>
-        public string GenerateToken(User user)
+        public string GenerateJwtToken(User user)
         {
             var claims = new[]
             {
@@ -44,6 +44,18 @@ namespace CeylonHire.Infrastructure.Security
                 signingCredentials: creds);
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        /// <summary>
+        /// enerates a secure random token for password reset functionality.
+        /// </summary>
+        /// <returns>Returns a secure random token as a string.</returns>
+        public string GeneratePasswordResetToken()
+        {
+            var randomBytes = new byte[64];
+            using var rng = System.Security.Cryptography.RandomNumberGenerator.Create();
+            rng.GetBytes(randomBytes);
+            return Convert.ToBase64String(randomBytes);
         }
     }
 }

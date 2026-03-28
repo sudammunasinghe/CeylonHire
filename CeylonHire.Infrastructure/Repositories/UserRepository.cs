@@ -14,6 +14,7 @@ namespace CeylonHire.Infrastructure.Repositories
         private readonly string _Insert_JobSeekerProfile;
         private readonly string _Insert_CompanyProfile;
         private readonly string _Select_UserByEmail;
+        private readonly string _Update_UserForSavePasswordResetToken;
         public UserRepository(IDbConnectionFactory connectionFactory, ISqlQueryLoader queryLoader)
         {
             _connectionFactory = connectionFactory;
@@ -22,6 +23,7 @@ namespace CeylonHire.Infrastructure.Repositories
             _Insert_JobSeekerProfile = _queryLoader.Load("JobSeeker", "Insert_JobSeekerProfile.sql");
             _Select_UserByEmail = _queryLoader.Load("User", "Select_UserByEmail.sql");
             _Insert_CompanyProfile = _queryLoader.Load("CompanyProfile", "Insert_CompanyProfile.sql");
+            _Update_UserForSavePasswordResetToken = _queryLoader.Load("User", "Update_UserForSavePasswordResetToken.sql");
         }
 
         /// <summary>
@@ -135,6 +137,27 @@ namespace CeylonHire.Infrastructure.Repositories
                 new { Email = email }
              );
 
+        }
+
+        /// <summary>
+        /// saves a password reset token for a user, along with its expiry time.
+        /// </summary>
+        /// <param name="userId">The Id of the user.</param>
+        /// <param name="token">The password reset token.</param>
+        /// <param name="expiry">The expiry time of the token.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
+        public async Task SavePasswordResetTokenAsync(int userId, string token, DateTime expiry)
+        {
+            using var db = _connectionFactory.CreateConnection();
+            await db.ExecuteAsync(
+                _Update_UserForSavePasswordResetToken,
+                new
+                {
+                    UserId = userId,
+                    Token = token,
+                    Expiry = expiry
+                }
+            );
         }
     }
 }

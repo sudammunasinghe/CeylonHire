@@ -1,4 +1,5 @@
 ﻿using CeylonHire.Api.Models.JobSeeker;
+using CeylonHire.Application.DTOs.Auth;
 using CeylonHire.Application.DTOs.CompanyProfile;
 
 namespace CeylonHire.Application.Interfaces.IServices
@@ -26,5 +27,12 @@ namespace CeylonHire.Application.Interfaces.IServices
         /// <param name="password">The password of the user.</param>
         /// <returns>Returns a JWT token if the login is successful.</returns>
         Task<string> Login(string email, string password);
+
+        /// <summary>
+        /// forgot password functionality for users who have forgotten their password. which typically involves sending a password reset link or code to the user's email address.
+        /// </summary>
+        /// <param name="dto">An object containing the user's email.</param>
+        /// <returns><see cref="ApiResponse{string}"/></returns>
+        Task<string> ForgotPasswordAsync(ForgotPasswordDto dto);
     }
 }

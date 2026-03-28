@@ -14,8 +14,9 @@ var builder = WebApplication.CreateBuilder(args);
 // ================================== Register Services ===================================================
 builder.Services.AddScoped<IDbConnectionFactory, DbConnectionFactory>();
 builder.Services.AddSingleton<ISqlQueryLoader, SqlQueryLoader>();
-builder.Services.AddScoped<IPasswordService, PasswordService>();
+builder.Services.AddScoped<IHashingService, HashingService>();
 builder.Services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();

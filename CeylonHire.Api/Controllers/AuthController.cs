@@ -1,5 +1,6 @@
 ﻿using CeylonHire.Api.Models.JobSeeker;
 using CeylonHire.Application.DTOs.ApiResponse;
+using CeylonHire.Application.DTOs.Auth;
 using CeylonHire.Application.DTOs.CompanyProfile;
 using CeylonHire.Application.Interfaces.IServices;
 using Microsoft.AspNetCore.Mvc;
@@ -58,6 +59,22 @@ namespace CeylonHire.Api.Controllers
         {
             var token = await _authService.Login(email, password);
             return Ok(new { tokenId = token });
+        }
+
+        /// <summary>
+        /// forgot password functionality for users who have forgotten their password. which typically involves sending a password reset link or code to the user's email address.
+        /// </summary>
+        /// <param name="dto">An object containing the user's email.</param>
+        /// <returns><see cref="ApiResponse{string}"/></returns>
+        [HttpPost("forgotPassword")]
+        public async Task<ActionResult<ApiResponse<string>>> ForgotPasswordAsync(ForgotPasswordDto dto)
+        {
+            var result = await _authService.ForgotPasswordAsync(dto);
+            return Ok(new ApiResponse<string>
+            {
+                Success = true,
+                Message= result
+            });
         }
     }
 }

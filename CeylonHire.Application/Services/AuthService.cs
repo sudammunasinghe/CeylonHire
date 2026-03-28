@@ -1,4 +1,5 @@
 ﻿using CeylonHire.Api.Models.JobSeeker;
+using CeylonHire.Application.DTOs.Auth;
 using CeylonHire.Application.DTOs.CompanyProfile;
 using CeylonHire.Application.Exceptions;
 using CeylonHire.Application.Interfaces.IRepositories;
@@ -11,13 +12,15 @@ namespace CeylonHire.Application.Services
     public class AuthService : IAuthService
     {
         private readonly IUserRepository _userRepository;
-        private readonly IPasswordService _passwordService;
+        private readonly IHashingService _hashingService;
+        private readonly IEmailService _emailService;
         private readonly ITokenGeneratorService _tokenGeneratorService;
-        public AuthService(IUserRepository userRepository, IPasswordService passwordService, ITokenGeneratorService tokenGeneratorService)
+        public AuthService(IUserRepository userRepository, IHashingService hashingService, ITokenGeneratorService tokenGeneratorService, IEmailService emailService)
         {
             _userRepository = userRepository;
-            _passwordService = passwordService;
+            _hashingService = hashingService;
             _tokenGeneratorService = tokenGeneratorService;
+            _emailService = emailService;
         }
 
         /// <summary>
@@ -43,7 +46,7 @@ namespace CeylonHire.Application.Services
                 await _userRepository.RegisterNewJobseekerAsync(newUser, jobseekerProfileInfo);
 
             if (jobseekerProfileId > 0)
-                return _tokenGeneratorService.GenerateToken(newUser);
+                return _tokenGeneratorService.GenerateJwtToken(newUser);
             return "Registration failed.";
         }
 
@@ -69,7 +72,7 @@ namespace CeylonHire.Application.Services
                 await _userRepository.RegisterNewCompanyAsync(newUser, companyProfileInfo);
 
             if (companyProfileId > 0)
-                return _tokenGeneratorService.GenerateToken(newUser);
+                return _tokenGeneratorService.GenerateJwtToken(newUser);
             return "Registration failed.";
         }
 
@@ -85,9 +88,36 @@ namespace CeylonHire.Application.Services
             var user =
                 await _userRepository.GetUserByEmailAsync(email);
 
-            if (user == null || !_passwordService.VerifyPassword(password, user.PasswordHash))
+            if (user == null || !_hashingService.VerifyPassword(password, user.PasswordHash))
                 throw new UnauthorizedAccessException("Invalid Credentials ...");
-            return _tokenGeneratorService.GenerateToken(user);
+            return _tokenGeneratorService.GenerateJwtToken(user);
+        }
+
+        /// <summary>
+        /// forgot password functionality for users who have forgotten their password. which typically involves sending a password reset link or code to the user's email address.
+        /// </summary>
+        /// <param name="dto">An object containing the user's email.</param>
+        /// <returns><see cref="ApiResponse{string}"/></returns>
+        public async Task<string> ForgotPasswordAsync(ForgotPasswordDto dto)
+        {
+            var user =
+                    await _userRepository.GetUserByEmailAsync(dto.Email);
+            if (user == null)
+                return "If the email exists, a reset link has been sent...";
+
+            var token = _tokenGeneratorService.GeneratePasswordResetToken();
+            var hashToken = _hashingService.HashPasswordResetToken(token);
+            var expiry = DateTime.Now.AddMinutes(10);
+
+            var resetLink = "https://ceylonhire.com/reset-password?token={token}&email={user.Email}";
+            await _emailService.SendEmailAsync(
+                user.Email,
+                "Password Reset Request",
+                $"Click here to reset your password : {resetLink}"
+            );
+
+            await _userRepository.SavePasswordResetTokenAsync(user.Id, hashToken, expiry);
+            return "If the email exists, a reset link has been sent...";
         }
 
         /// <summary>
@@ -110,7 +140,7 @@ namespace CeylonHire.Application.Services
                 password,
                 (int)role
             );
-            newUser.PasswordHash = _passwordService.HashPassword(password);
+            newUser.PasswordHash = _hashingService.HashPassword(password);
             return newUser;
         }
     }
