@@ -98,3 +98,4 @@ D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\MailKit.dll
 D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\MimeKit.dll
 D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\User\Select_UserByPasswordResetTokenId.sql
 D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\User\Update_UserForResetPassword.sql
+D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\User\Select_UserByUserId.sql

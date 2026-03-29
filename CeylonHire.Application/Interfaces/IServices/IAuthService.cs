@@ -41,5 +41,12 @@ namespace CeylonHire.Application.Interfaces.IServices
         /// <param name="dto">An object containing the user's new password, token & tokenId.</param>
         /// <returns></returns>
         Task<bool> ResetPassword(ResetPasswordDto dto);
+
+        /// <summary>
+        /// change password functionality for authenticated users who want to change their password.
+        /// </summary>
+        /// <param name="dto">An object containing the user's current and new passwords.</param>
+        /// <returns>Returns true if the password was successfully changed, otherwise false</returns>
+        Task<bool> ChangePasswordAsync(ChangePasswordDto dto);
     }
 }

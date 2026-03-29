@@ -1,6 +1,7 @@
 using CeylonHire.Application.Interfaces.IRepositories;
 using CeylonHire.Application.Interfaces.IServices;
 using CeylonHire.Application.Services;
+using CeylonHire.Infrastructure.Identity;
 using CeylonHire.Infrastructure.Persistence;
 using CeylonHire.Infrastructure.Persistence.Sql.Helpers;
 using CeylonHire.Infrastructure.Repositories;
@@ -18,10 +19,12 @@ builder.Services.AddSingleton<ISqlQueryLoader, SqlQueryLoader>();
 builder.Services.AddScoped<IHashingService, HashingService>();
 builder.Services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 
+builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddControllers();
 

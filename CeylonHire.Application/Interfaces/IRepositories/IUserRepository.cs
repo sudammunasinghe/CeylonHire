@@ -49,5 +49,12 @@ namespace CeylonHire.Application.Interfaces.IRepositories
         /// <param name="expiry">The expiry time of the token.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
         Task SavePasswordResetTokenAsync(int userId, Guid tokenId, string tokenHash, DateTime expiry);
+
+        /// <summary>
+        /// Get user details by user's Id.
+        /// </summary>
+        /// <param name="userId">The Id of the user to retrieve.</param>
+        /// <returns>Returns the user details if found, otherwise null.</returns>
+        Task<User?> GetUserByUserIdAsync(int userId);
     }
 }

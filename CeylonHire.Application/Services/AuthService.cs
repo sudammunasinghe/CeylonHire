@@ -15,12 +15,20 @@ namespace CeylonHire.Application.Services
         private readonly IHashingService _hashingService;
         private readonly IEmailService _emailService;
         private readonly ITokenGeneratorService _tokenGeneratorService;
-        public AuthService(IUserRepository userRepository, IHashingService hashingService, ITokenGeneratorService tokenGeneratorService, IEmailService emailService)
+        private readonly ICurrentUserService _currentUserService;
+        public AuthService(
+            IUserRepository userRepository, 
+            IHashingService hashingService, 
+            ITokenGeneratorService tokenGeneratorService, 
+            IEmailService emailService,
+            ICurrentUserService currentUserService
+            )
         {
             _userRepository = userRepository;
             _hashingService = hashingService;
             _tokenGeneratorService = tokenGeneratorService;
             _emailService = emailService;
+            _currentUserService = currentUserService;
         }
 
         /// <summary>
@@ -178,6 +186,35 @@ namespace CeylonHire.Application.Services
             user.PasswordHash = _hashingService.HashPassword(dto.NewPassword);
             var affectedRows =  await _userRepository.UpdatePasswordAsync(user);
             return affectedRows == 1;
+        }
+
+        /// <summary>
+        /// change password functionality for authenticated users who want to change their password.
+        /// </summary>
+        /// <param name="dto">An object containing the user's current and new passwords.</param>
+        /// <returns>Returns true if the password was successfully changed, otherwise false.</returns>
+        /// <exception cref="UnauthorizedAccessException">Thrown when the user is not authenticated.</exception>
+        /// <exception cref="BadRequestException">Thrown when the current password is invalid or the new password is the same as the current password.</exception>
+        public async Task<bool> ChangePasswordAsync(ChangePasswordDto dto)
+        {
+            var loggedUserId = _currentUserService.UserId;
+            if (loggedUserId == null)
+                throw new UnauthorizedAccessException("Unauthorized ...");
+
+            var loggedUser = 
+                await _userRepository.GetUserByUserIdAsync(loggedUserId);
+
+            if (!_hashingService.VerifyPassword(dto.CurrentPassword, loggedUser.PasswordHash))
+                throw new BadRequestException("Invalid current password ...");
+
+            User.ValidatePassword(dto.NewPassword);
+            if (dto.NewPassword == dto.CurrentPassword)
+                throw new BadRequestException("New password should be differ from the current password ...");
+
+            loggedUser.PasswordHash = _hashingService.HashPassword(dto.NewPassword);
+            var affectedRows = await _userRepository.UpdatePasswordAsync(loggedUser);
+            return affectedRows == 1;
+
         }
 
         /// <summary>

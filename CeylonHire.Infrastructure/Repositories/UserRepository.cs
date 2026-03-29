@@ -17,6 +17,7 @@ namespace CeylonHire.Infrastructure.Repositories
         private readonly string _Update_UserForSavePasswordResetToken;
         private readonly string _Select_UserByPasswordResetTokenId;
         private readonly string _Update_UserForResetPassword;
+        private readonly string _Select_UserByUserId;
         public UserRepository(IDbConnectionFactory connectionFactory, ISqlQueryLoader queryLoader)
         {
             _connectionFactory = connectionFactory;
@@ -28,6 +29,7 @@ namespace CeylonHire.Infrastructure.Repositories
             _Update_UserForSavePasswordResetToken = _queryLoader.Load("User", "Update_UserForSavePasswordResetToken.sql");
             _Select_UserByPasswordResetTokenId = _queryLoader.Load("User", "Select_UserByPasswordResetTokenId.sql");
             _Update_UserForResetPassword = _queryLoader.Load("User", "Update_UserForResetPassword.sql");
+            _Select_UserByUserId = _queryLoader.Load("User", "Select_UserByUserId.sql");
         }
 
         /// <summary>
@@ -195,6 +197,21 @@ namespace CeylonHire.Infrastructure.Repositories
                     TokenHash = tokenHash,
                     Expiry = expiry
                 }
+            );
+        }
+
+        /// <summary>
+        /// Asynchronously retrieves a user by their unique identifier.
+        /// </summary>
+        /// <param name="userId">The unique identifier of the user to retrieve.</param>
+        /// <returns>A task that represents the asynchronous operation. The task result contains the user if found; otherwise,
+        /// null.</returns>
+        public async Task<User?> GetUserByUserIdAsync(int userId)
+        {
+            using var db = _connectionFactory.CreateConnection();
+            return await db.QueryFirstOrDefaultAsync<User>(
+                _Select_UserByUserId,
+                new { UserId =  userId }
             );
         }
     }

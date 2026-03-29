@@ -11,6 +11,7 @@
     <None Remove="Persistence\Sql\User\Insert_JobSeekerProfile.sql" />
     <None Remove="Persistence\Sql\User\Insert_NewUser.sql" />
     <None Remove="Persistence\Sql\User\Select_UserByEmail.sql" />
+    <None Remove="Persistence\Sql\User\Select_UserByUserId.sql" />
     <None Remove="Persistence\Sql\User\Update_UserForResetPassword.sql" />
     <None Remove="Persistence\Sql\User\Update_UserForSavePasswordResetToken.sql" />
   </ItemGroup>
@@ -31,6 +32,9 @@
     <Content Include="Persistence\Sql\User\Select_UserByPasswordResetTokenId.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Persistence\Sql\User\Select_UserByUserId.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Persistence\Sql\User\Update_UserForResetPassword.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -47,6 +51,7 @@
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.1.72" />
     <PackageReference Include="MailKit" Version="4.15.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.3.9" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="7.0.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="10.0.5" />
   </ItemGroup>
