@@ -2,7 +2,7 @@
   {
     "ContainingType": "CeylonHire.Api.Controllers.AuthController",
     "Method": "ForgotPasswordAsync",
-    "RelativePath": "api/Auth/forgotPassword",
+    "RelativePath": "api/Auth/forgot-Password",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -154,6 +154,32 @@
         "Name": "CVUrl",
         "Type": "System.String",
         "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "CeylonHire.Application.DTOs.ApiResponse.ApiResponse\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "CeylonHire.Api.Controllers.AuthController",
+    "Method": "ResetPasswordAsync",
+    "RelativePath": "api/Auth/reset-password",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "CeylonHire.Application.DTOs.Auth.ResetPasswordDto",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": [

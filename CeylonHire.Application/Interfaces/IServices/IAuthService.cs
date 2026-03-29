@@ -34,5 +34,12 @@ namespace CeylonHire.Application.Interfaces.IServices
         /// <param name="dto">An object containing the user's email.</param>
         /// <returns><see cref="ApiResponse{string}"/></returns>
         Task<string> ForgotPasswordAsync(ForgotPasswordDto dto);
+
+        /// <summary>
+        /// reset password functionality for users who have forgotten their password.
+        /// </summary>
+        /// <param name="dto">An object containing the user's new password, token & tokenId.</param>
+        /// <returns></returns>
+        Task<bool> ResetPassword(ResetPasswordDto dto);
     }
 }

@@ -106,18 +106,78 @@ namespace CeylonHire.Application.Services
                 return "If the email exists, a reset link has been sent...";
 
             var token = _tokenGeneratorService.GeneratePasswordResetToken();
+            var tokenId = Guid.NewGuid();
             var hashToken = _hashingService.HashPasswordResetToken(token);
             var expiry = DateTime.Now.AddMinutes(10);
 
-            var resetLink = "https://ceylonhire.com/reset-password?token={token}&email={user.Email}";
+            var resetLink = $"https://ceylonhire.com/reset-password?token={token}&tokenId={tokenId}";
+
+            var subject = "Password Reset Request";
+            var body = $@"
+                    <!DOCTYPE html>
+                        <html>
+                            <head>
+                                <meta charset='UTF-8'>
+                            </head>
+                            <body style='font-family: Arial, sans-serif; background-color:#f4f4f4; padding:20px;'>
+                                <div style='max-width:600px; margin:auto; background:white; padding:20px; border-radius:10px;'>                            
+                                    <h2 style='color:#333;'>🔐 Password Reset Request</h2>                            
+                                    <p>Hello,</p>                          
+                                    <p>We received a request to reset your password for your <strong>CeylonHire</strong> account.</p>                            
+                                    <p>Click the button below to reset your password:</p>                            
+                                    <div style='text-align:center; margin:30px 0;'>
+                                        <a href='{resetLink}' 
+                                           style='background-color:#007bff; color:white; padding:12px 25px; text-decoration:none; border-radius:5px; display:inline-block;'>
+                                           Reset Password
+                                        </a>
+                                    </div>                    
+                                    <p>This link will expire in <strong>10 minutes</strong>.</p>                   
+                                    <p>If you did not request a password reset, please ignore this email.</p>                   
+                                    <hr style='margin:30px 0;'>                   
+                                    <p style='font-size:12px; color:gray;'>
+                                        If the button doesn't work, copy and paste this link into your browser:<br>
+                                        <a href='{resetLink}'>{resetLink}</a>
+                                    </p>                    
+                                    <p style='margin-top:20px;'>Thanks,<br><strong>CeylonHire Team</strong></p>                   
+                                </div>                   
+                            </body>
+                        </html>
+                    ";
+
             await _emailService.SendEmailAsync(
                 user.Email,
-                "Password Reset Request",
-                $"Click here to reset your password : {resetLink}"
+                subject,
+                body
             );
 
-            await _userRepository.SavePasswordResetTokenAsync(user.Id, hashToken, expiry);
+            await _userRepository.SavePasswordResetTokenAsync(user.Id, tokenId, hashToken, expiry);
             return "If the email exists, a reset link has been sent...";
+        }
+
+        /// <summary>
+        /// reset password functionality for users who have forgotten their password.
+        /// </summary>
+        /// <param name="dto">An object containing the user's new password, token & tokenId.</param>
+        /// <returns>Returns true if the password was successfully reset, otherwise false.</returns>
+        /// <exception cref="BadRequestException">Thrown when the reset token is invalid or expired.</exception>
+        public async Task<bool> ResetPassword(ResetPasswordDto dto)
+        {
+            var user =
+                await _userRepository.GetUserByPasswordResetTokenIdAsync(dto.TokenId);
+
+            if(user == null ||
+               user.PasswordResetTokenHash == null ||
+               !_hashingService.VerifyPasswordResetToken(dto.Token, user.PasswordResetTokenHash) ||
+               user.PasswordResetTokenExpiry < DateTime.Now
+            )
+            {
+                throw new BadRequestException("Invalid or expired reset token ...");
+            }
+
+            User.ValidatePassword(dto.NewPassword);
+            user.PasswordHash = _hashingService.HashPassword(dto.NewPassword);
+            var affectedRows =  await _userRepository.UpdatePasswordAsync(user);
+            return affectedRows == 1;
         }
 
         /// <summary>

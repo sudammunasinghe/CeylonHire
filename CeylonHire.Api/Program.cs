@@ -6,6 +6,7 @@ using CeylonHire.Infrastructure.Persistence.Sql.Helpers;
 using CeylonHire.Infrastructure.Repositories;
 using CeylonHire.Infrastructure.Security;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -80,6 +81,19 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+//==================================== Rate Limit Configuration ==============================================
+
+builder.Services.AddRateLimiter(options =>
+{
+    options.AddFixedWindowLimiter("ForgotPasswordPolicy", opt =>
+    {
+        opt.PermitLimit = 3; // max 3 requests
+        opt.Window = TimeSpan.FromMinutes(15); // per 15 mins
+        opt.QueueProcessingOrder = System.Threading.RateLimiting.QueueProcessingOrder.OldestFirst;
+        opt.QueueLimit = 0;
+    });
+});
+
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -102,7 +116,11 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
+
 app.UseAuthorization();
+
+app.UseRateLimiter();
 
 app.MapControllers();
 

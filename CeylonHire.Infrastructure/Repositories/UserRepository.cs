@@ -15,6 +15,8 @@ namespace CeylonHire.Infrastructure.Repositories
         private readonly string _Insert_CompanyProfile;
         private readonly string _Select_UserByEmail;
         private readonly string _Update_UserForSavePasswordResetToken;
+        private readonly string _Select_UserByPasswordResetTokenId;
+        private readonly string _Update_UserForResetPassword;
         public UserRepository(IDbConnectionFactory connectionFactory, ISqlQueryLoader queryLoader)
         {
             _connectionFactory = connectionFactory;
@@ -24,6 +26,8 @@ namespace CeylonHire.Infrastructure.Repositories
             _Select_UserByEmail = _queryLoader.Load("User", "Select_UserByEmail.sql");
             _Insert_CompanyProfile = _queryLoader.Load("CompanyProfile", "Insert_CompanyProfile.sql");
             _Update_UserForSavePasswordResetToken = _queryLoader.Load("User", "Update_UserForSavePasswordResetToken.sql");
+            _Select_UserByPasswordResetTokenId = _queryLoader.Load("User", "Select_UserByPasswordResetTokenId.sql");
+            _Update_UserForResetPassword = _queryLoader.Load("User", "Update_UserForResetPassword.sql");
         }
 
         /// <summary>
@@ -140,13 +144,46 @@ namespace CeylonHire.Infrastructure.Repositories
         }
 
         /// <summary>
+        /// Get user details by password reset token Id.
+        /// </summary>
+        /// <param name="tokenId">The Id of the password reset token.</param>
+        /// <returns>Returns the user details if found, otherwise null.</returns>
+        public async Task<User?> GetUserByPasswordResetTokenIdAsync(Guid? tokenId)
+        {
+            using var db = _connectionFactory.CreateConnection();
+            return await db.QueryFirstOrDefaultAsync<User>(
+                _Select_UserByPasswordResetTokenId,
+                new { TokenId = tokenId }
+            );
+        }
+
+        /// <summary>
+        /// update the password hash of a user in the database.
+        /// </summary>
+        /// <param name="user">The user whose password needs to be updated.</param>
+        /// <returns>Returns the number of affected rows.</returns>
+        public async Task<int> UpdatePasswordAsync(User user)
+        {
+            using var db = _connectionFactory.CreateConnection();
+            return await db.ExecuteAsync(
+                _Update_UserForResetPassword,
+                new
+                {
+                    UserId = user.Id,
+                    PasswordHash = user.PasswordHash
+                }
+            );
+
+        }
+
+        /// <summary>
         /// saves a password reset token for a user, along with its expiry time.
         /// </summary>
         /// <param name="userId">The Id of the user.</param>
         /// <param name="token">The password reset token.</param>
         /// <param name="expiry">The expiry time of the token.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
-        public async Task SavePasswordResetTokenAsync(int userId, string token, DateTime expiry)
+        public async Task SavePasswordResetTokenAsync(int userId, Guid tokenId, string tokenHash, DateTime expiry)
         {
             using var db = _connectionFactory.CreateConnection();
             await db.ExecuteAsync(
@@ -154,7 +191,8 @@ namespace CeylonHire.Infrastructure.Repositories
                 new
                 {
                     UserId = userId,
-                    Token = token,
+                    TokenId = tokenId,
+                    TokenHash = tokenHash,
                     Expiry = expiry
                 }
             );

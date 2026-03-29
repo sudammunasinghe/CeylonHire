@@ -10,4 +10,4 @@
     [CreatedDateTime],
     [LastModifiedDateTime]
 FROM [dbo].[Users]
-WHERE [Email] = @Email;
+WHERE [PasswordResetTokenId] = @TokenId;

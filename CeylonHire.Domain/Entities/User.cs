@@ -8,8 +8,9 @@ namespace CeylonHire.Domain.Entities
         public string Email { get; set; }
         public string PasswordHash { get; set; }
         public int RoleId { get; set; }
-        public string? PasswordResetToken { get; set; }
-        public string? asswordResetTokenExpiry { get; set; }
+        public Guid? PasswordResetTokenId { get; set; }
+        public string? PasswordResetTokenHash { get; set; }
+        public DateTime? PasswordResetTokenExpiry { get; set; }
 
         private User() { }
 

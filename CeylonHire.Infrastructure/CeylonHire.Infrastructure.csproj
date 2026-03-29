@@ -11,6 +11,7 @@
     <None Remove="Persistence\Sql\User\Insert_JobSeekerProfile.sql" />
     <None Remove="Persistence\Sql\User\Insert_NewUser.sql" />
     <None Remove="Persistence\Sql\User\Select_UserByEmail.sql" />
+    <None Remove="Persistence\Sql\User\Update_UserForResetPassword.sql" />
     <None Remove="Persistence\Sql\User\Update_UserForSavePasswordResetToken.sql" />
   </ItemGroup>
 
@@ -25,6 +26,12 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Persistence\Sql\User\Select_UserByEmail.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\User\Select_UserByPasswordResetTokenId.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\User\Update_UserForResetPassword.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Persistence\Sql\User\Update_UserForSavePasswordResetToken.sql">

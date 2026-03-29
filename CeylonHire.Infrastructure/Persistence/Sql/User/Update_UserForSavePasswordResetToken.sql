@@ -1,6 +1,7 @@
 ﻿UPDATE [dbo].[Users]
 SET
-	[PasswordResetToken] = @Token,
+	[PasswordResetTokenId] = @TokenId,
+	[PasswordResetTokenHash] = @TokenHash,
 	[PasswordResetTokenExpiry] = @Expiry,
 	[LastModifiedDateTime] = GETDATE()
 WHERE [Id] = @UserId;

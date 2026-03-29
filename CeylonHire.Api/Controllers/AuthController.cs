@@ -4,6 +4,7 @@ using CeylonHire.Application.DTOs.Auth;
 using CeylonHire.Application.DTOs.CompanyProfile;
 using CeylonHire.Application.Interfaces.IServices;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace CeylonHire.Api.Controllers
 {
@@ -66,14 +67,31 @@ namespace CeylonHire.Api.Controllers
         /// </summary>
         /// <param name="dto">An object containing the user's email.</param>
         /// <returns><see cref="ApiResponse{string}"/></returns>
-        [HttpPost("forgotPassword")]
-        public async Task<ActionResult<ApiResponse<string>>> ForgotPasswordAsync(ForgotPasswordDto dto)
+        [EnableRateLimiting("ForgotPasswordPolicy")]
+        [HttpPost("forgot-Password")]
+        public async Task<ActionResult<ApiResponse<string>>> ForgotPasswordAsync([FromBody] ForgotPasswordDto dto)
         {
             var result = await _authService.ForgotPasswordAsync(dto);
             return Ok(new ApiResponse<string>
             {
                 Success = true,
                 Message= result
+            });
+        }
+
+        /// <summary>
+        /// reset password functionality for users who have forgotten their password.
+        /// </summary>
+        /// <param name="dto">An object containing the user's new password, token & tokenId.</param>
+        /// <returns><see cref="ApiResponse{string}"/></returns>
+        [HttpPost("reset-password")]
+        public async Task<ActionResult<ApiResponse<string>>> ResetPasswordAsync([FromBody] ResetPasswordDto dto)
+        {
+            var isSuccess = await _authService.ResetPassword(dto);
+            return Ok(new ApiResponse<string>
+            {
+                Success = true,
+                Message = isSuccess ? "Password updated Successfully" : "Password update unsuccessful"
             });
         }
     }
