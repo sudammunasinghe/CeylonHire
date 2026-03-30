@@ -1,10 +1,4 @@
-﻿using CeylonHire.Api.Models;
-using CeylonHire.Domain.Exceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CeylonHire.Domain.Exceptions;
 
 namespace CeylonHire.Domain.Entities
 {
@@ -12,39 +6,40 @@ namespace CeylonHire.Domain.Entities
     {
         public int Id { get; set; }
         public string Email { get; set; }
-        public string PasswordHash { get; set; }
+        public string PasswordHash { get; private set; }
         public int RoleId { get; set; }
-        public string? PasswordResetToken { get; set; }
-        public string? asswordResetTokenExpiry { get; set; }
+        public Guid? PasswordResetTokenId { get; set; }
+        public string? PasswordResetTokenHash { get; set; }
+        public DateTime? PasswordResetTokenExpiry { get; set; }
 
         private User() { }
 
         public static void ValidateEmail(string? email)
         {
-            if(string.IsNullOrWhiteSpace(email))
+            if (string.IsNullOrWhiteSpace(email))
                 throw new DomainException("Email is required.");
-        }
-
-        public static void ValidatePassword(string? password)
-        {
-            if (string.IsNullOrWhiteSpace(password))
-                throw new DomainException("Password is required.");
         }
 
         public static User Create(
             string email,
-            string password,
+            string passwordHash,
             int roleId
             )
         {
             ValidateEmail(email);
-            ValidatePassword(password);
 
-            return new User
+            var user = new User
             {
                 Email = email,
                 RoleId = roleId
             };
+            user.ChangePassword(passwordHash);
+            return user;
+        }
+
+        public void ChangePassword(string passwordHash)
+        {
+            PasswordHash = passwordHash;
         }
     }
 }

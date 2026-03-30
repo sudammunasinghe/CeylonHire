@@ -201,6 +201,14 @@
               "target": "Package",
               "version": "[2.1.72, )"
             },
+            "MailKit": {
+              "target": "Package",
+              "version": "[4.15.1, )"
+            },
+            "Microsoft.AspNetCore.Http.Abstractions": {
+              "target": "Package",
+              "version": "[2.3.9, )"
+            },
             "Microsoft.Data.SqlClient": {
               "target": "Package",
               "version": "[7.0.0, )"

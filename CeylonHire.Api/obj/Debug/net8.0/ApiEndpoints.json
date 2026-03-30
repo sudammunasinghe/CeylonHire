@@ -1,51 +1,146 @@
 [
   {
     "ContainingType": "CeylonHire.Api.Controllers.AuthController",
-    "Method": "RegisterNewJobseekerAsync",
-    "RelativePath": "api/Auth",
+    "Method": "ChangePasswordAsync",
+    "RelativePath": "api/Auth/change-password",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "FirstName",
-        "Type": "System.String",
-        "IsRequired": false
-      },
+        "Name": "dto",
+        "Type": "CeylonHire.Application.DTOs.Auth.ChangePasswordDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
       {
-        "Name": "LastName",
-        "Type": "System.String",
-        "IsRequired": false
-      },
+        "Type": "CeylonHire.Application.DTOs.ApiResponse.ApiResponse\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "CeylonHire.Api.Controllers.AuthController",
+    "Method": "ForgotPasswordAsync",
+    "RelativePath": "api/Auth/forgot-Password",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
       {
-        "Name": "Email",
-        "Type": "System.String",
-        "IsRequired": false
-      },
+        "Name": "dto",
+        "Type": "CeylonHire.Application.DTOs.Auth.ForgotPasswordDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
       {
-        "Name": "Password",
-        "Type": "System.String",
-        "IsRequired": false
-      },
+        "Type": "CeylonHire.Application.DTOs.ApiResponse.ApiResponse\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "CeylonHire.Api.Controllers.AuthController",
+    "Method": "Login",
+    "RelativePath": "api/Auth/login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
       {
-        "Name": "Address",
-        "Type": "System.String",
-        "IsRequired": false
-      },
+        "Name": "dto",
+        "Type": "CeylonHire.Application.DTOs.Auth.LoginDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
       {
-        "Name": "NIC",
-        "Type": "System.String",
-        "IsRequired": false
-      },
+        "Type": "CeylonHire.Application.DTOs.ApiResponse.ApiResponse\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "CeylonHire.Api.Controllers.AuthController",
+    "Method": "RegisterNewCompanyAsync",
+    "RelativePath": "api/Auth/register/company",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
       {
-        "Name": "ExperienceYears",
-        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
+        "Name": "dto",
+        "Type": "CeylonHire.Application.DTOs.CompanyProfile.CompanyProfileDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
       {
-        "Name": "CVUrl",
-        "Type": "System.String",
-        "IsRequired": false
+        "Type": "CeylonHire.Application.DTOs.ApiResponse.ApiResponse\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "CeylonHire.Api.Controllers.AuthController",
+    "Method": "RegisterNewJobseekerAsync",
+    "RelativePath": "api/Auth/register/jobseeker",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "CeylonHire.Api.Models.JobSeeker.JobSeekerProfileDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "CeylonHire.Application.DTOs.ApiResponse.ApiResponse\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "CeylonHire.Api.Controllers.AuthController",
+    "Method": "ResetPasswordAsync",
+    "RelativePath": "api/Auth/reset-password",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "CeylonHire.Application.DTOs.Auth.ResetPasswordDto",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": [

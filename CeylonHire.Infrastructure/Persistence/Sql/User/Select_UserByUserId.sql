@@ -1,12 +1,13 @@
 ﻿SELECT 
 	[Id],
     [Email],
-    [PassswordHash],
+    [PasswordHash],
     [RoleId],
-    [PasswordResetToken],
+    [PasswordResetTokenId],
+    [PasswordResetTokenHash],
     [PasswordResetTokenExpiry],
     [IsActive],
     [CreatedDateTime],
     [LastModifiedDateTime]
 FROM [dbo].[Users]
-WHERE [Email] = @Email;
+WHERE [Id] = @UserId;
