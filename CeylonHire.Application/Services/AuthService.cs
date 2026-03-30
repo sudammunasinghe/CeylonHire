@@ -6,6 +6,7 @@ using CeylonHire.Application.Interfaces.IRepositories;
 using CeylonHire.Application.Interfaces.IServices;
 using CeylonHire.Domain.Entities;
 using CeylonHire.Domain.Enums;
+using CeylonHire.Domain.ValueObjects;
 
 namespace CeylonHire.Application.Services
 {
@@ -17,9 +18,9 @@ namespace CeylonHire.Application.Services
         private readonly ITokenGeneratorService _tokenGeneratorService;
         private readonly ICurrentUserService _currentUserService;
         public AuthService(
-            IUserRepository userRepository, 
-            IHashingService hashingService, 
-            ITokenGeneratorService tokenGeneratorService, 
+            IUserRepository userRepository,
+            IHashingService hashingService,
+            ITokenGeneratorService tokenGeneratorService,
             IEmailService emailService,
             ICurrentUserService currentUserService
             )
@@ -35,9 +36,13 @@ namespace CeylonHire.Application.Services
         /// Register a new jobseeker with the provided details in the JobSeekerProfileDto.
         /// </summary>
         /// <param name="dto">An object conataining jobseeker profile details.</param>
-        /// <returns></returns>
+        /// <returns>Returns a JWT token if the registration is successful.</returns>
+        /// <exception cref="BadRequestException">Thrown when the requested data is invalid.</exception>
         public async Task<string> RegisterNewJobseekerAsync(JobSeekerProfileDto dto)
         {
+            if (dto == null)
+                throw new BadRequestException("Invalid Request Data ...");
+
             var newUser =
                 await CreateNewUserAsync(dto.Email, dto.Password, RoleEnum.Jobseeker);
 
@@ -50,12 +55,9 @@ namespace CeylonHire.Application.Services
                 dto.CVUrl
             );
 
-            var jobseekerProfileId =
-                await _userRepository.RegisterNewJobseekerAsync(newUser, jobseekerProfileInfo);
-
-            if (jobseekerProfileId > 0)
-                return _tokenGeneratorService.GenerateJwtToken(newUser);
-            return "Registration failed.";
+            var userId = await _userRepository.RegisterNewJobseekerAsync(newUser, jobseekerProfileInfo);
+            newUser.Id = userId;
+            return _tokenGeneratorService.GenerateJwtToken(newUser);
         }
 
 
@@ -63,9 +65,13 @@ namespace CeylonHire.Application.Services
         /// Register a new company with the provided details in the CompanyProfileDto.
         /// </summary>
         /// <param name="dto">An object containing company profile details.</param>
-        /// <returns></returns>
+        /// <returns>Returns a JWT token if the registration is successful.</returns>
+        /// <exception cref="BadRequestException">Thrown when the requested data is invalid.</exception>
         public async Task<string> RegisterNewCompanyAsync(CompanyProfileDto dto)
         {
+            if (dto == null)
+                throw new BadRequestException("Invalid Request Data ...");
+
             var newUser =
                 await CreateNewUserAsync(dto.Email, dto.Password, RoleEnum.Employer);
 
@@ -76,12 +82,9 @@ namespace CeylonHire.Application.Services
                 dto.LogoUrl
             );
 
-            var companyProfileId =
-                await _userRepository.RegisterNewCompanyAsync(newUser, companyProfileInfo);
-
-            if (companyProfileId > 0)
-                return _tokenGeneratorService.GenerateJwtToken(newUser);
-            return "Registration failed.";
+            var userId = await _userRepository.RegisterNewCompanyAsync(newUser, companyProfileInfo);
+            newUser.Id = userId;
+            return _tokenGeneratorService.GenerateJwtToken(newUser);
         }
 
         /// <summary>
@@ -91,12 +94,16 @@ namespace CeylonHire.Application.Services
         /// <param name="password">The password of the user.</param>
         /// <returns>Returns a JWT token if the login is successful.</returns>
         /// <exception cref="UnauthorizedAccessException">Thrown when the credentials are invalid.</exception>
-        public async Task<string> Login(string email, string password)
+        /// <exception cref="BadRequestException">Thrown when the email or password is not provided.</exception>
+        public async Task<string> LoginAsync(LoginDto dto)
         {
-            var user =
-                await _userRepository.GetUserByEmailAsync(email);
+            if (string.IsNullOrWhiteSpace(dto.Email) || string.IsNullOrWhiteSpace(dto.Password))
+                throw new BadRequestException("Email and password are required ...");
 
-            if (user == null || !_hashingService.VerifyPassword(password, user.PasswordHash))
+            var user =
+                await _userRepository.GetUserByEmailAsync(dto.Email);
+
+            if (user == null || !_hashingService.VerifyPassword(dto.Password, user.PasswordHash))
                 throw new UnauthorizedAccessException("Invalid Credentials ...");
             return _tokenGeneratorService.GenerateJwtToken(user);
         }
@@ -106,8 +113,12 @@ namespace CeylonHire.Application.Services
         /// </summary>
         /// <param name="dto">An object containing the user's email.</param>
         /// <returns><see cref="ApiResponse{string}"/></returns>
+        /// <exception cref="BadRequestException">Thrown when the email is not provided.</exception>
         public async Task<string> ForgotPasswordAsync(ForgotPasswordDto dto)
         {
+            if (string.IsNullOrWhiteSpace(dto.Email))
+                throw new BadRequestException("Email is required ...");
+
             var user =
                     await _userRepository.GetUserByEmailAsync(dto.Email);
             if (user == null)
@@ -152,13 +163,12 @@ namespace CeylonHire.Application.Services
                         </html>
                     ";
 
-            await _emailService.SendEmailAsync(
-                user.Email,
-                subject,
-                body
-            );
-
             await _userRepository.SavePasswordResetTokenAsync(user.Id, tokenId, hashToken, expiry);
+            await _emailService.SendEmailAsync(
+                    user.Email,
+                    subject,
+                    body
+                );
             return "If the email exists, a reset link has been sent...";
         }
 
@@ -168,12 +178,12 @@ namespace CeylonHire.Application.Services
         /// <param name="dto">An object containing the user's new password, token & tokenId.</param>
         /// <returns>Returns true if the password was successfully reset, otherwise false.</returns>
         /// <exception cref="BadRequestException">Thrown when the reset token is invalid or expired.</exception>
-        public async Task<bool> ResetPassword(ResetPasswordDto dto)
+        public async Task ResetPassword(ResetPasswordDto dto)
         {
             var user =
                 await _userRepository.GetUserByPasswordResetTokenIdAsync(dto.TokenId);
 
-            if(user == null ||
+            if (user == null ||
                user.PasswordResetTokenHash == null ||
                !_hashingService.VerifyPasswordResetToken(dto.Token, user.PasswordResetTokenHash) ||
                user.PasswordResetTokenExpiry < DateTime.Now
@@ -182,10 +192,10 @@ namespace CeylonHire.Application.Services
                 throw new BadRequestException("Invalid or expired reset token ...");
             }
 
-            User.ValidatePassword(dto.NewPassword);
-            user.PasswordHash = _hashingService.HashPassword(dto.NewPassword);
-            var affectedRows =  await _userRepository.UpdatePasswordAsync(user);
-            return affectedRows == 1;
+            Password validatedPassword = new(dto.NewPassword);
+            var passwordHash = _hashingService.HashPassword(validatedPassword.Value);
+            user.ChangePassword(passwordHash);
+            await _userRepository.UpdatePasswordAsync(user);
         }
 
         /// <summary>
@@ -195,26 +205,32 @@ namespace CeylonHire.Application.Services
         /// <returns>Returns true if the password was successfully changed, otherwise false.</returns>
         /// <exception cref="UnauthorizedAccessException">Thrown when the user is not authenticated.</exception>
         /// <exception cref="BadRequestException">Thrown when the current password is invalid or the new password is the same as the current password.</exception>
-        public async Task<bool> ChangePasswordAsync(ChangePasswordDto dto)
+        /// <exception cref="BadRequestException">Thrown when the current password or new password is empty.</exception>
+        public async Task ChangePasswordAsync(ChangePasswordDto dto)
         {
+            if (string.IsNullOrWhiteSpace(dto.CurrentPassword) || string.IsNullOrWhiteSpace(dto.NewPassword))
+                throw new BadRequestException("Current password and new password cannot be empty ...");
+
             var loggedUserId = _currentUserService.UserId;
             if (loggedUserId == null)
                 throw new UnauthorizedAccessException("Unauthorized ...");
 
-            var loggedUser = 
+            var loggedUser =
                 await _userRepository.GetUserByUserIdAsync(loggedUserId);
+
+            if (loggedUser == null)
+                throw new UnauthorizedAccessException("User not found ...");
 
             if (!_hashingService.VerifyPassword(dto.CurrentPassword, loggedUser.PasswordHash))
                 throw new BadRequestException("Invalid current password ...");
 
-            User.ValidatePassword(dto.NewPassword);
             if (dto.NewPassword == dto.CurrentPassword)
                 throw new BadRequestException("New password should be differ from the current password ...");
 
-            loggedUser.PasswordHash = _hashingService.HashPassword(dto.NewPassword);
-            var affectedRows = await _userRepository.UpdatePasswordAsync(loggedUser);
-            return affectedRows == 1;
-
+            Password validatedPassword = new(dto.NewPassword);
+            var passwordHash = _hashingService.HashPassword(validatedPassword.Value);
+            loggedUser.ChangePassword(passwordHash);
+            await _userRepository.UpdatePasswordAsync(loggedUser);
         }
 
         /// <summary>
@@ -224,20 +240,21 @@ namespace CeylonHire.Application.Services
         /// <param name="password">The password of the new user.</param>
         /// <param name="role">The role of the new user.</param>
         /// <returns><see cref="User"/>An object containing the newly created user details.</returns>
-        /// <exception cref="DupplicateEmailException">Thrown when the email already exists.</exception>
-        private async Task<User> CreateNewUserAsync(string? email, string? password, RoleEnum role)
+        /// <exception cref="DuplicateEmailException">Thrown when the email already exists.</exception>
+        private async Task<User> CreateNewUserAsync(string email, string password, RoleEnum role)
         {
             var user =
                     await _userRepository.GetUserByEmailAsync(email);
             if (user != null)
-                throw new DupplicateEmailException("Email already exists.");
+                throw new DuplicateEmailException("Email already exists.");
 
+            Password validatedPassword = new(password);
+            var passwordHash = _hashingService.HashPassword(validatedPassword.Value);
             var newUser = User.Create(
                 email,
-                password,
+                passwordHash,
                 (int)role
             );
-            newUser.PasswordHash = _hashingService.HashPassword(password);
             return newUser;
         }
     }

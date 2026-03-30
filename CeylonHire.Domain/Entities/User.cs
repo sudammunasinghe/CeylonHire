@@ -6,7 +6,7 @@ namespace CeylonHire.Domain.Entities
     {
         public int Id { get; set; }
         public string Email { get; set; }
-        public string PasswordHash { get; set; }
+        public string PasswordHash { get; private set; }
         public int RoleId { get; set; }
         public Guid? PasswordResetTokenId { get; set; }
         public string? PasswordResetTokenHash { get; set; }
@@ -20,26 +20,26 @@ namespace CeylonHire.Domain.Entities
                 throw new DomainException("Email is required.");
         }
 
-        public static void ValidatePassword(string? password)
-        {
-            if (string.IsNullOrWhiteSpace(password))
-                throw new DomainException("Password is required.");
-        }
-
         public static User Create(
             string email,
-            string password,
+            string passwordHash,
             int roleId
             )
         {
             ValidateEmail(email);
-            ValidatePassword(password);
 
-            return new User
+            var user = new User
             {
                 Email = email,
                 RoleId = roleId
             };
+            user.ChangePassword(passwordHash);
+            return user;
+        }
+
+        public void ChangePassword(string passwordHash)
+        {
+            PasswordHash = passwordHash;
         }
     }
 }

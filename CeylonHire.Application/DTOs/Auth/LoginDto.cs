@@ -1,7 +1,8 @@
 ﻿namespace CeylonHire.Application.DTOs.Auth
 {
-    public class ForgotPasswordDto
+    public class LoginDto
     {
         public string Email { get; set; }
+        public string Password { get; set; }
     }
 }

@@ -60,14 +60,9 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "email",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "password",
-        "Type": "System.String",
-        "IsRequired": false
+        "Name": "dto",
+        "Type": "CeylonHire.Application.DTOs.Auth.LoginDto",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": [
@@ -91,34 +86,9 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "CompanyName",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Email",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Password",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Description",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "WebSite",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "LogoUrl",
-        "Type": "System.String",
-        "IsRequired": false
+        "Name": "dto",
+        "Type": "CeylonHire.Application.DTOs.CompanyProfile.CompanyProfileDto",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": [
@@ -142,44 +112,9 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "FirstName",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "LastName",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Email",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Password",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Address",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "NIC",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "ExperienceYears",
-        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "CVUrl",
-        "Type": "System.String",
-        "IsRequired": false
+        "Name": "dto",
+        "Type": "CeylonHire.Api.Models.JobSeeker.JobSeekerProfileDto",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": [

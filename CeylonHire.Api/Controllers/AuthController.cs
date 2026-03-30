@@ -25,13 +25,14 @@ namespace CeylonHire.Api.Controllers
         /// <returns><see cref="ApiResponse{string}"/></returns>
         [HttpPost("register/jobseeker")]
         [AllowAnonymous]
-        public async Task<ActionResult<ApiResponse<string>>> RegisterNewJobseekerAsync([FromForm] JobSeekerProfileDto dto)
+        public async Task<ActionResult<ApiResponse<string>>> RegisterNewJobseekerAsync([FromBody] JobSeekerProfileDto dto)
         {
             var result = await _authService.RegisterNewJobseekerAsync(dto);
             return Ok(new ApiResponse<string>
             {
                 Success = true,
-                Message = result
+                Data = result,
+                Message = "Registration successful."
             });
         }
 
@@ -42,13 +43,14 @@ namespace CeylonHire.Api.Controllers
         /// <returns><see cref="ApiResponse{string}"/></returns>
         [HttpPost("register/company")]
         [AllowAnonymous]
-        public async Task<ActionResult<ApiResponse<string>>> RegisterNewCompanyAsync([FromForm] CompanyProfileDto dto)
+        public async Task<ActionResult<ApiResponse<string>>> RegisterNewCompanyAsync([FromBody] CompanyProfileDto dto)
         {
             var result = await _authService.RegisterNewCompanyAsync(dto);
             return Ok(new ApiResponse<string>
             {
                 Success = true,
-                Message = result
+                Data = result,
+                Message = "Registration successful."
             });
         }
 
@@ -60,10 +62,15 @@ namespace CeylonHire.Api.Controllers
         /// <returns>Returns a JWT token if the login is successful.</returns>
         [HttpPost("login")]
         [AllowAnonymous]
-        public async Task<ActionResult<ApiResponse<string>>> Login(string email, string password)
+        public async Task<ActionResult<ApiResponse<string>>> Login(LoginDto dto)
         {
-            var token = await _authService.Login(email, password);
-            return Ok(new { tokenId = token });
+            var token = await _authService.LoginAsync(dto);
+            return Ok(new ApiResponse<string>
+            {
+                Success = true,
+                Data = token,
+                Message = "Login successful."
+            });
         }
 
         /// <summary>
@@ -80,7 +87,7 @@ namespace CeylonHire.Api.Controllers
             return Ok(new ApiResponse<string>
             {
                 Success = true,
-                Message= result
+                Message = result
             });
         }
 
@@ -93,11 +100,11 @@ namespace CeylonHire.Api.Controllers
         [AllowAnonymous]
         public async Task<ActionResult<ApiResponse<string>>> ResetPasswordAsync([FromBody] ResetPasswordDto dto)
         {
-            var isSuccess = await _authService.ResetPassword(dto);
+            await _authService.ResetPassword(dto);
             return Ok(new ApiResponse<string>
             {
                 Success = true,
-                Message = isSuccess ? "Password updated Successfully" : "Password update unsuccessful"
+                Message = "Password updated Successfully"
             });
         }
 
@@ -110,10 +117,11 @@ namespace CeylonHire.Api.Controllers
         [Authorize]
         public async Task<ActionResult<ApiResponse<string>>> ChangePasswordAsync([FromBody] ChangePasswordDto dto)
         {
-            bool isSuccess = await _authService.ChangePasswordAsync(dto);
-            return Ok(new ApiResponse<string>{
+            await _authService.ChangePasswordAsync(dto);
+            return Ok(new ApiResponse<string>
+            {
                 Success = true,
-                Message = isSuccess ? "Password changed Successfully" : "Password change unsuccessful"
+                Message = "Password changed Successfully"
             });
         }
     }

@@ -9,7 +9,6 @@ namespace CeylonHire.Application.Interfaces.IRepositories
         /// </summary>
         /// <param name="user">An object containing user details.</param>
         /// <param name="jobseekerProfile">An object containing jobseeker profile details.</param>
-        /// <returns>Returns the Id of the newly registered jobseeker.</returns>
         Task<int> RegisterNewJobseekerAsync(User user, JobSeekerProfile jobseekerProfile);
 
         /// <summary>
@@ -17,7 +16,6 @@ namespace CeylonHire.Application.Interfaces.IRepositories
         /// </summary>
         /// <param name="user">An object containing user details.</param>
         /// <param name="companyProfile">An object containing company profile details.</param>
-        /// <returns>Returns the Id of the newly registered company.</returns>
         Task<int> RegisterNewCompanyAsync(User user, CompanyProfile companyProfile);
 
         /// <summary>
@@ -39,7 +37,7 @@ namespace CeylonHire.Application.Interfaces.IRepositories
         /// </summary>
         /// <param name="user">The user whose password needs to be updated.</param>
         /// <returns>Returns the number of affected rows.</returns>
-        Task<int> UpdatePasswordAsync(User user);
+        Task UpdatePasswordAsync(User user);
 
         /// <summary>
         /// saves a password reset token for a user, along with its expiry time.

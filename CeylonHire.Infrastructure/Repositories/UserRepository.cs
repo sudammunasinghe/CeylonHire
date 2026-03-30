@@ -37,7 +37,6 @@ namespace CeylonHire.Infrastructure.Repositories
         /// </summary>
         /// <param name="newUser">An object containing user details.</param>
         /// <param name="jobseekerProfile">An object containing jobseeker profile details.</param>
-        /// <returns>Returns the Id of the newly registered jobseeker.</returns>
         public async Task<int> RegisterNewJobseekerAsync(User newUser, JobSeekerProfile jobseekerProfile)
         {
             using var db = _connectionFactory.CreateConnection();
@@ -57,7 +56,7 @@ namespace CeylonHire.Infrastructure.Repositories
                     transaction
                 );
 
-                var jobseekerProfileId = await db.ExecuteScalarAsync<int>(
+                await db.ExecuteAsync(
                     _Insert_JobSeekerProfile,
                     new
                     {
@@ -74,7 +73,7 @@ namespace CeylonHire.Infrastructure.Repositories
                     transaction
                 );
                 transaction.Commit();
-                return jobseekerProfileId;
+                return userId;
             }
             catch
             {
@@ -88,7 +87,6 @@ namespace CeylonHire.Infrastructure.Repositories
         /// </summary>
         /// <param name="newUser">An object containing user details.</param>
         /// <param name="companyProfile">An object containing company profile details.</param>
-        /// <returns>Returns the Id of the newly registered company.</returns>
         public async Task<int> RegisterNewCompanyAsync(User newUser, CompanyProfile companyProfile)
         {
             using var db = _connectionFactory.CreateConnection();
@@ -108,7 +106,7 @@ namespace CeylonHire.Infrastructure.Repositories
                     transaction
                 );
 
-                var companyProfileId = await db.ExecuteScalarAsync<int>(
+                await db.ExecuteAsync(
                     _Insert_CompanyProfile,
                     new
                     {
@@ -121,7 +119,7 @@ namespace CeylonHire.Infrastructure.Repositories
                     transaction
                  );
                 transaction.Commit();
-                return companyProfileId;
+                return userId;
             }
             catch
             {
@@ -164,10 +162,10 @@ namespace CeylonHire.Infrastructure.Repositories
         /// </summary>
         /// <param name="user">The user whose password needs to be updated.</param>
         /// <returns>Returns the number of affected rows.</returns>
-        public async Task<int> UpdatePasswordAsync(User user)
+        public async Task UpdatePasswordAsync(User user)
         {
             using var db = _connectionFactory.CreateConnection();
-            return await db.ExecuteAsync(
+            await db.ExecuteAsync(
                 _Update_UserForResetPassword,
                 new
                 {
@@ -211,7 +209,7 @@ namespace CeylonHire.Infrastructure.Repositories
             using var db = _connectionFactory.CreateConnection();
             return await db.QueryFirstOrDefaultAsync<User>(
                 _Select_UserByUserId,
-                new { UserId =  userId }
+                new { UserId = userId }
             );
         }
     }

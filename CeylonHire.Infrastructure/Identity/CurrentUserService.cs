@@ -1,11 +1,6 @@
 ﻿using CeylonHire.Application.Interfaces.IServices;
 using Microsoft.AspNetCore.Http;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CeylonHire.Infrastructure.Identity
 {
@@ -26,7 +21,7 @@ namespace CeylonHire.Infrastructure.Identity
 
                 if (userIdClaim == null)
                     throw new UnauthorizedAccessException("Unauthorized ...");
-                
+
                 return int.Parse(userIdClaim.Value);
             }
         }

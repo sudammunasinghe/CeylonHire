@@ -46,7 +46,7 @@ namespace CeylonHire.Api.Middleware
                     status = HttpStatusCode.Unauthorized;
                     break;
 
-                case DupplicateEmailException:
+                case DuplicateEmailException:
                     status = HttpStatusCode.Conflict;
                     break;
 

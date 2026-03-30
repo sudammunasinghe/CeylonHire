@@ -10,14 +10,14 @@ namespace CeylonHire.Application.Interfaces.IServices
         /// Register a new jobseeker with the provided details in the JobSeekerProfileDto.
         /// </summary>
         /// <param name="dto">An object conataining jobseeker profile details.</param>
-        /// <returns></returns>
+        /// <returns>Returns a JWT token if the registration is successful.</returns>
         Task<string> RegisterNewJobseekerAsync(JobSeekerProfileDto dto);
 
         /// <summary>
         /// Register a new company with the provided details in the CompanyProfileDto.
         /// </summary>
         /// <param name="dto">An object containing company profile details.</param>
-        /// <returns></returns>
+        /// <returns>Returns a JWT token if the registration is successful.</returns>
         Task<string> RegisterNewCompanyAsync(CompanyProfileDto dto);
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace CeylonHire.Application.Interfaces.IServices
         /// <param name="email">The email of the user.</param>
         /// <param name="password">The password of the user.</param>
         /// <returns>Returns a JWT token if the login is successful.</returns>
-        Task<string> Login(string email, string password);
+        Task<string> LoginAsync(LoginDto dto);
 
         /// <summary>
         /// forgot password functionality for users who have forgotten their password. which typically involves sending a password reset link or code to the user's email address.
@@ -40,13 +40,13 @@ namespace CeylonHire.Application.Interfaces.IServices
         /// </summary>
         /// <param name="dto">An object containing the user's new password, token & tokenId.</param>
         /// <returns></returns>
-        Task<bool> ResetPassword(ResetPasswordDto dto);
+        Task ResetPassword(ResetPasswordDto dto);
 
         /// <summary>
         /// change password functionality for authenticated users who want to change their password.
         /// </summary>
         /// <param name="dto">An object containing the user's current and new passwords.</param>
         /// <returns>Returns true if the password was successfully changed, otherwise false</returns>
-        Task<bool> ChangePasswordAsync(ChangePasswordDto dto);
+        Task ChangePasswordAsync(ChangePasswordDto dto);
     }
 }
