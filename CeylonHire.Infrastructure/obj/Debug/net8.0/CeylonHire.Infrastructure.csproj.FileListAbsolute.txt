@@ -24,3 +24,7 @@ D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\
 D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\User\Select_UserByPasswordResetTokenId.sql
 D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\User\Update_UserForResetPassword.sql
 D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\User\Select_UserByUserId.sql
+D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\Job\Insert_JobSkills.sql
+D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\Job\Insert_NewJob.sql
+D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\Job\Select_CompanyDetailsByUserId.sql
+D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\Job\Select_JobMasterData.sql

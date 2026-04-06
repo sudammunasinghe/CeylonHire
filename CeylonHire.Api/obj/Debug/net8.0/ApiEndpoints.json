@@ -154,5 +154,31 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "CeylonHire.Api.Controllers.JobController",
+    "Method": "CreateJobPostAsync",
+    "RelativePath": "api/Job",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "CeylonHire.Application.DTOs.Job.JobDetailsDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "CeylonHire.Application.DTOs.ApiResponse.ApiResponse\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   }
 ]

@@ -292,6 +292,54 @@
           }
         }
       }
+    },
+    "/api/Job": {
+      "post": {
+        "tags": [
+          "Job"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobDetailsDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobDetailsDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/JobDetailsDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -345,6 +393,65 @@
         "properties": {
           "email": {
             "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "JobDetailsDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "salary": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "location": {
+            "type": "string",
+            "nullable": true
+          },
+          "numberOfOpenings": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "minExperienceYears": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "jobTypeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "jobModeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "experienceLevelId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "deadLine": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "skillIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
             "nullable": true
           }
         },
