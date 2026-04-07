@@ -1,12 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CeylonHire.Application.DTOs.Job
+﻿namespace CeylonHire.Application.DTOs.Job
 {
-    public class JobDetailsDto
+    public class CreateJobDetailsDto
     {
         public string? Title { get; set; }
         public string? Description { get; set; }

@@ -3,11 +3,6 @@ using CeylonHire.Domain.Entities;
 using CeylonHire.Infrastructure.Persistence;
 using CeylonHire.Infrastructure.Persistence.Sql.Helpers;
 using Dapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CeylonHire.Infrastructure.Repositories
 {
@@ -19,6 +14,10 @@ namespace CeylonHire.Infrastructure.Repositories
         private readonly string _Select_CompanyDetailsByUserId;
         private readonly string _Insert_NewJob;
         private readonly string _Insert_JobSkills;
+        private readonly string _Select_JobByJobId;
+        private readonly string _Update_JobDetails;
+        private readonly string _Select_ExistingSkillIds;
+        private readonly string _Update_JobSkills;
         public JobRepository(IDbConnectionFactory connectionFactory, ISqlQueryLoader queryLoader)
         {
             _connectionFactory = connectionFactory;
@@ -27,8 +26,16 @@ namespace CeylonHire.Infrastructure.Repositories
             _Select_CompanyDetailsByUserId = _queryLoader.Load("Job", "Select_CompanyDetailsByUserId.sql");
             _Insert_NewJob = _queryLoader.Load("Job", "Insert_NewJob.sql");
             _Insert_JobSkills = _queryLoader.Load("Job", "Insert_JobSkills.sql");
+            _Select_JobByJobId = _queryLoader.Load("Job", "Select_JobByJobId.sql");
+            _Update_JobDetails = _queryLoader.Load("Job", "Update_JobDetails.sql");
+            _Select_ExistingSkillIds = _queryLoader.Load("Job", "Select_ExistingSkillIds.sql");
+            _Update_JobSkills = _queryLoader.Load("Job", "Update_JobSkills.sql");
         }
 
+        /// <summary>
+        /// gets the master data required for job posting form such as job types, job modes, experience levels and skills.
+        /// </summary>
+        /// <returns>A <see cref="JobMasterDataResult"/> object containing the master data.</returns>
         public async Task<JobMasterDataResult> GetJobMasterDataAsync()
         {
             using var db = _connectionFactory.CreateConnection();
@@ -43,15 +50,26 @@ namespace CeylonHire.Infrastructure.Repositories
             return result;
         }
 
+        /// <summary>
+        /// gets the company details associated with the specified user ID.
+        /// </summary>
+        /// <param name="userId">The ID of the user whose company details are to be retrieved.</param>
+        /// <returns>A <see cref="CompanyProfile"/> object containing the company details, or null if not found.</returns>
         public async Task<CompanyProfile?> GetCompanyDetailsByUserIdAsync(int userId)
         {
             using var db = _connectionFactory.CreateConnection();
             return await db.QueryFirstOrDefaultAsync<CompanyProfile>(
                 _Select_CompanyDetailsByUserId,
-                new { UserId =  userId }
+                new { UserId = userId }
             );
         }
 
+        /// <summary>
+        /// creates a new job post in the database and associates it with the specified skill IDs.
+        /// </summary>
+        /// <param name="newJob">An object containing the details of the job to be created.</param>
+        /// <param name="skillIds">A collection of skill IDs associated with the job.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
         public async Task CreateJobPostAsync(Job newJob, ICollection<int> skillIds)
         {
             using var db = _connectionFactory.CreateConnection();
@@ -65,15 +83,89 @@ namespace CeylonHire.Infrastructure.Repositories
                     transaction
                 );
 
-                foreach(var skill in skillIds)
+                await db.ExecuteAsync(
+                    _Insert_JobSkills,
+                    skillIds.Select(skill => new
+                    {
+                        JobId = jobId,
+                        SkillId = skill
+                    }),
+                    transaction
+                );
+                transaction.Commit();
+            }
+            catch
+            {
+                transaction.Rollback();
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// gets the details of a job post by its ID.
+        /// </summary>
+        /// <param name="jobId">The ID of the job to be retrieved.</param>
+        /// <returns>A <see cref="Job"/> object containing the job details, or null if not found.</returns>
+        public async Task<Job?> GetJobByJobIdAsync(int jobId)
+        {
+            using var db = _connectionFactory.CreateConnection();
+            return await db.QueryFirstOrDefaultAsync<Job>(
+                _Select_JobByJobId,
+                new { JobId = jobId }
+            );
+        }
+
+        /// <summary>
+        /// updates the details of an existing job post in the database and manages the associations with skill IDs.
+        /// </summary>
+        /// <param name="updatedJob">An object containing the updated details of the job.</param>
+        /// <param name="skillIds">A collection of skill IDs associated with the job.</param>
+        /// <returns>A task representing the asynchronous operation.</returns>
+        public async Task UpdateJobAsync(Job updatedJob, ICollection<int> skillIds)
+        {
+            using var db = _connectionFactory.CreateConnection();
+            db.Open();
+            using var transaction = db.BeginTransaction();
+            try
+            {
+                await db.ExecuteAsync(
+                    _Update_JobDetails,
+                    updatedJob,
+                    transaction
+                );
+
+                skillIds ??= new List<int>();
+
+                var existingSkillIds = (await db.QueryAsync<int>(
+                    _Select_ExistingSkillIds,
+                    new { JobId = updatedJob.Id },
+                    transaction
+                )).ToList();
+
+                var IdsToIncativate = existingSkillIds.Except(skillIds).ToList();
+                if (IdsToIncativate.Any())
+                {
+                    await db.ExecuteAsync(
+                        _Update_JobSkills,
+                        new
+                        {
+                            SkillIds = IdsToIncativate,
+                            JobId = updatedJob.Id
+                        },
+                        transaction
+                    );
+                }
+
+                var IdsToInsert = skillIds.Except(existingSkillIds).ToList();
+                if (IdsToInsert.Any())
                 {
                     await db.ExecuteAsync(
                         _Insert_JobSkills,
-                        new
+                        IdsToInsert.Select(skill => new
                         {
-                            JobId = jobId,
-                            SkillId = skill
-                        },
+                            JobId = updatedJob.Id,
+                            SkillId = skill,
+                        }),
                         transaction
                     );
                 }

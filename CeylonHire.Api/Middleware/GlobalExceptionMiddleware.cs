@@ -1,7 +1,6 @@
 ﻿using CeylonHire.Application.DTOs.ApiResponse;
 using CeylonHire.Application.Exceptions;
 using CeylonHire.Domain.Exceptions;
-using SendGrid.Helpers.Errors.Model;
 using System.Net;
 using System.Text.Json;
 

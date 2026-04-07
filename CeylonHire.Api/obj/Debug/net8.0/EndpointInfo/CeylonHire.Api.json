@@ -302,17 +302,63 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/JobDetailsDto"
+                "$ref": "#/components/schemas/CreateJobDetailsDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/JobDetailsDto"
+                "$ref": "#/components/schemas/CreateJobDetailsDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/JobDetailsDto"
+                "$ref": "#/components/schemas/CreateJobDetailsDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Job"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateJobDetailsDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateJobDetailsDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateJobDetailsDto"
               }
             }
           }
@@ -388,17 +434,7 @@
         },
         "additionalProperties": false
       },
-      "ForgotPasswordDto": {
-        "type": "object",
-        "properties": {
-          "email": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "JobDetailsDto": {
+      "CreateJobDetailsDto": {
         "type": "object",
         "properties": {
           "title": {
@@ -452,6 +488,16 @@
               "type": "integer",
               "format": "int32"
             },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ForgotPasswordDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
             "nullable": true
           }
         },
@@ -541,6 +587,69 @@
           "message": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UpdateJobDetailsDto": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "salary": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "location": {
+            "type": "string",
+            "nullable": true
+          },
+          "numberOfOpenings": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "minExperienceYears": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "jobTypeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "jobModeId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "experienceLevelId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "deadLine": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "skillIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false

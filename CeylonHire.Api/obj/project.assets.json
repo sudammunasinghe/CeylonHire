@@ -775,7 +775,8 @@
         "framework": ".NETCoreApp,Version=v8.0",
         "dependencies": {
           "BCrypt.Net-Next": "4.1.0",
-          "CeylonHire.Domain": "1.0.0"
+          "CeylonHire.Domain": "1.0.0",
+          "SendGrid": "9.29.3"
         },
         "compile": {
           "bin/placeholder/CeylonHire.Application.dll": {}

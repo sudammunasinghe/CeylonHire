@@ -15,14 +15,35 @@ namespace CeylonHire.Api.Controllers
             _jobService = jobService;
         }
 
+        /// <summary>
+        /// Creates a new job post based on the provided details in the CreateJobDetailsDto object.
+        /// </summary>
+        /// <param name="dto">An object containing the details of the job to be created.</param>
+        /// <returns></returns>
         [HttpPost]
-        public async Task<ActionResult<ApiResponse<string>>> CreateJobPostAsync(JobDetailsDto dto)
+        public async Task<ActionResult<ApiResponse<string>>> CreateJobPostAsync(CreateJobDetailsDto dto)
         {
             await _jobService.CreateJobPostAsync(dto);
             return Ok(new ApiResponse<string>
             {
                 Success = true,
                 Message = "Job created successfully."
+            });
+        }
+
+        /// <summary>
+        /// Updates an existing job post with the provided details in the UpdateJobDetailsDto object.
+        /// </summary>
+        /// <param name="dto">An object containing the details of the job to be updated.</param>
+        /// <returns></returns>
+        [HttpPut]
+        public async Task<ActionResult<ApiResponse<string>>> UpdateJobAsync(UpdateJobDetailsDto dto)
+        {
+            await _jobService.UpdateJobAsync(dto);
+            return Ok(new ApiResponse<string>
+            {
+                Success = true,
+                Message = "Job updated successfully."
             });
         }
 

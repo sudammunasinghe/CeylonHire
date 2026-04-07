@@ -6,8 +6,8 @@ namespace CeylonHire.Domain.Entities
     {
         public int Id { get; set; }
         public int CompanyId { get; set; }
-        public string? Title { get; set; }
-        public string? Description { get; set; }
+        public string? Title { get; private set; }
+        public string? Description { get; private set; }
         public decimal? Salary { get; set; }
         public string? Location { get; set; }
         public int? NumberOfOpenings { get; set; }
@@ -15,7 +15,7 @@ namespace CeylonHire.Domain.Entities
         public int? JobTypeId { get; set; }
         public int? JobModeId { get; set; }
         public int ExperienceLevelId { get; set; }
-        public DateTime DeadLine { get; set; }
+        public DateTime DeadLine { get; private set; }
         private Job() { }
 
         public static void ValidateTitle(string? title)
@@ -30,7 +30,7 @@ namespace CeylonHire.Domain.Entities
                 throw new DomainException("Job description is required.");
         }
 
-        public static void ValidateDeadLine(DateTime? dueDate)
+        public static void ValidateDeadLine(DateTime dueDate)
         {
             if (dueDate <= DateTime.Now)
                 throw new DomainException("Invalid deadline.");
@@ -68,6 +68,39 @@ namespace CeylonHire.Domain.Entities
                 ExperienceLevelId = expLevelId,
                 DeadLine = deadLine
             };
+        }
+
+        public void Update(
+            int jobId,
+            int companyId,
+            string? title,
+            string? description,
+            decimal? salary,
+            string? location,
+            int? noOfOpenings,
+            int? minExperienceYears,
+            int? jobTypeId,
+            int? jobModeId,
+            int expLevelId,
+            DateTime deadLine
+           )
+        {
+            ValidateTitle(title);
+            ValidateDescription(description);
+            ValidateDeadLine(deadLine);
+
+            Id = jobId;
+            CompanyId = companyId;
+            Title = title;
+            Description = description;
+            Salary = salary;
+            Location = location;
+            NumberOfOpenings = noOfOpenings;
+            MinExperienceYears = minExperienceYears;
+            JobTypeId = jobTypeId;
+            JobModeId = jobModeId;
+            ExperienceLevelId = expLevelId;
+            DeadLine = deadLine;
         }
 
     }
