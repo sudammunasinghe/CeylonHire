@@ -1,4 +1,5 @@
-﻿using CeylonHire.Domain.Entities;
+﻿using CeylonHire.Application.DTOs.Job;
+using CeylonHire.Domain.Entities;
 
 namespace CeylonHire.Application.Interfaces.IRepositories
 {
@@ -39,5 +40,8 @@ namespace CeylonHire.Application.Interfaces.IRepositories
         /// <param name="skillIds">A collection of skill IDs associated with the job.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
         Task UpdateJobAsync(Job updatedJob, ICollection<int> skillIds);
+
+        Task RemoveJobByIdAsync(int jobId);
+        Task<IEnumerable<JobDetailsDto>> GetMyJobsAsync(int companyId);
     }
 }

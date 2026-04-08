@@ -1,4 +1,5 @@
-﻿using CeylonHire.Application.Interfaces.IRepositories;
+﻿using CeylonHire.Application.DTOs.Job;
+using CeylonHire.Application.Interfaces.IRepositories;
 using CeylonHire.Domain.Entities;
 using CeylonHire.Infrastructure.Persistence;
 using CeylonHire.Infrastructure.Persistence.Sql.Helpers;
@@ -18,6 +19,8 @@ namespace CeylonHire.Infrastructure.Repositories
         private readonly string _Update_JobDetails;
         private readonly string _Select_ExistingSkillIds;
         private readonly string _Update_JobSkills;
+        private readonly string _Update_JobForInactivation;
+        private readonly string _Select_JobsByCompanyId;
         public JobRepository(IDbConnectionFactory connectionFactory, ISqlQueryLoader queryLoader)
         {
             _connectionFactory = connectionFactory;
@@ -30,6 +33,8 @@ namespace CeylonHire.Infrastructure.Repositories
             _Update_JobDetails = _queryLoader.Load("Job", "Update_JobDetails.sql");
             _Select_ExistingSkillIds = _queryLoader.Load("Job", "Select_ExistingSkillIds.sql");
             _Update_JobSkills = _queryLoader.Load("Job", "Update_JobSkills.sql");
+            _Update_JobForInactivation = _queryLoader.Load("Job", "Update_JobForInactivation.sql");
+            _Select_JobsByCompanyId = _queryLoader.Load("Job", "Select_JobsByCompanyId.sql");
         }
 
         /// <summary>
@@ -177,6 +182,24 @@ namespace CeylonHire.Infrastructure.Repositories
                 transaction.Rollback();
                 throw;
             }
+        }
+
+        public async Task RemoveJobByIdAsync(int jobId)
+        {
+            using var db = _connectionFactory.CreateConnection();
+            await db.ExecuteAsync(
+                _Update_JobForInactivation,
+                new { JobId = jobId }
+            );
+        }
+
+        public async Task<IEnumerable<JobDetailsDto>> GetMyJobsAsync(int companyId)
+        {
+            using var db = _connectionFactory.CreateConnection();
+            return await db.QueryAsync<JobDetailsDto>(
+                _Select_JobsByCompanyId,
+                new { CompanyId = companyId }
+            );
         }
     }
 }

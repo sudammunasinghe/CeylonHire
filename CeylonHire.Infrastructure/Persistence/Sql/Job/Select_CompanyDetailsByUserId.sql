@@ -9,4 +9,5 @@
     [CreatedDateTime],
     [LastModifiedDateTime]
 FROM [dbo].[CompanyProfiles]
-WHERE [UserId] = @UserId;
+WHERE [UserId] = @UserId AND
+    [IsActive] = 1;

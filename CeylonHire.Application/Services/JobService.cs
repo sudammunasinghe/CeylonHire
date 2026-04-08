@@ -25,20 +25,11 @@ namespace CeylonHire.Application.Services
         /// <exception cref="NotFoundException">Thrown when the company profile is not found.</exception>
         public async Task CreateJobPostAsync(CreateJobDetailsDto dto)
         {
-            var loggedUser = _currentUserService.UserId;
-            if (loggedUser == null)
-                throw new UnauthorizedAccessException("Unauthorized.");
-
-            var company =
-                await _jobRepository.GetCompanyDetailsByUserIdAsync(loggedUser);
-
-            if (company == null)
-                throw new NotFoundException("Company profile not found.");
-
+            var companyId = await GetCompanyIdByLoggedUser();
             await ValidateJobMasterDataAsync(dto.JobTypeId, dto.JobModeId, dto.ExperienceLevelId, dto.SkillIds);
 
             var newJob = Job.Create(
-                company.Id,
+                companyId,
                 dto.Title,
                 dto.Description,
                 dto.Salary,
@@ -63,30 +54,21 @@ namespace CeylonHire.Application.Services
         /// <exception cref="NotFoundException">Thrown when the job or company profile is not found.</exception>
         public async Task UpdateJobAsync(UpdateJobDetailsDto dto)
         {
-            var loggedUser = _currentUserService.UserId;
-            if (loggedUser == null)
-                throw new UnauthorizedAccessException("Unauthorized.");
-
-            var company =
-                await _jobRepository.GetCompanyDetailsByUserIdAsync(loggedUser);
-
-            if (company == null)
-                throw new NotFoundException("Company profile not found.");
-
+            var companyId = await GetCompanyIdByLoggedUser();
             var job =
                 await _jobRepository.GetJobByJobIdAsync(dto.Id);
 
             if (job == null)
                 throw new NotFoundException("Job not found.");
 
-            if (job.CompanyId != company.Id)
+            if (job.CompanyId != companyId)
                 throw new UnauthorizedAccessException("You are not allowed to update this job.");
 
             await ValidateJobMasterDataAsync(dto.JobTypeId, dto.JobModeId, dto.ExperienceLevelId, dto.SkillIds);
 
             job.Update(
                 dto.Id,
-                company.Id,
+                companyId,
                 dto.Title,
                 dto.Description,
                 dto.Salary,
@@ -100,6 +82,28 @@ namespace CeylonHire.Application.Services
             );
 
             await _jobRepository.UpdateJobAsync(job, dto.SkillIds);
+        }
+
+        public async Task RemoveJobByIdAsync(int jobId)
+        {
+            var companyId = await GetCompanyIdByLoggedUser();
+            var job =
+                await _jobRepository.GetJobByJobIdAsync(jobId);
+
+            if (job == null)
+                throw new NotFoundException("Job not found.");
+
+            if (job.CompanyId != companyId)
+                throw new UnauthorizedAccessException("You are not allowed to remove this job.");
+
+            await _jobRepository.RemoveJobByIdAsync(jobId);
+        }
+
+        public async Task<IEnumerable<JobDetailsDto>> GetMyJobsAsync()
+        {
+            var companyId = await GetCompanyIdByLoggedUser();
+            return await _jobRepository.GetMyJobsAsync(companyId);
+
         }
 
         /// <summary>
@@ -143,6 +147,20 @@ namespace CeylonHire.Application.Services
             {
                 throw new BadRequestException("Invalid skill.");
             }
+        }
+
+        private async Task<int> GetCompanyIdByLoggedUser()
+        {
+            var loggedUser = _currentUserService.UserId;
+            if (loggedUser == null)
+                throw new UnauthorizedAccessException("Unauthorized.");
+
+            var company = 
+                await _jobRepository.GetCompanyDetailsByUserIdAsync(loggedUser);
+
+            if (company == null)
+                throw new NotFoundException("Company profile not found.");
+            return company.Id;
         }
     }
 }

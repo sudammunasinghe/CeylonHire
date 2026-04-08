@@ -1,6 +1,7 @@
 ﻿using CeylonHire.Application.DTOs.ApiResponse;
 using CeylonHire.Application.DTOs.Job;
 using CeylonHire.Application.Interfaces.IServices;
+using CeylonHire.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CeylonHire.Api.Controllers
@@ -47,5 +48,26 @@ namespace CeylonHire.Api.Controllers
             });
         }
 
+        [HttpPut("{jobId}/courseInactivate")]
+        public async Task<ActionResult<ApiResponse<string>>> RemoveJobByIdAsync(int jobId)
+        {
+            await _jobService.RemoveJobByIdAsync(jobId);
+            return Ok(new ApiResponse<string>
+            {
+                Success = true,
+                Message = "Job removed successfully."
+            });
+        }
+
+        [HttpGet("company")]
+        public async Task<ActionResult<ApiResponse<IEnumerable<JobDetailsDto>>>> GetMyJobsAsync()
+        {
+            var result = await _jobService.GetMyJobsAsync();
+            return Ok(new ApiResponse<IEnumerable<JobDetailsDto>>{
+                Success = true,
+                Data = result,
+                Message = "Retrieved jobs successfully."
+            });
+        }
     }
 }

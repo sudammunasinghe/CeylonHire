@@ -15,4 +15,5 @@
     [CreatedDateTime],
     [LastModifiedDateTime]
 FROM [dbo].[Jobs]
-WHERE [Id] = @JobId;
+WHERE [Id] = @JobId AND
+    [IsActive] = 1;

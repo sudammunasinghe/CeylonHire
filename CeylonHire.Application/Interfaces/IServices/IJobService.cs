@@ -1,4 +1,5 @@
 ﻿using CeylonHire.Application.DTOs.Job;
+using CeylonHire.Domain.Entities;
 
 namespace CeylonHire.Application.Interfaces.IServices
 {
@@ -17,5 +18,8 @@ namespace CeylonHire.Application.Interfaces.IServices
         /// <param name="dto">An object containing the details of the job to be updated.</param>
         /// <returns></returns>
         Task UpdateJobAsync(UpdateJobDetailsDto dto);
+
+        Task RemoveJobByIdAsync(int jobId);
+        Task<IEnumerable<JobDetailsDto>> GetMyJobsAsync();
     }
 }
