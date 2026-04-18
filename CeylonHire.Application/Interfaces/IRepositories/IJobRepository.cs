@@ -1,4 +1,5 @@
 ﻿using CeylonHire.Application.DTOs.Job;
+using CeylonHire.Application.DTOs.PagedResult;
 using CeylonHire.Domain.Entities;
 
 namespace CeylonHire.Application.Interfaces.IRepositories
@@ -43,5 +44,15 @@ namespace CeylonHire.Application.Interfaces.IRepositories
 
         Task RemoveJobByIdAsync(int jobId);
         Task<IEnumerable<JobDetailsDto>> GetMyJobsAsync(int companyId);
+        Task<PagedResult<JobDetailsDto>> GetAllJobsAsync(
+            string? search,
+            string? location,
+            int? jobTypeId,
+            int? jobModeId,
+            int pageNumber,
+            int pageSize
+        );
+
+        Task<JobDetailsDto?> GetJobDetailsByJobIdAsync(int jobId);
     }
 }

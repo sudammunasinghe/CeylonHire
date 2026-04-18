@@ -1,4 +1,5 @@
 ﻿using CeylonHire.Application.DTOs.Job;
+using CeylonHire.Application.DTOs.PagedResult;
 using CeylonHire.Application.Interfaces.IRepositories;
 using CeylonHire.Domain.Entities;
 using CeylonHire.Infrastructure.Persistence;
@@ -21,6 +22,8 @@ namespace CeylonHire.Infrastructure.Repositories
         private readonly string _Update_JobSkills;
         private readonly string _Update_JobForInactivation;
         private readonly string _Select_JobsByCompanyId;
+        private readonly string _Select_AllJobs;
+        private readonly string _Select_JobDetailsByJobId;
         public JobRepository(IDbConnectionFactory connectionFactory, ISqlQueryLoader queryLoader)
         {
             _connectionFactory = connectionFactory;
@@ -35,6 +38,8 @@ namespace CeylonHire.Infrastructure.Repositories
             _Update_JobSkills = _queryLoader.Load("Job", "Update_JobSkills.sql");
             _Update_JobForInactivation = _queryLoader.Load("Job", "Update_JobForInactivation.sql");
             _Select_JobsByCompanyId = _queryLoader.Load("Job", "Select_JobsByCompanyId.sql");
+            _Select_AllJobs = _queryLoader.Load("Job", "Select_AllJobs.sql");
+            _Select_JobDetailsByJobId = _queryLoader.Load("Job", "Select_JobDetailsByJobId.sql");
         }
 
         /// <summary>
@@ -200,6 +205,58 @@ namespace CeylonHire.Infrastructure.Repositories
                 _Select_JobsByCompanyId,
                 new { CompanyId = companyId }
             );
+        }
+
+        public async Task<PagedResult<JobDetailsDto>> GetAllJobsAsync(
+            string? search,
+            string? location,
+            int? jobTypeId,
+            int? jobModeId,
+            int pageNumber,
+            int pageSize
+            )
+        {
+            var offset = (pageNumber - 1) * pageSize;
+            using var db = _connectionFactory.CreateConnection();
+            var multi = await db.QueryMultipleAsync(
+                _Select_AllJobs,
+                new
+                {
+                    Search = search,
+                    Location = location,
+                    JobTypeId = jobTypeId,
+                    JobModeId = jobModeId,
+                    PageSize = pageSize,
+                    Offset = offset
+                }
+            );
+            var items = (await multi.ReadAsync<JobDetailsDto>()).ToList();
+            var totalCount = await multi.ReadFirstAsync<int>();
+
+            return new PagedResult<JobDetailsDto>
+            {
+                TotalCount = totalCount,
+                PageNumber = pageNumber,
+                PageSize = pageSize,
+                Items = items
+            };
+        }
+
+        public async Task<JobDetailsDto?> GetJobDetailsByJobIdAsync(int jobId)
+        {
+           using var db = _connectionFactory.CreateConnection();
+            var multi = await db.QueryMultipleAsync(
+                _Select_JobDetailsByJobId,
+                new { JobId = jobId }
+            );
+
+            var job = await multi.ReadFirstOrDefaultAsync<JobDetailsDto>();
+            if (job == null)
+                return null;
+
+            var skill = (await multi.ReadAsync<string>()).ToList();
+            job.JobSkill = skill;
+            return job;
         }
     }
 }

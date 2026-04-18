@@ -10,8 +10,8 @@ namespace CeylonHire.Application.DTOs.Job
     {
         public int Id { get; set; }
         public int CompanyId { get; set; }
-        public string? Title { get; private set; }
-        public string? Description { get; private set; }
+        public string? Title { get; set; }
+        public string? Description { get; set; }
         public decimal? Salary { get; set; }
         public string? Location { get; set; }
         public int? NumberOfOpenings { get; set; }
@@ -19,6 +19,7 @@ namespace CeylonHire.Application.DTOs.Job
         public string? JobType { get; set; }
         public string? JobMode { get; set; }
         public string? ExperienceLevel { get; set; }
-        public DateTime DeadLine { get; private set; }
+        public DateTime DeadLine { get; set; }
+        public List<string>? JobSkill { get; set; }
     }
 }

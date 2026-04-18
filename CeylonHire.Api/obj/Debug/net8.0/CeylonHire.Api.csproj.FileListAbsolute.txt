@@ -109,3 +109,5 @@ D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\Job\Upd
 D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\Job\Update_JobDetails.sql
 D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\Job\Update_JobForInactivation.sql
 D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\Job\Select_JobsByCompanyId.sql
+D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\Job\Select_AllJobs.sql
+D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\Job\Select_JobDetailsByJobId.sql

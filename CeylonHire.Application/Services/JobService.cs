@@ -1,8 +1,10 @@
 ﻿using CeylonHire.Application.DTOs.Job;
+using CeylonHire.Application.DTOs.PagedResult;
 using CeylonHire.Application.Exceptions;
 using CeylonHire.Application.Interfaces.IRepositories;
 using CeylonHire.Application.Interfaces.IServices;
 using CeylonHire.Domain.Entities;
+using System.Xml.Linq;
 
 namespace CeylonHire.Application.Services
 {
@@ -104,6 +106,44 @@ namespace CeylonHire.Application.Services
             var companyId = await GetCompanyIdByLoggedUser();
             return await _jobRepository.GetMyJobsAsync(companyId);
 
+        }
+
+        public async Task<PagedResult<JobDetailsDto>> GetAllJobsAsync(
+            string? search,
+            string? location,
+            int? jobTypeId,
+            int? jobModeId,
+            int pageNumber,
+            int pageSize
+            )
+        {
+            if (pageNumber <= 0 || pageSize <= 0)
+                throw new BadRequestException("Invalid pagination parameters.");
+
+            var filteredJobs = await _jobRepository.GetAllJobsAsync(
+                search,
+                location,
+                jobTypeId,
+                jobModeId,
+                pageNumber,
+                pageSize
+            );
+
+            if (!filteredJobs.Items.Any())
+                throw new NotFoundException("No jobs found.");
+
+            return filteredJobs;
+        }
+
+        public async Task<JobDetailsDto> GetJobDetailsByJobIdAsync(int jobId)
+        {
+            var job = 
+                await _jobRepository.GetJobDetailsByJobIdAsync(jobId);
+
+            if (job == null)
+                throw new NotFoundException("Job not found.");
+
+            return job;
         }
 
         /// <summary>
