@@ -11,14 +11,14 @@ namespace CeylonHire.Application.Interfaces.IServices
         /// </summary>
         /// <param name="dto">An object conataining jobseeker profile details.</param>
         /// <returns>Returns a JWT token if the registration is successful.</returns>
-        Task<string> RegisterNewJobseekerAsync(JobSeekerProfileDto dto);
+        Task<string> RegisterNewJobseekerAsync(CreateJobSeekerProfileDto dto);
 
         /// <summary>
         /// Register a new company with the provided details in the CompanyProfileDto.
         /// </summary>
         /// <param name="dto">An object containing company profile details.</param>
         /// <returns>Returns a JWT token if the registration is successful.</returns>
-        Task<string> RegisterNewCompanyAsync(CompanyProfileDto dto);
+        Task<string> RegisterNewCompanyAsync(CreateCompanyProfileDto dto);
 
         /// <summary>
         /// Authenticates a user with the provided email and password.

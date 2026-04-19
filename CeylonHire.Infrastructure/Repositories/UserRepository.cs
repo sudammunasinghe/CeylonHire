@@ -18,6 +18,7 @@ namespace CeylonHire.Infrastructure.Repositories
         private readonly string _Select_UserByPasswordResetTokenId;
         private readonly string _Update_UserForResetPassword;
         private readonly string _Select_UserByUserId;
+        private readonly string _Insert_UserSkills;
         public UserRepository(IDbConnectionFactory connectionFactory, ISqlQueryLoader queryLoader)
         {
             _connectionFactory = connectionFactory;
@@ -30,6 +31,7 @@ namespace CeylonHire.Infrastructure.Repositories
             _Select_UserByPasswordResetTokenId = _queryLoader.Load("User", "Select_UserByPasswordResetTokenId.sql");
             _Update_UserForResetPassword = _queryLoader.Load("User", "Update_UserForResetPassword.sql");
             _Select_UserByUserId = _queryLoader.Load("User", "Select_UserByUserId.sql");
+            _Insert_UserSkills = _queryLoader.Load("User", "Insert_UserSkills.sql");
         }
 
         /// <summary>
@@ -37,7 +39,7 @@ namespace CeylonHire.Infrastructure.Repositories
         /// </summary>
         /// <param name="newUser">An object containing user details.</param>
         /// <param name="jobseekerProfile">An object containing jobseeker profile details.</param>
-        public async Task<int> RegisterNewJobseekerAsync(User newUser, JobSeekerProfile jobseekerProfile)
+        public async Task<int> RegisterNewJobseekerAsync(User newUser, JobSeekerProfile jobseekerProfile, List<int> skills)
         {
             using var db = _connectionFactory.CreateConnection();
             db.Open();
@@ -70,6 +72,16 @@ namespace CeylonHire.Infrastructure.Repositories
                         ExperienceYears = jobseekerProfile.ExperienceYears,
                         CVUrl = jobseekerProfile.CVUrl
                     },
+                    transaction
+                );
+
+                await db.ExecuteAsync(
+                    _Insert_UserSkills,
+                    skills.Select(skill => new
+                    {
+                        UserId = userId,
+                        SkillId = skill
+                    }),
                     transaction
                 );
                 transaction.Commit();

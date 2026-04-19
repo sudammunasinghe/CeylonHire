@@ -27,6 +27,9 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<IJobService, JobService>();
 builder.Services.AddScoped<IJobRepository, JobRepository>();
 
+builder.Services.AddScoped<IJobSeekerService, JobSeekerService>();
+builder.Services.AddScoped<IJobSeekerRepository, JobSeekerRepository>();
+
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddControllers();

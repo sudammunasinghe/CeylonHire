@@ -14,17 +14,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/JobSeekerProfileDto"
+                "$ref": "#/components/schemas/CreateJobSeekerProfileDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/JobSeekerProfileDto"
+                "$ref": "#/components/schemas/CreateJobSeekerProfileDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/JobSeekerProfileDto"
+                "$ref": "#/components/schemas/CreateJobSeekerProfileDto"
               }
             }
           }
@@ -62,17 +62,17 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CompanyProfileDto"
+                "$ref": "#/components/schemas/CreateCompanyProfileDto"
               }
             },
             "text/json": {
               "schema": {
-                "$ref": "#/components/schemas/CompanyProfileDto"
+                "$ref": "#/components/schemas/CreateCompanyProfileDto"
               }
             },
             "application/*+json": {
               "schema": {
-                "$ref": "#/components/schemas/CompanyProfileDto"
+                "$ref": "#/components/schemas/CreateCompanyProfileDto"
               }
             }
           }
@@ -592,7 +592,7 @@
         },
         "additionalProperties": false
       },
-      "CompanyProfileDto": {
+      "CreateCompanyProfileDto": {
         "type": "object",
         "properties": {
           "companyName": {
@@ -669,6 +669,53 @@
           "deadLine": {
             "type": "string",
             "format": "date-time"
+          },
+          "skillIds": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "format": "int32"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateJobSeekerProfileDto": {
+        "type": "object",
+        "properties": {
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          },
+          "nic": {
+            "type": "string",
+            "nullable": true
+          },
+          "experienceYears": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "cvUrl": {
+            "type": "string",
+            "nullable": true
           },
           "skillIds": {
             "type": "array",
@@ -826,45 +873,6 @@
             "$ref": "#/components/schemas/JobDetailsDtoPagedResult"
           },
           "message": {
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "JobSeekerProfileDto": {
-        "type": "object",
-        "properties": {
-          "firstName": {
-            "type": "string",
-            "nullable": true
-          },
-          "lastName": {
-            "type": "string",
-            "nullable": true
-          },
-          "email": {
-            "type": "string",
-            "nullable": true
-          },
-          "password": {
-            "type": "string",
-            "nullable": true
-          },
-          "address": {
-            "type": "string",
-            "nullable": true
-          },
-          "nic": {
-            "type": "string",
-            "nullable": true
-          },
-          "experienceYears": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "cvUrl": {
             "type": "string",
             "nullable": true
           }

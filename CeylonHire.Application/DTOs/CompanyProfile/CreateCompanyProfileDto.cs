@@ -1,6 +1,6 @@
 ﻿namespace CeylonHire.Application.DTOs.CompanyProfile
 {
-    public class CompanyProfileDto
+    public class CreateCompanyProfileDto
     {
         public string? CompanyName { get; set; }
         public string Email { get; set; }

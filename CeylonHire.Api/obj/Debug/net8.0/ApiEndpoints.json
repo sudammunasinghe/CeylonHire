@@ -87,7 +87,7 @@
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "CeylonHire.Application.DTOs.CompanyProfile.CompanyProfileDto",
+        "Type": "CeylonHire.Application.DTOs.CompanyProfile.CreateCompanyProfileDto",
         "IsRequired": true
       }
     ],
@@ -113,7 +113,7 @@
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "CeylonHire.Api.Models.JobSeeker.JobSeekerProfileDto",
+        "Type": "CeylonHire.Api.Models.JobSeeker.CreateJobSeekerProfileDto",
         "IsRequired": true
       }
     ],

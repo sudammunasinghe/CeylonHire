@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <None Remove="Persistence\Sql\CompanyProfile\Insert_CompanyProfile.sql" />
+    <None Remove="Persistence\Sql\JobSeeker\Select_JobSeekerProfileDetails.sql" />
     <None Remove="Persistence\Sql\Job\Insert_JobSkills.sql" />
     <None Remove="Persistence\Sql\Job\Insert_NewJob.sql" />
     <None Remove="Persistence\Sql\Job\Select_AllJobs.sql" />
@@ -22,6 +23,7 @@
     <None Remove="Persistence\Sql\Job\Update_JobSkills.sql" />
     <None Remove="Persistence\Sql\User\Insert_JobSeekerProfile.sql" />
     <None Remove="Persistence\Sql\User\Insert_NewUser.sql" />
+    <None Remove="Persistence\Sql\User\Insert_UserSkills.sql" />
     <None Remove="Persistence\Sql\User\Select_UserByEmail.sql" />
     <None Remove="Persistence\Sql\User\Select_UserByUserId.sql" />
     <None Remove="Persistence\Sql\User\Update_UserForResetPassword.sql" />
@@ -33,6 +35,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Persistence\Sql\JobSeeker\Insert_JobSeekerProfile.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\JobSeeker\Select_JobSeekerProfileDetails.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Persistence\Sql\Job\Insert_JobSkills.sql">
@@ -72,6 +77,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Persistence\Sql\User\Insert_NewUser.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\User\Insert_UserSkills.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Persistence\Sql\User\Select_UserByEmail.sql">
