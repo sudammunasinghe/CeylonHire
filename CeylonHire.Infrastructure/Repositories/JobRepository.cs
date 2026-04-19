@@ -189,6 +189,11 @@ namespace CeylonHire.Infrastructure.Repositories
             }
         }
 
+        /// <summary>
+        /// Inactivate a job post by its Id.
+        /// </summary>
+        /// <param name="jobId">The Id of the job to be inactivated.</param>
+        /// <returns></returns>
         public async Task RemoveJobByIdAsync(int jobId)
         {
             using var db = _connectionFactory.CreateConnection();
@@ -198,6 +203,11 @@ namespace CeylonHire.Infrastructure.Repositories
             );
         }
 
+        /// <summary>
+        /// Gets all the job posts created by the specified company.
+        /// </summary>
+        /// <param name="companyId">The Id of the company whose job posts are to be retrieved.</param>
+        /// <returns>A list of <see cref="JobDetailsDto"/> objects representing the job posts.</returns>
         public async Task<IEnumerable<JobDetailsDto>> GetMyJobsAsync(int companyId)
         {
             using var db = _connectionFactory.CreateConnection();
@@ -207,6 +217,16 @@ namespace CeylonHire.Infrastructure.Repositories
             );
         }
 
+        /// <summary>
+        /// Gets all the job posts with pagination and filtering options for search, location, job type, and job mode.
+        /// </summary>
+        /// <param name="search">search value.</param>
+        /// <param name="location">location value.</param>
+        /// <param name="jobTypeId">job type Id.</param>
+        /// <param name="jobModeId">job mode Id.</param>
+        /// <param name="pageNumber">page number.</param>
+        /// <param name="pageSize">page size.</param>
+        /// <returns>A paged result of <see cref="JobDetailsDto"/> objects representing the job posts.</returns>
         public async Task<PagedResult<JobDetailsDto>> GetAllJobsAsync(
             string? search,
             string? location,
@@ -242,9 +262,14 @@ namespace CeylonHire.Infrastructure.Repositories
             };
         }
 
+        /// <summary>
+        /// retrieves the details of a specific job post by its Id.
+        /// </summary>
+        /// <param name="jobId">The Id of the job to be retrieved.</param>
+        /// <returns>A <see cref="JobDetailsDto"/> object containing the job details, or null if not found.</returns>
         public async Task<JobDetailsDto?> GetJobDetailsByJobIdAsync(int jobId)
         {
-           using var db = _connectionFactory.CreateConnection();
+            using var db = _connectionFactory.CreateConnection();
             var multi = await db.QueryMultipleAsync(
                 _Select_JobDetailsByJobId,
                 new { JobId = jobId }

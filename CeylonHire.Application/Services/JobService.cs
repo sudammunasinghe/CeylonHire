@@ -4,7 +4,6 @@ using CeylonHire.Application.Exceptions;
 using CeylonHire.Application.Interfaces.IRepositories;
 using CeylonHire.Application.Interfaces.IServices;
 using CeylonHire.Domain.Entities;
-using System.Xml.Linq;
 
 namespace CeylonHire.Application.Services
 {
@@ -86,6 +85,13 @@ namespace CeylonHire.Application.Services
             await _jobRepository.UpdateJobAsync(job, dto.SkillIds);
         }
 
+        /// <summary>
+        /// Inactivate a job post by its Id.
+        /// </summary>
+        /// <param name="jobId">The Id of the job to be inactivated.</param>
+        /// <returns></returns>
+        /// <exception cref="NotFoundException">Thrown when the job is not found.</exception>
+        /// <exception cref="UnauthorizedAccessException">Thrown when the user is not authorized to inactivate the job.</exception>
         public async Task RemoveJobByIdAsync(int jobId)
         {
             var companyId = await GetCompanyIdByLoggedUser();
@@ -101,13 +107,28 @@ namespace CeylonHire.Application.Services
             await _jobRepository.RemoveJobByIdAsync(jobId);
         }
 
+        /// <summary>
+        /// Gets all the job posts created by the company.
+        /// </summary>
+        /// <returns>A list of <see cref="JobDetailsDto"/> objects representing the job posts.</returns>
         public async Task<IEnumerable<JobDetailsDto>> GetMyJobsAsync()
         {
             var companyId = await GetCompanyIdByLoggedUser();
             return await _jobRepository.GetMyJobsAsync(companyId);
-
         }
 
+        /// <summary>
+        /// Gets all the job posts with pagination and filtering options for search, location, job type, and job mode.
+        /// </summary>
+        /// <param name="search">search value.</param>
+        /// <param name="location">location value.</param>
+        /// <param name="jobTypeId">job type Id.</param>
+        /// <param name="jobModeId">job mode Id.</param>
+        /// <param name="pageNumber">page number.</param>
+        /// <param name="pageSize">page size.</param>
+        /// <returns>A paged result of <see cref="JobDetailsDto"/> objects representing the job posts.</returns>
+        /// <exception cref="BadRequestException">Thrwon when the pagination parameters are invalid.</exception>
+        /// <exception cref="NotFoundException">Thrown when the job is not found.</exception>
         public async Task<PagedResult<JobDetailsDto>> GetAllJobsAsync(
             string? search,
             string? location,
@@ -135,9 +156,15 @@ namespace CeylonHire.Application.Services
             return filteredJobs;
         }
 
+        /// <summary>
+        /// retrieves the details of a specific job post by its Id.
+        /// </summary>
+        /// <param name="jobId">The Id of the job to be retrieved.</param>
+        /// <returns>A <see cref="JobDetailsDto"/> object containing the job details.</returns>
+        /// <exception cref="NotFoundException">Thrown when the job is not found.</exception>
         public async Task<JobDetailsDto> GetJobDetailsByJobIdAsync(int jobId)
         {
-            var job = 
+            var job =
                 await _jobRepository.GetJobDetailsByJobIdAsync(jobId);
 
             if (job == null)
@@ -189,13 +216,19 @@ namespace CeylonHire.Application.Services
             }
         }
 
+        /// <summary>
+        /// Retrieves the company Id associated with the currently logged-in user.
+        /// </summary>
+        /// <returns>The company Id of the logged-in user.</returns>
+        /// <exception cref="UnauthorizedAccessException">Thrown when the user is not authenticated.</exception>
+        /// <exception cref="NotFoundException">Thrown when the company profile is not found.</exception>
         private async Task<int> GetCompanyIdByLoggedUser()
         {
             var loggedUser = _currentUserService.UserId;
             if (loggedUser == null)
                 throw new UnauthorizedAccessException("Unauthorized.");
 
-            var company = 
+            var company =
                 await _jobRepository.GetCompanyDetailsByUserIdAsync(loggedUser);
 
             if (company == null)
