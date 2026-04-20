@@ -329,5 +329,25 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "CeylonHire.Api.Controllers.JobSeekerController",
+    "Method": "GetCurrentJobSeekerProfileAsync",
+    "RelativePath": "api/JobSeeker",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "CeylonHire.Application.DTOs.ApiResponse.ApiResponse\u00601[[CeylonHire.Application.DTOs.JobSeeker.JobSeekerProfileDto, CeylonHire.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   }
 ]

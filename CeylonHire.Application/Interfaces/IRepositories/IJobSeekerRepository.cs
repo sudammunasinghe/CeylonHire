@@ -9,6 +9,6 @@ namespace CeylonHire.Application.Interfaces.IRepositories
 {
     public interface IJobSeekerRepository
     {
-        Task<(JobSeekerProfile? profileDetails, List<Skill>? userSkills)?> GetCurrentJobSeekerProfileAsync(int userId);
+        Task<(JobSeekerProfile? profileDetails, List<Skill>? userSkills)> GetCurrentJobSeekerProfileAsync(int userId);
     }
 }

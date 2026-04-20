@@ -29,13 +29,21 @@ namespace CeylonHire.Application.Services
             var result =
                 await _jobSeekerRepository.GetCurrentJobSeekerProfileAsync(loggedUserId);
 
-            if (result == null)
+            if (result.profileDetails == null)
                 throw new NotFoundException("Profile not found.");
-            
+
             return new JobSeekerProfileDto
             {
-                Id = result.
-            }
+                Id = result.profileDetails.Id,
+                UserId = result.profileDetails.UserId,
+                FullName = $"{result.profileDetails.FirstName} {result.profileDetails.LastName}",
+                Address = result.profileDetails.Address,
+                NIC = result.profileDetails.NIC,
+                DateOfBirth = result.profileDetails.DateOfBirth,
+                ExperienceYears = result.profileDetails.ExperienceYears,
+                CVUrl = result.profileDetails.CVUrl,
+                Skills = result.userSkills.Select(x => x.SkillName).ToList(),
+            };
         }
     }
 }

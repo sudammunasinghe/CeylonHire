@@ -25,7 +25,7 @@ namespace CeylonHire.Infrastructure.Repositories
             _Select_JobSeekerProfileDetails = _queryLoader.Load("JobSeeker", "Select_JobSeekerProfileDetails.sql");
         }
 
-        public async Task<(JobSeekerProfile? profileDetails, List<Skill>? userSkills)?> GetCurrentJobSeekerProfileAsync(int userId)
+        public async Task<(JobSeekerProfile? profileDetails, List<Skill>? userSkills)> GetCurrentJobSeekerProfileAsync(int userId)
         {
             using var db = _connectionFactory.CreateConnection();
             var multi = await db.QueryMultipleAsync(
@@ -34,9 +34,6 @@ namespace CeylonHire.Infrastructure.Repositories
             );
 
             var profileData = await multi.ReadFirstOrDefaultAsync<JobSeekerProfile>();
-            if (profileData == null)
-                return null;
-
             var skills = (await multi.ReadAsync<Skill>()).ToList();
             return (profileData, skills);
         }
