@@ -1,4 +1,5 @@
 ﻿using CeylonHire.Domain.Exceptions;
+using System.Runtime;
 namespace CeylonHire.Domain.Entities
 {
     public class JobSeekerProfile : BaseEntity
@@ -7,7 +8,7 @@ namespace CeylonHire.Domain.Entities
         public int UserId { get; set; }
         public string? FirstName { get; set; }
         public string? LastName { get; set; }
-        public char Gender { get; set; }
+        public char? Gender { get; set; }
         public string? Address { get; set; }
         public string? NIC { get; set; }
         public DateTime? DateOfBirth { get; set; }
@@ -68,7 +69,6 @@ namespace CeylonHire.Domain.Entities
             };
         }
 
-
         public static JobSeekerProfile Create(
             string? firstName,
             string? lastName,
@@ -93,6 +93,41 @@ namespace CeylonHire.Domain.Entities
                 ExperienceYears = experienceYears,
                 CVUrl = cvUrl
             };
+        }
+
+        public void Update(
+            string? firstName,
+            string? lastName,
+            string? address,
+            string? nic,
+            int? experienceYears,
+            string? cvUrl
+            )
+        {
+            NicInfo? nicInfo = null;
+            if (!string.IsNullOrWhiteSpace(firstName))
+            {
+                ValidateFirstName(firstName);
+            }
+
+            if (!string.IsNullOrWhiteSpace(lastName))
+            {
+                ValidateFirstName(lastName);
+            }
+
+            if (!string.IsNullOrWhiteSpace(nic))
+            {
+                nicInfo = ExtractNicInfo(nic);
+            }
+            
+            FirstName = firstName ?? FirstName;
+            LastName = lastName ?? LastName;
+            Gender = nicInfo?.Gender ?? Gender;
+            Address = address ?? Address;
+            NIC = nic ?? NIC;
+            DateOfBirth = nicInfo?.DateOfBirth ?? DateOfBirth;
+            ExperienceYears = experienceYears ?? ExperienceYears;
+            CVUrl = cvUrl ?? CVUrl;
         }
     }
 }

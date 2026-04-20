@@ -14,10 +14,12 @@ namespace CeylonHire.Application.Services
     {
         private readonly IJobSeekerRepository _jobSeekerRepository;
         private readonly ICurrentUserService _currentUserService;
-        public JobSeekerService(IJobSeekerRepository jobSeekerRepository, ICurrentUserService currentUserService)
+        private readonly IJobRepository _jobRepository;
+        public JobSeekerService(IJobSeekerRepository jobSeekerRepository, ICurrentUserService currentUserService, IJobRepository jobRepository)
         {
             _jobSeekerRepository = jobSeekerRepository;
             _currentUserService = currentUserService;
+            _jobRepository = jobRepository;
         }
 
         public async Task<JobSeekerProfileDto> GetCurrentJobSeekerProfileAsync()
@@ -44,6 +46,37 @@ namespace CeylonHire.Application.Services
                 CVUrl = result.profileDetails.CVUrl,
                 Skills = result.userSkills.Select(x => x.SkillName).ToList(),
             };
+        }
+
+        public async Task UpdateCurrentJobSeekerProfileAsync(UpdateJobSeekerProfileDto dto)
+        {
+            var profile =
+                await _jobSeekerRepository.GetJobSeekerByJobSeekerProfileIdAsync(dto.Id);
+
+            if (profile == null)
+                throw new NotFoundException("Job seeker profile not found.");
+
+            var loggedUserId = _currentUserService.UserId;
+            if (loggedUserId == null || loggedUserId != profile.UserId)
+                throw new UnauthorizedAccessException("Unauthorized.");
+
+            profile.Update(
+                dto.FirstName,
+                dto.LastName,
+                dto.Address,
+                dto.NIC,
+                dto.ExperienceYears,
+                dto.CVUrl
+            );
+
+            var masterData =
+                await _jobRepository.GetJobMasterDataAsync();
+
+            var validSkillIds = masterData.skills.Select(x => x.Id).ToHashSet();
+            if (!dto.SkillIds.All(skill => validSkillIds.Contains(skill)))
+                throw new BadRequestException("Invalid skill.");
+
+            await _jobSeekerRepository.UpdateCurrentJobSeekerProfileAsync(profile, dto.SkillIds);
         }
     }
 }

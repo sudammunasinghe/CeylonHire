@@ -10,5 +10,6 @@ namespace CeylonHire.Application.Interfaces.IServices
     public interface IJobSeekerService
     {
         Task<JobSeekerProfileDto> GetCurrentJobSeekerProfileAsync();
+        Task UpdateCurrentJobSeekerProfileAsync(UpdateJobSeekerProfileDto dto);
     }
 }

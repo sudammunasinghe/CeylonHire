@@ -27,5 +27,15 @@ namespace CeylonHire.Api.Controllers
                 Message = "Profile details retrieved successfully."
             });
         }
+
+        [HttpPost]
+        public async Task<ActionResult<ApiResponse<string>>> UpdateCurrentJobSeekerProfileAsync(UpdateJobSeekerProfileDto dto)
+        {
+            await _jobSeekerService.UpdateCurrentJobSeekerProfileAsync(dto);
+            return Ok(new ApiResponse<string>{
+                Success = true,
+                Message = "Profile updated successfully."
+            });
+        }
     }
 }
