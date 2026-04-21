@@ -37,5 +37,16 @@ namespace CeylonHire.Api.Controllers
                 Message = "Profile updated successfully."
             });
         }
+
+        [HttpPost]
+        public async Task<ActionResult<ApiResponse<string>>> SaveJobAsync(int jobId)
+        {
+            await _jobSeekerService.SaveJobAsync(jobId);
+            return Ok(new ApiResponse<string>
+            {
+                Success = true,
+                Message = "Job saved successfully."
+            });
+        }
     }
 }

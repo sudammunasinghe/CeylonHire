@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CeylonHire.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+438ed29eb05e5d6ff612949ed5b716dc30dedd60")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c0b2570d510fabf212372f156ba584de0d169ef3")]
 [assembly: System.Reflection.AssemblyProductAttribute("CeylonHire.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CeylonHire.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

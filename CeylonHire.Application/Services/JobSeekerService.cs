@@ -73,5 +73,37 @@ namespace CeylonHire.Application.Services
 
             await _jobSeekerRepository.UpdateCurrentJobSeekerProfileAsync(profile, dto.SkillIds);
         }
+
+        public async Task SaveJobAsync(int jobId)
+        {
+            var loggedUserId = _currentUserService.UserId;
+            if (loggedUserId == null)
+                throw new UnauthorizedAccessException("Unauthorized.");
+
+            var job =
+                await _jobRepository.GetJobByJobIdAsync(jobId);
+
+            if (job == null)
+                throw new NotFoundException("Job not found.");
+
+            var jobSeeker =
+                await _jobSeekerRepository.GetCurrentJobSeekerProfileAsync(loggedUserId);
+
+            if (jobSeeker.profileDetails?.Id == null)
+                throw new BadRequestException("Only job seekers can save jobs.");
+
+            var savedJob =
+                await _jobSeekerRepository.GetSavedJobAsync(jobSeeker.profileDetails.Id, jobId);
+
+            if(savedJob != null)
+            {
+                if (savedJob.IsActive == true)
+                    throw new ConflictException("Job already saved.");
+
+                await _jobSeekerRepository.ReActivateSavedJobAsync(savedJob.Id);
+                return;
+            }
+            await _jobSeekerRepository.SaveJobAsync(jobSeeker.profileDetails.Id, jobId);
+        }
     }
 }

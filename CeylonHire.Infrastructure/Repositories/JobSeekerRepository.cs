@@ -17,6 +17,9 @@ namespace CeylonHire.Infrastructure.Repositories
         private readonly string _Update_UserSkills;
         private readonly string _Insert_UserSkill;
         private readonly string _Select_JobSeekerProfileById;
+        private readonly string _Select_SavedJobAsync;
+        private readonly string _Update_SavedJob;
+        private readonly string _Insert_SavedJob;
 
         public JobSeekerRepository(IDbConnectionFactory connectionFactory, ISqlQueryLoader queryLoader)
         {
@@ -28,6 +31,9 @@ namespace CeylonHire.Infrastructure.Repositories
             _Update_UserSkills = _queryLoader.Load("JobSeeker", "Update_UserSkills.sql");
             _Insert_UserSkill = _queryLoader.Load("JobSeeker", "Insert_UserSkill.sql");
             _Select_JobSeekerProfileById = _queryLoader.Load("JobSeeker", "Select_JobSeekerProfileById.sql");
+            _Select_SavedJobAsync = _queryLoader.Load("JobSeeker", "Select_SavedJobAsync.sql");
+            _Update_SavedJob = _queryLoader.Load("JobSeeker", "Update_SavedJob.sql");
+            _Insert_SavedJob = _queryLoader.Load("JobSeeker", "Insert_SavedJob.sql");
         }
 
         public async Task<(JobSeekerProfile? profileDetails, List<Skill>? userSkills)> GetCurrentJobSeekerProfileAsync(int userId)
@@ -107,6 +113,44 @@ namespace CeylonHire.Infrastructure.Repositories
                 new
                 {
                     JobSeekerProfileId = jobSeekerProfileId,
+                }
+            );
+        }
+
+        public async Task<SavedJob?> GetSavedJobAsync(int jobSeekerId, int jobId)
+        {
+            using var db = _connectionFactory.CreateConnection();
+            return await db.QueryFirstOrDefaultAsync<SavedJob>(
+                _Select_SavedJobAsync,
+                new
+                {
+                    JobSeekerId = jobSeekerId,
+                    JobId = jobId
+                }
+            );
+        }
+
+        public async Task ReActivateSavedJobAsync(int savedJobId)
+        {
+            using var db = _connectionFactory.CreateConnection();
+            await db.ExecuteAsync(
+                _Update_SavedJob,
+                new
+                {
+                    SavedJobId = savedJobId,
+                }
+            );
+        }
+
+        public async Task SaveJobAsync(int jobSeekerId, int jobId)
+        {
+            using var db = _connectionFactory.CreateConnection();
+            await db.ExecuteAsync(
+                _Insert_SavedJob,
+                new
+                {
+                    JobSeekerId = jobSeekerId,
+                    JobId = jobId
                 }
             );
         }
