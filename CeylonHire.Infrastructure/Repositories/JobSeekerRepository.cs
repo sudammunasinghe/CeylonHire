@@ -3,11 +3,6 @@ using CeylonHire.Domain.Entities;
 using CeylonHire.Infrastructure.Persistence;
 using CeylonHire.Infrastructure.Persistence.Sql.Helpers;
 using Dapper;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CeylonHire.Infrastructure.Repositories
 {
@@ -40,7 +35,7 @@ namespace CeylonHire.Infrastructure.Repositories
             using var db = _connectionFactory.CreateConnection();
             var multi = await db.QueryMultipleAsync(
                 _Select_JobSeekerProfileDetails,
-                new { UserId =  userId }
+                new { UserId = userId }
             );
 
             var profileData = await multi.ReadFirstOrDefaultAsync<JobSeekerProfile>();
@@ -63,7 +58,7 @@ namespace CeylonHire.Infrastructure.Repositories
 
                 var existingSkills = (await db.QueryAsync<int>(
                     _Select_ExistingUserSkills,
-                    new { UserId =  updatedProfile.UserId },
+                    new { UserId = updatedProfile.UserId },
                     transaction
                 )).ToList();
 
@@ -76,6 +71,7 @@ namespace CeylonHire.Infrastructure.Repositories
                         _Update_UserSkills,
                         new
                         {
+                            UserId = updatedProfile.UserId,
                             SkillIds = skillsToInactivate
                         },
                         transaction

@@ -1,5 +1,4 @@
 ﻿using CeylonHire.Domain.Exceptions;
-using System.Runtime;
 namespace CeylonHire.Domain.Entities
 {
     public class JobSeekerProfile : BaseEntity
@@ -119,7 +118,7 @@ namespace CeylonHire.Domain.Entities
             {
                 nicInfo = ExtractNicInfo(nic);
             }
-            
+
             FirstName = firstName ?? FirstName;
             LastName = lastName ?? LastName;
             Gender = nicInfo?.Gender ?? Gender;

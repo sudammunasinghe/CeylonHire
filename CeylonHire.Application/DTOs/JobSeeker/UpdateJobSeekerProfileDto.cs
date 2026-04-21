@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CeylonHire.Application.DTOs.JobSeeker
+﻿namespace CeylonHire.Application.DTOs.JobSeeker
 {
     public class UpdateJobSeekerProfileDto
     {

@@ -603,7 +603,7 @@
           }
         }
       },
-      "post": {
+      "put": {
         "tags": [
           "JobSeeker"
         ],

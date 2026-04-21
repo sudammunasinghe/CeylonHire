@@ -8,5 +8,5 @@
     [DateOfBirth] = @DateOfBirth,
     [ExperienceYears] = @ExperienceYears,
     [CVUrl] = @CVUrl,
-    [LastModifiedDateTime] = @LastModifiedDateTime
+    [LastModifiedDateTime] = GETDATE()
 WHERE [Id] = @Id;

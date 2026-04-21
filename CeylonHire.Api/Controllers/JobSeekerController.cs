@@ -1,7 +1,6 @@
 ﻿using CeylonHire.Application.DTOs.ApiResponse;
 using CeylonHire.Application.DTOs.JobSeeker;
 using CeylonHire.Application.Interfaces.IServices;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CeylonHire.Api.Controllers
@@ -28,11 +27,12 @@ namespace CeylonHire.Api.Controllers
             });
         }
 
-        [HttpPost]
+        [HttpPut]
         public async Task<ActionResult<ApiResponse<string>>> UpdateCurrentJobSeekerProfileAsync(UpdateJobSeekerProfileDto dto)
         {
             await _jobSeekerService.UpdateCurrentJobSeekerProfileAsync(dto);
-            return Ok(new ApiResponse<string>{
+            return Ok(new ApiResponse<string>
+            {
                 Success = true,
                 Message = "Profile updated successfully."
             });

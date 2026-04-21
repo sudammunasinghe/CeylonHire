@@ -354,7 +354,7 @@
     "ContainingType": "CeylonHire.Api.Controllers.JobSeekerController",
     "Method": "UpdateCurrentJobSeekerProfileAsync",
     "RelativePath": "api/JobSeeker",
-    "HttpMethod": "POST",
+    "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [
