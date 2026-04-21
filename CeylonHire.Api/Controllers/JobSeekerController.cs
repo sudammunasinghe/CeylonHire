@@ -38,7 +38,7 @@ namespace CeylonHire.Api.Controllers
             });
         }
 
-        [HttpPost]
+        [HttpPost("saved-jobs/{jobId}")]
         public async Task<ActionResult<ApiResponse<string>>> SaveJobAsync(int jobId)
         {
             await _jobSeekerService.SaveJobAsync(jobId);
@@ -46,6 +46,17 @@ namespace CeylonHire.Api.Controllers
             {
                 Success = true,
                 Message = "Job saved successfully."
+            });
+        }
+
+        [HttpPut("unsaved-jobs/{jobId}")]
+        public async Task<ActionResult<ApiResponse<string>>> UnsaveJobAsync(int jobId)
+        {
+            await _jobSeekerService.UnsaveJobAsync(jobId);
+            return Ok(new ApiResponse<string>
+            {
+                Success = true,
+                Message = "Job unsaved successfully."
             });
         }
     }

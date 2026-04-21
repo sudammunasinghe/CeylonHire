@@ -1,5 +1,5 @@
 ﻿UPDATE [dbo].[SavedJobs]
 SET
-	[IsActive] = 1,
+	[IsActive] = @IsActive,
 	[LastModifiedDateTime] = GETDATE()
 WHERE [Id] = @SavedJobId;

@@ -117,7 +117,7 @@ namespace CeylonHire.Infrastructure.Repositories
             );
         }
 
-        public async Task<SavedJob?> GetSavedJobAsync(int jobSeekerId, int jobId)
+        public async Task<SavedJob?> GetSavedJobAsync(int? jobSeekerId, int jobId)
         {
             using var db = _connectionFactory.CreateConnection();
             return await db.QueryFirstOrDefaultAsync<SavedJob>(
@@ -138,11 +138,12 @@ namespace CeylonHire.Infrastructure.Repositories
                 new
                 {
                     SavedJobId = savedJobId,
+                    IsActive = true
                 }
             );
         }
 
-        public async Task SaveJobAsync(int jobSeekerId, int jobId)
+        public async Task SaveJobAsync(int? jobSeekerId, int jobId)
         {
             using var db = _connectionFactory.CreateConnection();
             await db.ExecuteAsync(
@@ -151,6 +152,19 @@ namespace CeylonHire.Infrastructure.Repositories
                 {
                     JobSeekerId = jobSeekerId,
                     JobId = jobId
+                }
+            );
+        }
+
+        public async Task UnsaveJobAsync(int savedJobId)
+        {
+            using var db = _connectionFactory.CreateConnection();
+            await db.ExecuteAsync(
+                _Update_SavedJob,
+                new
+                {
+                    SavedJobId = savedJobId,
+                    IsActive = false
                 }
             );
         }

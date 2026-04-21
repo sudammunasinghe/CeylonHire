@@ -648,7 +648,9 @@
             }
           }
         }
-      },
+      }
+    },
+    "/api/JobSeeker/saved-jobs/{jobId}": {
       "post": {
         "tags": [
           "JobSeeker"
@@ -656,7 +658,48 @@
         "parameters": [
           {
             "name": "jobId",
-            "in": "query",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/JobSeeker/unsaved-jobs/{jobId}": {
+      "put": {
+        "tags": [
+          "JobSeeker"
+        ],
+        "parameters": [
+          {
+            "name": "jobId",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "integer",
               "format": "int32"
