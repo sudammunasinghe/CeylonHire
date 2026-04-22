@@ -90,7 +90,7 @@ namespace CeylonHire.Application.Services
             var savedJob =
                 await _jobSeekerRepository.GetSavedJobAsync(jobSeekerId, jobId);
 
-            if(savedJob != null)
+            if (savedJob != null)
             {
                 if (savedJob.IsActive == true)
                     throw new ConflictException("Job already saved.");
@@ -116,7 +116,7 @@ namespace CeylonHire.Application.Services
             var savedJob =
                 await _jobSeekerRepository.GetSavedJobAsync(jobSeekerId, jobId);
 
-            if(savedJob != null)
+            if (savedJob != null)
             {
                 if (savedJob.IsActive == false)
                     throw new ConflictException("Job already unsaved.");
@@ -130,7 +130,7 @@ namespace CeylonHire.Application.Services
         {
             var jobSeekerId = await GetJobSeekerIdAsync();
             if (jobSeekerId == null)
-                throw new BadRequestException("Only job seekers can retrive saved jobs.");
+                throw new BadRequestException("Only job seekers can retrieve saved jobs.");
 
             return await _jobSeekerRepository.GetSavedJobsAsync(jobSeekerId);
         }

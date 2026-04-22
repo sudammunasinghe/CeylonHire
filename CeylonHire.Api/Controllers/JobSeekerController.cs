@@ -15,7 +15,7 @@ namespace CeylonHire.Api.Controllers
             _jobSeekerService = jobSeekerService;
         }
 
-        [HttpGet("profile")]
+        [HttpGet("profile/me")]
         public async Task<ActionResult<ApiResponse<JobSeekerProfileDto>>> GetCurrentJobSeekerProfileAsync()
         {
             var result = await _jobSeekerService.GetCurrentJobSeekerProfileAsync();
