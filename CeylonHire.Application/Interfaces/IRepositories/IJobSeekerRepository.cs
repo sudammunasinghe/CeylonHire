@@ -1,4 +1,5 @@
-﻿using CeylonHire.Domain.Entities;
+﻿using CeylonHire.Application.DTOs.JobSeeker;
+using CeylonHire.Domain.Entities;
 
 namespace CeylonHire.Application.Interfaces.IRepositories
 {
@@ -11,5 +12,6 @@ namespace CeylonHire.Application.Interfaces.IRepositories
         Task ReActivateSavedJobAsync(int savedJobId);
         Task SaveJobAsync(int? jobSeekerId, int jobId);
         Task UnsaveJobAsync(int savedJobId);
+        Task<IEnumerable<SavedJobDetailsDto>> GetSavedJobsAsync(int? jobSeekerId);
     }
 }

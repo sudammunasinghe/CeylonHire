@@ -8,5 +8,6 @@ namespace CeylonHire.Application.Interfaces.IServices
         Task UpdateCurrentJobSeekerProfileAsync(UpdateJobSeekerProfileDto dto);
         Task SaveJobAsync(int jobId);
         Task UnsaveJobAsync(int jobId);
+        Task<IEnumerable<SavedJobDetailsDto>> GetSavedJobsAsync();
     }
 }

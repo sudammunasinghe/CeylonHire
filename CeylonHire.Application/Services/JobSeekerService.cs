@@ -76,10 +76,16 @@ namespace CeylonHire.Application.Services
 
         public async Task SaveJobAsync(int jobId)
         {
-            var jobSeekerId = await GetJobSeekerIdAsync(jobId);
+            var jobSeekerId = await GetJobSeekerIdAsync();
 
             if (jobSeekerId == null)
                 throw new BadRequestException("Only job seekers can save jobs.");
+
+            var job =
+                await _jobRepository.GetJobByJobIdAsync(jobId);
+
+            if (job == null)
+                throw new NotFoundException("Job not found.");
 
             var savedJob =
                 await _jobSeekerRepository.GetSavedJobAsync(jobSeekerId, jobId);
@@ -97,9 +103,15 @@ namespace CeylonHire.Application.Services
 
         public async Task UnsaveJobAsync(int jobId)
         {
-            var jobSeekerId = await GetJobSeekerIdAsync(jobId);
+            var jobSeekerId = await GetJobSeekerIdAsync();
             if (jobSeekerId == null)
                 throw new BadRequestException("Only job seekers can unsave jobs.");
+
+            var job =
+                await _jobRepository.GetJobByJobIdAsync(jobId);
+
+            if (job == null)
+                throw new NotFoundException("Job not found.");
 
             var savedJob =
                 await _jobSeekerRepository.GetSavedJobAsync(jobSeekerId, jobId);
@@ -114,17 +126,20 @@ namespace CeylonHire.Application.Services
             throw new NotFoundException("Saved job not found.");
         }
 
-        private async Task<int?> GetJobSeekerIdAsync(int jobId)
+        public async Task<IEnumerable<SavedJobDetailsDto>> GetSavedJobsAsync()
+        {
+            var jobSeekerId = await GetJobSeekerIdAsync();
+            if (jobSeekerId == null)
+                throw new BadRequestException("Only job seekers can retrive saved jobs.");
+
+            return await _jobSeekerRepository.GetSavedJobsAsync(jobSeekerId);
+        }
+
+        private async Task<int?> GetJobSeekerIdAsync()
         {
             var loggedUserId = _currentUserService.UserId;
             if (loggedUserId == null)
                 throw new UnauthorizedAccessException("Unauthorized.");
-
-            var job =
-                await _jobRepository.GetJobByJobIdAsync(jobId);
-
-            if (job == null)
-                throw new NotFoundException("Job not found.");
 
             var jobSeeker =
                 await _jobSeekerRepository.GetCurrentJobSeekerProfileAsync(loggedUserId);

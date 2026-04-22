@@ -121,3 +121,4 @@ D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\JobSeek
 D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\JobSeeker\Insert_SavedJob.sql
 D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\JobSeeker\Select_SavedJobAsync.sql
 D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\JobSeeker\Update_SavedJob.sql
+D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\JobSeeker\Select_SavedJobDetails.sql

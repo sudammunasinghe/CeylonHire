@@ -15,7 +15,7 @@ namespace CeylonHire.Api.Controllers
             _jobSeekerService = jobSeekerService;
         }
 
-        [HttpGet]
+        [HttpGet("profile")]
         public async Task<ActionResult<ApiResponse<JobSeekerProfileDto>>> GetCurrentJobSeekerProfileAsync()
         {
             var result = await _jobSeekerService.GetCurrentJobSeekerProfileAsync();
@@ -27,7 +27,7 @@ namespace CeylonHire.Api.Controllers
             });
         }
 
-        [HttpPut]
+        [HttpPut("update-profile")]
         public async Task<ActionResult<ApiResponse<string>>> UpdateCurrentJobSeekerProfileAsync(UpdateJobSeekerProfileDto dto)
         {
             await _jobSeekerService.UpdateCurrentJobSeekerProfileAsync(dto);
@@ -57,6 +57,18 @@ namespace CeylonHire.Api.Controllers
             {
                 Success = true,
                 Message = "Job unsaved successfully."
+            });
+        }
+
+        [HttpGet("saved-jobs")]
+        public async Task<ActionResult<ApiResponse<IEnumerable<SavedJobDetailsDto>>>> GetSavedJobsAsync()
+        {
+            var result = await _jobSeekerService.GetSavedJobsAsync();
+            return Ok(new ApiResponse<IEnumerable<SavedJobDetailsDto>>
+            {
+                Success = true,
+                Data = result,
+                Message = "Saved jobs retrieved successfully."
             });
         }
     }

@@ -1,4 +1,5 @@
-﻿using CeylonHire.Application.Interfaces.IRepositories;
+﻿using CeylonHire.Application.DTOs.JobSeeker;
+using CeylonHire.Application.Interfaces.IRepositories;
 using CeylonHire.Domain.Entities;
 using CeylonHire.Infrastructure.Persistence;
 using CeylonHire.Infrastructure.Persistence.Sql.Helpers;
@@ -20,6 +21,7 @@ namespace CeylonHire.Infrastructure.Repositories
         private readonly string _Select_SavedJobAsync;
         private readonly string _Update_SavedJob;
         private readonly string _Insert_SavedJob;
+        private readonly string _Select_SavedJobDetails;
 
         public JobSeekerRepository(IDbConnectionFactory connectionFactory, ISqlQueryLoader queryLoader)
         {
@@ -34,6 +36,7 @@ namespace CeylonHire.Infrastructure.Repositories
             _Select_SavedJobAsync = _queryLoader.Load("JobSeeker", "Select_SavedJobAsync.sql");
             _Update_SavedJob = _queryLoader.Load("JobSeeker", "Update_SavedJob.sql");
             _Insert_SavedJob = _queryLoader.Load("JobSeeker", "Insert_SavedJob.sql");
+            _Select_SavedJobDetails = _queryLoader.Load("JobSeeker", "Select_SavedJobDetails.sql");
         }
 
         public async Task<(JobSeekerProfile? profileDetails, List<Skill>? userSkills)> GetCurrentJobSeekerProfileAsync(int userId)
@@ -165,6 +168,18 @@ namespace CeylonHire.Infrastructure.Repositories
                 {
                     SavedJobId = savedJobId,
                     IsActive = false
+                }
+            );
+        }
+
+        public async Task<IEnumerable<SavedJobDetailsDto>> GetSavedJobsAsync(int? jobSeekerId)
+        {
+            using var db = _connectionFactory.CreateConnection();
+            return await db.QueryAsync<SavedJobDetailsDto>(
+                _Select_SavedJobDetails,
+                new
+                {
+                    JobSeekerId = jobSeekerId,
                 }
             );
         }

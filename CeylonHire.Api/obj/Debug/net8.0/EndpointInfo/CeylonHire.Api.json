@@ -575,7 +575,7 @@
         }
       }
     },
-    "/api/JobSeeker": {
+    "/api/JobSeeker/profile": {
       "get": {
         "tags": [
           "JobSeeker"
@@ -602,7 +602,9 @@
             }
           }
         }
-      },
+      }
+    },
+    "/api/JobSeeker/update-profile": {
       "put": {
         "tags": [
           "JobSeeker"
@@ -723,6 +725,35 @@
               "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/StringApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/JobSeeker/saved-jobs": {
+      "get": {
+        "tags": [
+          "JobSeeker"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/SavedJobDetailsDtoIEnumerableApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SavedJobDetailsDtoIEnumerableApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SavedJobDetailsDtoIEnumerableApiResponse"
                 }
               }
             }
@@ -1123,6 +1154,58 @@
             "nullable": true
           },
           "newPassword": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SavedJobDetailsDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "companyName": {
+            "type": "string",
+            "nullable": true
+          },
+          "location": {
+            "type": "string",
+            "nullable": true
+          },
+          "jobMode": {
+            "type": "string",
+            "nullable": true
+          },
+          "postedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SavedJobDetailsDtoIEnumerableApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SavedJobDetailsDto"
+            },
+            "nullable": true
+          },
+          "message": {
             "type": "string",
             "nullable": true
           }
