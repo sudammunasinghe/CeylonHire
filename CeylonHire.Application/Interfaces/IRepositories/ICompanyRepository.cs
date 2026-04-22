@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CeylonHire.Domain.Entities;
 
 namespace CeylonHire.Application.Interfaces.IRepositories
 {
     public interface ICompanyRepository
     {
+        Task<CompanyProfile?> GetCurrentCompanyProfileAsync(int userId);
     }
 }

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CeylonHire.Application.DTOs.CompanyProfile;
 
 namespace CeylonHire.Application.Interfaces.IServices
 {
     public interface ICompanyService
     {
+        Task<CompanyProfileDto> GetCurrentCompanyProfileAsync();
     }
 }

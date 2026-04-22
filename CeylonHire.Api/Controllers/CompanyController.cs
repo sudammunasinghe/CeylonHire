@@ -1,5 +1,6 @@
-﻿using CeylonHire.Application.Interfaces.IServices;
-using CeylonHire.Domain.Entities;
+﻿using CeylonHire.Application.DTOs.ApiResponse;
+using CeylonHire.Application.DTOs.CompanyProfile;
+using CeylonHire.Application.Interfaces.IServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CeylonHire.Api.Controllers
@@ -12,6 +13,18 @@ namespace CeylonHire.Api.Controllers
         public CompanyController(ICompanyService companyService)
         {
             _companyService = companyService;
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<ApiResponse<CompanyProfileDto>>> GetCurrentCompanyProfileAsync()
+        {
+            var result = await _companyService.GetCurrentCompanyProfileAsync();
+            return Ok(new ApiResponse<CompanyProfileDto>
+            {
+                Success = true,
+                Data = result,
+                Message = "Profile details retrieved successfully."
+            });
         }
     }
 }

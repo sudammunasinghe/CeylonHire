@@ -293,6 +293,35 @@
         }
       }
     },
+    "/api/Company": {
+      "get": {
+        "tags": [
+          "Company"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyProfileDtoApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyProfileDtoApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CompanyProfileDtoApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Job": {
       "post": {
         "tags": [
@@ -575,7 +604,7 @@
         }
       }
     },
-    "/api/JobSeeker/profile": {
+    "/api/JobSeeker/profile/me": {
       "get": {
         "tags": [
           "JobSeeker"
@@ -778,18 +807,10 @@
         },
         "additionalProperties": false
       },
-      "CreateCompanyProfileDto": {
+      "CompanyProfileDto": {
         "type": "object",
         "properties": {
           "companyName": {
-            "type": "string",
-            "nullable": true
-          },
-          "email": {
-            "type": "string",
-            "nullable": true
-          },
-          "password": {
             "type": "string",
             "nullable": true
           },
@@ -802,6 +823,56 @@
             "nullable": true
           },
           "logoUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CompanyProfileDtoApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "data": {
+            "$ref": "#/components/schemas/CompanyProfileDto"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CreateCompanyProfileDto": {
+        "type": "object",
+        "properties": {
+          "companyName": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "webSite": {
+            "type": "string",
+            "nullable": true
+          },
+          "logoUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
             "type": "string",
             "nullable": true
           }

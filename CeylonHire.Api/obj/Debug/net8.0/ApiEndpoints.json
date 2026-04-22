@@ -156,6 +156,26 @@
     ]
   },
   {
+    "ContainingType": "CeylonHire.Api.Controllers.CompanyController",
+    "Method": "GetCurrentCompanyProfileAsync",
+    "RelativePath": "api/Company",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "CeylonHire.Application.DTOs.ApiResponse.ApiResponse\u00601[[CeylonHire.Application.DTOs.CompanyProfile.CompanyProfileDto, CeylonHire.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "CeylonHire.Api.Controllers.JobController",
     "Method": "CreateJobPostAsync",
     "RelativePath": "api/Job",
@@ -333,7 +353,7 @@
   {
     "ContainingType": "CeylonHire.Api.Controllers.JobSeekerController",
     "Method": "GetCurrentJobSeekerProfileAsync",
-    "RelativePath": "api/JobSeeker/profile",
+    "RelativePath": "api/JobSeeker/profile/me",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

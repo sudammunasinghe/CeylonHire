@@ -47,3 +47,4 @@ D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\
 D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\JobSeeker\Select_SavedJobAsync.sql
 D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\JobSeeker\Update_SavedJob.sql
 D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\JobSeeker\Select_SavedJobDetails.sql
+D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\CompanyProfile\Select_CompanyProfileDetails.sql
