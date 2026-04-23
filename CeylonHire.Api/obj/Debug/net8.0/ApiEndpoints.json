@@ -493,5 +493,25 @@
         "StatusCode": 200
       }
     ]
+  },
+  {
+    "ContainingType": "CeylonHire.Api.Controllers.MasterDataController",
+    "Method": "GetJobMasterDataAsync",
+    "RelativePath": "api/MasterData/job-master-date",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "CeylonHire.Application.DTOs.ApiResponse.ApiResponse\u00601[[CeylonHire.Domain.Entities.JobMasterDataResult, CeylonHire.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   }
 ]

@@ -11,10 +11,12 @@ namespace CeylonHire.Application.Services
     {
         private readonly IJobRepository _jobRepository;
         private readonly ICurrentUserService _currentUserService;
-        public JobService(IJobRepository jobRepository, ICurrentUserService currentUserService)
+        private readonly IMasterDataService _masterDataService;
+        public JobService(IJobRepository jobRepository, ICurrentUserService currentUserService, IMasterDataService masterDataService)
         {
             _jobRepository = jobRepository;
             _currentUserService = currentUserService;
+            _masterDataService = masterDataService;
         }
 
         /// <summary>
@@ -185,7 +187,7 @@ namespace CeylonHire.Application.Services
         private async Task ValidateJobMasterDataAsync(int? jobTypeId, int? jobModeId, int? expLevelId, ICollection<int>? skillIds)
         {
             var masterData =
-                await _jobRepository.GetJobMasterDataAsync();
+                await _masterDataService.GetJobMasterDataAsync();
 
             if (skillIds == null || !skillIds.Any())
                 throw new BadRequestException("At least one skill is required.");

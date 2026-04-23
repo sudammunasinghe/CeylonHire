@@ -22,6 +22,7 @@ namespace CeylonHire.Infrastructure.Repositories
         private readonly string _Update_SavedJob;
         private readonly string _Insert_SavedJob;
         private readonly string _Select_SavedJobDetails;
+        private readonly string _Select_JobByJobId;
 
         public JobSeekerRepository(IDbConnectionFactory connectionFactory, ISqlQueryLoader queryLoader)
         {
@@ -37,6 +38,7 @@ namespace CeylonHire.Infrastructure.Repositories
             _Update_SavedJob = _queryLoader.Load("JobSeeker", "Update_SavedJob.sql");
             _Insert_SavedJob = _queryLoader.Load("JobSeeker", "Insert_SavedJob.sql");
             _Select_SavedJobDetails = _queryLoader.Load("JobSeeker", "Select_SavedJobDetails.sql");
+            _Select_JobByJobId = _queryLoader.Load("JobSeeker", "Select_JobByJobId.sql");
         }
 
         public async Task<(JobSeekerProfile? profileDetails, List<Skill>? userSkills)> GetCurrentJobSeekerProfileAsync(int? userId)
@@ -113,10 +115,7 @@ namespace CeylonHire.Infrastructure.Repositories
             using var db = _connectionFactory.CreateConnection();
             return await db.QueryFirstOrDefaultAsync<JobSeekerProfile>(
                 _Select_JobSeekerProfileById,
-                new
-                {
-                    JobSeekerProfileId = jobSeekerProfileId,
-                }
+                new { JobSeekerProfileId = jobSeekerProfileId }
             );
         }
 
@@ -177,10 +176,16 @@ namespace CeylonHire.Infrastructure.Repositories
             using var db = _connectionFactory.CreateConnection();
             return await db.QueryAsync<SavedJobDetailsDto>(
                 _Select_SavedJobDetails,
-                new
-                {
-                    JobSeekerId = jobSeekerId,
-                }
+                new { JobSeekerId = jobSeekerId }
+            );
+        }
+
+        public async Task<Job?> GetJobByJobIdAsync(int jobId)
+        {
+            using var db = _connectionFactory.CreateConnection();
+            return await db.QueryFirstOrDefaultAsync<Job>(
+                _Select_JobByJobId,
+                new { JobId = jobId }
             );
         }
     }

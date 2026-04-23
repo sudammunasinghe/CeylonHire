@@ -18,6 +18,14 @@
           "CeylonHire.Api.dll": {}
         }
       },
+      "AWSSDK.Core/4.0.3.32": {
+        "runtime": {
+          "lib/net8.0/AWSSDK.Core.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "4.0.3.32"
+          }
+        }
+      },
       "BCrypt.Net-Next/4.1.0": {
         "runtime": {
           "lib/netstandard2.1/BCrypt.Net-Next.dll": {
@@ -495,8 +503,11 @@
       "System.Text.Encodings.Web/8.0.0": {},
       "CeylonHire.Application/1.0.0": {
         "dependencies": {
+          "AWSSDK.Core": "4.0.3.32",
           "BCrypt.Net-Next": "4.1.0",
           "CeylonHire.Domain": "1.0.0",
+          "Microsoft.Extensions.Caching.Abstractions": "8.0.0",
+          "Microsoft.Extensions.Logging.Abstractions": "8.0.2",
           "SendGrid": "9.29.3"
         },
         "runtime": {
@@ -538,6 +549,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "AWSSDK.Core/4.0.3.32": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Z+FDac2Sb5dRImj87wVcgsj5PbE34CXDPGFodk11AKTx5B30/NgsnYynZH2NYS/uPZylzcX23NEjGbcMSbqAwQ==",
+      "path": "awssdk.core/4.0.3.32",
+      "hashPath": "awssdk.core.4.0.3.32.nupkg.sha512"
     },
     "BCrypt.Net-Next/4.1.0": {
       "type": "package",

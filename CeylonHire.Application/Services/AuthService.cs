@@ -17,14 +17,14 @@ namespace CeylonHire.Application.Services
         private readonly IEmailService _emailService;
         private readonly ITokenGeneratorService _tokenGeneratorService;
         private readonly ICurrentUserService _currentUserService;
-        private readonly IJobRepository _jobRepository;
+        private readonly IMasterDataRepository _masterDataRepository;
         public AuthService(
             IUserRepository userRepository,
             IHashingService hashingService,
             ITokenGeneratorService tokenGeneratorService,
             IEmailService emailService,
             ICurrentUserService currentUserService,
-            IJobRepository jobRepository
+            IMasterDataRepository masterDataRepository
             )
         {
             _userRepository = userRepository;
@@ -32,7 +32,7 @@ namespace CeylonHire.Application.Services
             _tokenGeneratorService = tokenGeneratorService;
             _emailService = emailService;
             _currentUserService = currentUserService;
-            _jobRepository = jobRepository;
+            _masterDataRepository = masterDataRepository;
         }
 
         /// <summary>
@@ -61,7 +61,7 @@ namespace CeylonHire.Application.Services
             if (dto.SkillIds != null && dto.SkillIds.Any())
             {
                 var masterData =
-                    await _jobRepository.GetJobMasterDataAsync();
+                    await _masterDataRepository.GetJobMasterDataAsync();
 
                 var validSkillIds = masterData.skills.Select(sk => sk.Id).ToHashSet();
                 if (!dto.SkillIds.All(skill => validSkillIds.Contains(skill)))

@@ -101,7 +101,6 @@ D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\User\Up
 D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\User\Select_UserByUserId.sql
 D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\Job\Insert_JobSkills.sql
 D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\Job\Insert_NewJob.sql
-D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\Job\Select_JobMasterData.sql
 D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\Job\Select_ExistingSkillIds.sql
 D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\Job\Select_JobByJobId.sql
 D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\Job\Update_JobSkills.sql
@@ -124,3 +123,6 @@ D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\JobSeek
 D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\CompanyProfile\Select_CompanyProfileDetails.sql
 D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\CompanyProfile\Update_CompanyProfile.sql
 D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\Job\Select_CompanyDetailsByUserId.sql
+D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\JobSeeker\Select_JobByJobId.sql
+D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\MasterData\Select_JobMasterData.sql
+D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\AWSSDK.Core.dll

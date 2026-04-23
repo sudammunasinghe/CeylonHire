@@ -28,7 +28,7 @@ namespace CeylonHire.Api.Controllers
         }
 
         [HttpPut("update-profile")]
-        public async Task<ActionResult<ApiResponse<string>>> UpdateCurrentJobSeekerProfileAsync(UpdateJobSeekerProfileDto dto)
+        public async Task<ActionResult<ApiResponse<string>>> UpdateCurrentJobSeekerProfileAsync([FromBody] UpdateJobSeekerProfileDto dto)
         {
             await _jobSeekerService.UpdateCurrentJobSeekerProfileAsync(dto);
             return Ok(new ApiResponse<string>

@@ -837,6 +837,35 @@
           }
         }
       }
+    },
+    "/api/MasterData/job-master-date": {
+      "get": {
+        "tags": [
+          "MasterData"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobMasterDataResultApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobMasterDataResultApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/JobMasterDataResultApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -1184,6 +1213,56 @@
         },
         "additionalProperties": false
       },
+      "JobMasterDataResult": {
+        "type": "object",
+        "properties": {
+          "jobTypes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MasterDataEntity"
+            },
+            "nullable": true
+          },
+          "jobModes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MasterDataEntity"
+            },
+            "nullable": true
+          },
+          "experienceLevels": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MasterDataEntity"
+            },
+            "nullable": true
+          },
+          "skills": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MasterDataEntity"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "JobMasterDataResultApiResponse": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean"
+          },
+          "data": {
+            "$ref": "#/components/schemas/JobMasterDataResult"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "JobSeekerProfileDto": {
         "type": "object",
         "properties": {
@@ -1195,7 +1274,11 @@
             "type": "integer",
             "format": "int32"
           },
-          "fullName": {
+          "firstName": {
+            "type": "string",
+            "nullable": true
+          },
+          "lastName": {
             "type": "string",
             "nullable": true
           },
@@ -1255,6 +1338,34 @@
             "nullable": true
           },
           "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MasterDataEntity": {
+        "type": "object",
+        "properties": {
+          "isActive": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "createdDateTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "lastModifiedDateTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "description": {
             "type": "string",
             "nullable": true
           }

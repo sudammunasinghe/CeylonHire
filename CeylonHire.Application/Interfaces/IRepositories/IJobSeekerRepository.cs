@@ -13,5 +13,6 @@ namespace CeylonHire.Application.Interfaces.IRepositories
         Task SaveJobAsync(int? jobSeekerId, int jobId);
         Task UnsaveJobAsync(int savedJobId);
         Task<IEnumerable<SavedJobDetailsDto>> GetSavedJobsAsync(int? jobSeekerId);
+        Task<Job?> GetJobByJobIdAsync(int jobId);
     }
 }

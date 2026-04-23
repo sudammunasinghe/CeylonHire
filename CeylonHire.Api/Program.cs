@@ -33,6 +33,11 @@ builder.Services.AddScoped<IJobSeekerRepository, JobSeekerRepository>();
 builder.Services.AddScoped<ICompanyService, CompanyService>();
 builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 
+builder.Services.AddScoped<IMasterDataService, MasterDataService>();
+builder.Services.AddScoped<IMasterDataRepository, MasterDataRepository>();
+
+builder.Services.AddMemoryCache();
+
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddControllers();

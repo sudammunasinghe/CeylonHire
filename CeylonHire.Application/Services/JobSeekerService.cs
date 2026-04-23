@@ -9,12 +9,16 @@ namespace CeylonHire.Application.Services
     {
         private readonly IJobSeekerRepository _jobSeekerRepository;
         private readonly ICurrentUserService _currentUserService;
-        private readonly IJobRepository _jobRepository;
-        public JobSeekerService(IJobSeekerRepository jobSeekerRepository, ICurrentUserService currentUserService, IJobRepository jobRepository)
+        private readonly IMasterDataService _masterDataService;
+        public JobSeekerService(
+            IJobSeekerRepository jobSeekerRepository, 
+            ICurrentUserService currentUserService,
+            IMasterDataService masterDataService
+            )
         {
             _jobSeekerRepository = jobSeekerRepository;
             _currentUserService = currentUserService;
-            _jobRepository = jobRepository;
+            _masterDataService = masterDataService;
         }
 
         public async Task<JobSeekerProfileDto> GetCurrentJobSeekerProfileAsync()
@@ -23,37 +27,41 @@ namespace CeylonHire.Application.Services
             if (loggedUserId == null)
                 throw new UnauthorizedAccessException("Unauthorized.");
 
-            var result =
+            var profile =
                 await _jobSeekerRepository.GetCurrentJobSeekerProfileAsync(loggedUserId);
 
-            if (result.profileDetails == null)
-                throw new NotFoundException("Profile not found.");
+            if (profile.profileDetails == null)
+                throw new NotFoundException("Job seeker profile not found.");
 
             return new JobSeekerProfileDto
             {
-                Id = result.profileDetails.Id,
-                UserId = result.profileDetails.UserId,
-                FullName = $"{result.profileDetails.FirstName} {result.profileDetails.LastName}",
-                Address = result.profileDetails.Address,
-                NIC = result.profileDetails.NIC,
-                DateOfBirth = result.profileDetails.DateOfBirth,
-                ExperienceYears = result.profileDetails.ExperienceYears,
-                CVUrl = result.profileDetails.CVUrl,
-                Skills = result.userSkills.Select(x => x.SkillName).ToList(),
+                Id = profile.profileDetails.Id,
+                UserId = profile.profileDetails.UserId,
+                FirstName = profile.profileDetails.FirstName,
+                LastName = profile.profileDetails.LastName,
+                Address = profile.profileDetails.Address,
+                NIC = profile.profileDetails.NIC,
+                DateOfBirth = profile.profileDetails.DateOfBirth,
+                ExperienceYears = profile.profileDetails.ExperienceYears,
+                CVUrl = profile.profileDetails.CVUrl,
+                Skills = profile.userSkills.Select(x => x.SkillName).ToList(),
             };
         }
 
         public async Task UpdateCurrentJobSeekerProfileAsync(UpdateJobSeekerProfileDto dto)
         {
+            var loggedUser = _currentUserService.UserId;
+            if (loggedUser == null)
+                throw new UnauthorizedAccessException("Unauthorized.");
+
             var profile =
                 await _jobSeekerRepository.GetJobSeekerByJobSeekerProfileIdAsync(dto.Id);
 
             if (profile == null)
                 throw new NotFoundException("Job seeker profile not found.");
 
-            var loggedUserId = _currentUserService.UserId;
-            if (loggedUserId == null || loggedUserId != profile.UserId)
-                throw new UnauthorizedAccessException("Unauthorized.");
+            if(loggedUser != profile.UserId)
+                throw new UnauthorizedAccessException("Access denied.");
 
             profile.Update(
                 dto.FirstName,
@@ -65,7 +73,7 @@ namespace CeylonHire.Application.Services
             );
 
             var masterData =
-                await _jobRepository.GetJobMasterDataAsync();
+                await _masterDataService.GetJobMasterDataAsync();
 
             var validSkillIds = masterData.skills.Select(x => x.Id).ToHashSet();
             if (!dto.SkillIds.All(skill => validSkillIds.Contains(skill)))
@@ -82,7 +90,7 @@ namespace CeylonHire.Application.Services
                 throw new BadRequestException("Only job seekers can save jobs.");
 
             var job =
-                await _jobRepository.GetJobByJobIdAsync(jobId);
+                await _jobSeekerRepository.GetJobByJobIdAsync(jobId);
 
             if (job == null)
                 throw new NotFoundException("Job not found.");
@@ -108,7 +116,7 @@ namespace CeylonHire.Application.Services
                 throw new BadRequestException("Only job seekers can unsave jobs.");
 
             var job =
-                await _jobRepository.GetJobByJobIdAsync(jobId);
+                await _jobSeekerRepository.GetJobByJobIdAsync(jobId);
 
             if (job == null)
                 throw new NotFoundException("Job not found.");

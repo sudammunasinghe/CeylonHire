@@ -7,12 +7,6 @@ namespace CeylonHire.Application.Interfaces.IRepositories
     public interface IJobRepository
     {
         /// <summary>
-        /// returns the master data required for creating or updating a job post, including job types, job modes, experience levels, and skills.
-        /// </summary>
-        /// <returns>A <see cref="JobMasterDataResult"/> object containing the master data.</returns>
-        Task<JobMasterDataResult> GetJobMasterDataAsync();
-
-        /// <summary>
         /// gets the company details associated with a specific user ID.
         /// </summary>
         /// <param name="userId">The ID of the user whose company details are to be retrieved.</param>
