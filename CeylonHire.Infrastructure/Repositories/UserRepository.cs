@@ -216,7 +216,7 @@ namespace CeylonHire.Infrastructure.Repositories
         /// <param name="userId">The unique identifier of the user to retrieve.</param>
         /// <returns>A task that represents the asynchronous operation. The task result contains the user if found; otherwise,
         /// null.</returns>
-        public async Task<User?> GetUserByUserIdAsync(int userId)
+        public async Task<User?> GetUserByUserIdAsync(int? userId)
         {
             using var db = _connectionFactory.CreateConnection();
             return await db.QueryFirstOrDefaultAsync<User>(

@@ -15,7 +15,7 @@ namespace CeylonHire.Api.Controllers
             _companyService = companyService;
         }
 
-        [HttpGet]
+        [HttpGet("profile/me")]
         public async Task<ActionResult<ApiResponse<CompanyProfileDto>>> GetCurrentCompanyProfileAsync()
         {
             var result = await _companyService.GetCurrentCompanyProfileAsync();
@@ -24,6 +24,17 @@ namespace CeylonHire.Api.Controllers
                 Success = true,
                 Data = result,
                 Message = "Profile details retrieved successfully."
+            });
+        }
+
+        [HttpPut("update-profile")]
+        public async Task<ActionResult<ApiResponse<string>>> UpdateCurrentCompanyProfileAsync(CompanyProfileDto dto)
+        {
+            await _companyService.UpdateCurrentCompanyProfileAsync(dto);
+            return Ok(new ApiResponse<string>
+            {
+                Success = true,
+                Message = "Profile updated successfully."
             });
         }
     }

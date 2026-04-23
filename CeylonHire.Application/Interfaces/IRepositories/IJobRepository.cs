@@ -17,7 +17,7 @@ namespace CeylonHire.Application.Interfaces.IRepositories
         /// </summary>
         /// <param name="userId">The ID of the user whose company details are to be retrieved.</param>
         /// <returns>A <see cref="CompanyProfile"/> object containing the company details, or null if not found.</returns>
-        Task<CompanyProfile?> GetCompanyDetailsByUserIdAsync(int userId);
+        Task<CompanyProfile?> GetCompanyDetailsByUserIdAsync(int? userId);
 
         /// <summary>
         /// creates a new job post with the provided job details and associated skill IDs.

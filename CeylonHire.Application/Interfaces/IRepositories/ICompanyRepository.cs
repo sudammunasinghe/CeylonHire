@@ -4,6 +4,7 @@ namespace CeylonHire.Application.Interfaces.IRepositories
 {
     public interface ICompanyRepository
     {
-        Task<CompanyProfile?> GetCurrentCompanyProfileAsync(int userId);
+        Task UpdateCurrentCompanyProfileAsync(CompanyProfile updatedProfile);
+        Task<CompanyProfile?> GetCompanyProfileByIdAsync(int companyId);
     }
 }

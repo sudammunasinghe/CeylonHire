@@ -26,7 +26,6 @@ D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\
 D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\User\Select_UserByUserId.sql
 D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\Job\Insert_JobSkills.sql
 D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\Job\Insert_NewJob.sql
-D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\Job\Select_CompanyDetailsByUserId.sql
 D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\Job\Select_JobMasterData.sql
 D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\Job\Select_ExistingSkillIds.sql
 D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\Job\Select_JobByJobId.sql
@@ -48,3 +47,5 @@ D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\
 D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\JobSeeker\Update_SavedJob.sql
 D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\JobSeeker\Select_SavedJobDetails.sql
 D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\CompanyProfile\Select_CompanyProfileDetails.sql
+D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\CompanyProfile\Update_CompanyProfile.sql
+D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\Job\Select_CompanyDetails.sql

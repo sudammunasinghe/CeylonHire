@@ -53,6 +53,6 @@ namespace CeylonHire.Application.Interfaces.IRepositories
         /// </summary>
         /// <param name="userId">The Id of the user to retrieve.</param>
         /// <returns>Returns the user details if found, otherwise null.</returns>
-        Task<User?> GetUserByUserIdAsync(int userId);
+        Task<User?> GetUserByUserIdAsync(int? userId);
     }
 }

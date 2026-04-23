@@ -29,7 +29,7 @@ namespace CeylonHire.Infrastructure.Repositories
             _connectionFactory = connectionFactory;
             _queryLoader = queryLoader;
             _Select_JobMasterData = _queryLoader.Load("Job", "Select_JobMasterData.sql");
-            _Select_CompanyDetailsByUserId = _queryLoader.Load("Job", "Select_CompanyDetailsByUserId.sql");
+            _Select_CompanyDetailsByUserId = _queryLoader.Load("Job", "Select_CompanyDetails.sql");
             _Insert_NewJob = _queryLoader.Load("Job", "Insert_NewJob.sql");
             _Insert_JobSkills = _queryLoader.Load("Job", "Insert_JobSkills.sql");
             _Select_JobByJobId = _queryLoader.Load("Job", "Select_JobByJobId.sql");
@@ -65,12 +65,15 @@ namespace CeylonHire.Infrastructure.Repositories
         /// </summary>
         /// <param name="userId">The ID of the user whose company details are to be retrieved.</param>
         /// <returns>A <see cref="CompanyProfile"/> object containing the company details, or null if not found.</returns>
-        public async Task<CompanyProfile?> GetCompanyDetailsByUserIdAsync(int userId)
+        public async Task<CompanyProfile?> GetCompanyDetailsByUserIdAsync(int? userId)
         {
             using var db = _connectionFactory.CreateConnection();
             return await db.QueryFirstOrDefaultAsync<CompanyProfile>(
                 _Select_CompanyDetailsByUserId,
-                new { UserId = userId }
+                new { 
+                    UserId = userId,
+                    CompanyId = (int?)null
+                }
             );
         }
 
