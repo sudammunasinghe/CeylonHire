@@ -15,6 +15,10 @@ namespace CeylonHire.Api.Controllers
             _companyService = companyService;
         }
 
+        /// <summary>
+        /// Get the current company's profile details.
+        /// </summary>
+        /// <returns>Returns the current company's profile details.</returns>
         [HttpGet("profile/me")]
         public async Task<ActionResult<ApiResponse<CompanyProfileDto>>> GetCurrentCompanyProfileAsync()
         {
@@ -27,8 +31,13 @@ namespace CeylonHire.Api.Controllers
             });
         }
 
+        /// <summary>
+        /// Update the current company's profile details.
+        /// </summary>
+        /// <param name="dto">The company's profile details to update.</param>
+        /// <returns>Returns a success message if the update is successful</returns>
         [HttpPut("update-profile")]
-        public async Task<ActionResult<ApiResponse<string>>> UpdateCurrentCompanyProfileAsync(CompanyProfileDto dto)
+        public async Task<ActionResult<ApiResponse<string>>> UpdateCurrentCompanyProfileAsync([FromBody] CompanyProfileDto dto)
         {
             await _companyService.UpdateCurrentCompanyProfileAsync(dto);
             return Ok(new ApiResponse<string>

@@ -2,7 +2,6 @@
 using CeylonHire.Application.Exceptions;
 using CeylonHire.Application.Interfaces.IRepositories;
 using CeylonHire.Application.Interfaces.IServices;
-using System.Reflection.Metadata.Ecma335;
 
 namespace CeylonHire.Application.Services
 {
@@ -10,14 +9,18 @@ namespace CeylonHire.Application.Services
     {
         private readonly ICompanyRepository _companyRepository;
         private readonly ICurrentUserService _currentUserService;
-        private readonly IJobRepository _jobRepository;
-        public CompanyService(ICompanyRepository companyRepository, ICurrentUserService currentUserService, IJobRepository jobRepository)
+        public CompanyService(ICompanyRepository companyRepository, ICurrentUserService currentUserService)
         {
             _companyRepository = companyRepository;
             _currentUserService = currentUserService;
-            _jobRepository = jobRepository;
         }
 
+        /// <summary>
+        /// Get the current company's profile details.
+        /// </summary>
+        /// <returns>Returns the current company's profile details.</returns>
+        /// <exception cref="UnauthorizedAccessException">Thrown when the user is not logged in.</exception>
+        /// <exception cref="NotFoundException">Thrown when the company profile is not found.</exception>
         public async Task<CompanyProfileDto> GetCurrentCompanyProfileAsync()
         {
             var loggedUserId = _currentUserService.UserId;
@@ -25,7 +28,7 @@ namespace CeylonHire.Application.Services
                 throw new UnauthorizedAccessException("Unauthorized.");
 
             var profile =
-                await _jobRepository.GetCompanyDetailsByUserIdAsync(loggedUserId);
+                await _companyRepository.GetCompanyProfileDetailsAsync(loggedUserId, null);
 
             if (profile == null)
                 throw new NotFoundException("Company profile not found.");
@@ -41,14 +44,27 @@ namespace CeylonHire.Application.Services
 
         }
 
+        /// <summary>
+        /// Update the current company's profile details.
+        /// </summary>
+        /// <param name="dto">The company's profile details to update.</param>
+        /// <returns>Returns a task representing the asynchronous operation.</returns>
+        /// <exception cref="UnauthorizedAccessException">Thrown when the user is not logged in or does not have access.</exception>
+        /// <exception cref="NotFoundException">Thrown when the company profile is not found.</exception>
         public async Task UpdateCurrentCompanyProfileAsync(CompanyProfileDto dto)
         {
-            var profile = 
-                await _companyRepository.GetCompanyProfileByIdAsync(dto.Id);
-
             var loggedUser = _currentUserService.UserId;
-            if (loggedUser == null || profile?.UserId != loggedUser)
-                throw new UnauthorizedAccessException("Unauthorized.");
+            if (loggedUser == null)
+                throw new UnauthorizedAccessException("User not logged In.");
+
+            var profile =
+                await _companyRepository.GetCompanyProfileDetailsAsync(null, dto.Id);
+
+            if (profile == null)
+                throw new NotFoundException("Profile not found.");
+
+            if (loggedUser != profile.UserId)
+                throw new UnauthorizedAccessException("Access denied.");
 
             profile.Update(
                 dto.CompanyName,

@@ -29,7 +29,7 @@ namespace CeylonHire.Infrastructure.Repositories
             _connectionFactory = connectionFactory;
             _queryLoader = queryLoader;
             _Select_JobMasterData = _queryLoader.Load("Job", "Select_JobMasterData.sql");
-            _Select_CompanyDetailsByUserId = _queryLoader.Load("Job", "Select_CompanyDetails.sql");
+            _Select_CompanyDetailsByUserId = _queryLoader.Load("Job", "Select_CompanyDetailsByUserId.sql");
             _Insert_NewJob = _queryLoader.Load("Job", "Insert_NewJob.sql");
             _Insert_JobSkills = _queryLoader.Load("Job", "Insert_JobSkills.sql");
             _Select_JobByJobId = _queryLoader.Load("Job", "Select_JobByJobId.sql");
@@ -70,10 +70,7 @@ namespace CeylonHire.Infrastructure.Repositories
             using var db = _connectionFactory.CreateConnection();
             return await db.QueryFirstOrDefaultAsync<CompanyProfile>(
                 _Select_CompanyDetailsByUserId,
-                new { 
-                    UserId = userId,
-                    CompanyId = (int?)null
-                }
+                new { UserId = userId }
             );
         }
 

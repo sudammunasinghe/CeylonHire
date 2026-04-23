@@ -42,10 +42,12 @@ namespace CeylonHire.Domain.Entities
             string? logoUrl
             )
         {
-            if(!string.IsNullOrWhiteSpace(companyName))
+            if (!string.IsNullOrWhiteSpace(companyName))
+            {
                 ValidateCompanyName(companyName);
+                CompanyName = companyName;
+            }
 
-            CompanyName = companyName ?? CompanyName;
             Description = description ?? Description;
             WebSite = webSite ?? WebSite;
             LogoUrl = logoUrl ?? LogoUrl;

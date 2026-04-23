@@ -1,6 +1,5 @@
 ﻿UPDATE [dbo].[CompanyProfiles]
    SET 
-	[UserId] = @UserId,
     [CompanyName] = @CompanyName,
     [Description] = @Description,
     [WebSite] = @WebSite,
