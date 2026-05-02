@@ -12,7 +12,6 @@ namespace CeylonHire.Infrastructure.Repositories
     {
         private readonly IDbConnectionFactory _connectionFactory;
         private readonly ISqlQueryLoader _queryLoader;
-        private readonly string _Select_JobMasterData;
         private readonly string _Select_CompanyDetailsByUserId;
         private readonly string _Insert_NewJob;
         private readonly string _Insert_JobSkills;
@@ -28,7 +27,6 @@ namespace CeylonHire.Infrastructure.Repositories
         {
             _connectionFactory = connectionFactory;
             _queryLoader = queryLoader;
-            _Select_JobMasterData = _queryLoader.Load("Job", "Select_JobMasterData.sql");
             _Select_CompanyDetailsByUserId = _queryLoader.Load("Job", "Select_CompanyDetailsByUserId.sql");
             _Insert_NewJob = _queryLoader.Load("Job", "Insert_NewJob.sql");
             _Insert_JobSkills = _queryLoader.Load("Job", "Insert_JobSkills.sql");
@@ -43,29 +41,11 @@ namespace CeylonHire.Infrastructure.Repositories
         }
 
         /// <summary>
-        /// gets the master data required for job posting form such as job types, job modes, experience levels and skills.
-        /// </summary>
-        /// <returns>A <see cref="JobMasterDataResult"/> object containing the master data.</returns>
-        public async Task<JobMasterDataResult> GetJobMasterDataAsync()
-        {
-            using var db = _connectionFactory.CreateConnection();
-            var multi = await db.QueryMultipleAsync(_Select_JobMasterData);
-            var result = new JobMasterDataResult
-            {
-                jobTypes = (await multi.ReadAsync<MasterDataEntity>()).ToList(),
-                jobModes = (await multi.ReadAsync<MasterDataEntity>()).ToList(),
-                experienceLevels = (await multi.ReadAsync<MasterDataEntity>()).ToList(),
-                skills = (await multi.ReadAsync<MasterDataEntity>()).ToList()
-            };
-            return result;
-        }
-
-        /// <summary>
         /// gets the company details associated with the specified user ID.
         /// </summary>
         /// <param name="userId">The ID of the user whose company details are to be retrieved.</param>
         /// <returns>A <see cref="CompanyProfile"/> object containing the company details, or null if not found.</returns>
-        public async Task<CompanyProfile?> GetCompanyDetailsByUserIdAsync(int userId)
+        public async Task<CompanyProfile?> GetCompanyDetailsByUserIdAsync(int? userId)
         {
             using var db = _connectionFactory.CreateConnection();
             return await db.QueryFirstOrDefaultAsync<CompanyProfile>(

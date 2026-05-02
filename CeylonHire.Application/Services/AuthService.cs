@@ -17,12 +17,14 @@ namespace CeylonHire.Application.Services
         private readonly IEmailService _emailService;
         private readonly ITokenGeneratorService _tokenGeneratorService;
         private readonly ICurrentUserService _currentUserService;
+        private readonly IMasterDataRepository _masterDataRepository;
         public AuthService(
             IUserRepository userRepository,
             IHashingService hashingService,
             ITokenGeneratorService tokenGeneratorService,
             IEmailService emailService,
-            ICurrentUserService currentUserService
+            ICurrentUserService currentUserService,
+            IMasterDataRepository masterDataRepository
             )
         {
             _userRepository = userRepository;
@@ -30,6 +32,7 @@ namespace CeylonHire.Application.Services
             _tokenGeneratorService = tokenGeneratorService;
             _emailService = emailService;
             _currentUserService = currentUserService;
+            _masterDataRepository = masterDataRepository;
         }
 
         /// <summary>
@@ -38,7 +41,7 @@ namespace CeylonHire.Application.Services
         /// <param name="dto">An object conataining jobseeker profile details.</param>
         /// <returns>Returns a JWT token if the registration is successful.</returns>
         /// <exception cref="BadRequestException">Thrown when the requested data is invalid.</exception>
-        public async Task<string> RegisterNewJobseekerAsync(JobSeekerProfileDto dto)
+        public async Task<string> RegisterNewJobseekerAsync(CreateJobSeekerProfileDto dto)
         {
             if (dto == null)
                 throw new BadRequestException("Invalid Request Data ...");
@@ -55,7 +58,17 @@ namespace CeylonHire.Application.Services
                 dto.CVUrl
             );
 
-            var userId = await _userRepository.RegisterNewJobseekerAsync(newUser, jobseekerProfileInfo);
+            if (dto.SkillIds != null && dto.SkillIds.Any())
+            {
+                var masterData =
+                    await _masterDataRepository.GetJobMasterDataAsync();
+
+                var validSkillIds = masterData.skills.Select(sk => sk.Id).ToHashSet();
+                if (!dto.SkillIds.All(skill => validSkillIds.Contains(skill)))
+                    throw new BadRequestException("Invalid skill.");
+            }
+
+            var userId = await _userRepository.RegisterNewJobseekerAsync(newUser, jobseekerProfileInfo, dto.SkillIds);
             newUser.Id = userId;
             return _tokenGeneratorService.GenerateJwtToken(newUser);
         }
@@ -67,7 +80,7 @@ namespace CeylonHire.Application.Services
         /// <param name="dto">An object containing company profile details.</param>
         /// <returns>Returns a JWT token if the registration is successful.</returns>
         /// <exception cref="BadRequestException">Thrown when the requested data is invalid.</exception>
-        public async Task<string> RegisterNewCompanyAsync(CompanyProfileDto dto)
+        public async Task<string> RegisterNewCompanyAsync(CreateCompanyProfileDto dto)
         {
             if (dto == null)
                 throw new BadRequestException("Invalid Request Data ...");

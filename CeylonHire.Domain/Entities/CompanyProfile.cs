@@ -34,5 +34,23 @@ namespace CeylonHire.Domain.Entities
                 LogoUrl = logoUrl
             };
         }
+
+        public void Update(
+            string? companyName,
+            string? description,
+            string? webSite,
+            string? logoUrl
+            )
+        {
+            if (!string.IsNullOrWhiteSpace(companyName))
+            {
+                ValidateCompanyName(companyName);
+                CompanyName = companyName;
+            }
+
+            Description = description ?? Description;
+            WebSite = webSite ?? WebSite;
+            LogoUrl = logoUrl ?? LogoUrl;
+        }
     }
 }

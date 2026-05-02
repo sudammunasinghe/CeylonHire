@@ -12,7 +12,7 @@ namespace CeylonHire.Infrastructure.Identity
             _httpContextAccessor = httpContextAccessor;
         }
 
-        public int UserId
+        public int? UserId
         {
             get
             {

@@ -49,6 +49,10 @@ namespace CeylonHire.Api.Middleware
                     status = HttpStatusCode.Conflict;
                     break;
 
+                case ConflictException:
+                    status = HttpStatusCode.Conflict;
+                    break;
+
                 case Application.Exceptions.BadRequestException:
                     status = HttpStatusCode.BadRequest;
                     break;

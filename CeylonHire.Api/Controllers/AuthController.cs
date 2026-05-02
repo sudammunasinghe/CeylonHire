@@ -25,7 +25,7 @@ namespace CeylonHire.Api.Controllers
         /// <returns><see cref="ApiResponse{string}"/></returns>
         [HttpPost("register/jobseeker")]
         [AllowAnonymous]
-        public async Task<ActionResult<ApiResponse<string>>> RegisterNewJobseekerAsync([FromBody] JobSeekerProfileDto dto)
+        public async Task<ActionResult<ApiResponse<string>>> RegisterNewJobseekerAsync([FromBody] CreateJobSeekerProfileDto dto)
         {
             var result = await _authService.RegisterNewJobseekerAsync(dto);
             return Ok(new ApiResponse<string>
@@ -43,7 +43,7 @@ namespace CeylonHire.Api.Controllers
         /// <returns><see cref="ApiResponse{string}"/></returns>
         [HttpPost("register/company")]
         [AllowAnonymous]
-        public async Task<ActionResult<ApiResponse<string>>> RegisterNewCompanyAsync([FromBody] CompanyProfileDto dto)
+        public async Task<ActionResult<ApiResponse<string>>> RegisterNewCompanyAsync([FromBody] CreateCompanyProfileDto dto)
         {
             var result = await _authService.RegisterNewCompanyAsync(dto);
             return Ok(new ApiResponse<string>

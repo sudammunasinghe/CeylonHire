@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "a6Q4MFG/ZNM=",
+  "dgSpecHash": "t/tcB5lBP8Y=",
   "success": true,
   "projectFilePath": "D:\\MyProjects\\CeylonHire\\CeylonHire.APi\\CeylonHire.Api.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Sudam\\.nuget\\packages\\awssdk.core\\4.0.3.32\\awssdk.core.4.0.3.32.nupkg.sha512",
     "C:\\Users\\Sudam\\.nuget\\packages\\bcrypt.net-next\\4.1.0\\bcrypt.net-next.4.1.0.nupkg.sha512",
     "C:\\Users\\Sudam\\.nuget\\packages\\bouncycastle.cryptography\\2.6.2\\bouncycastle.cryptography.2.6.2.nupkg.sha512",
     "C:\\Users\\Sudam\\.nuget\\packages\\dapper\\2.1.72\\dapper.2.1.72.nupkg.sha512",

@@ -9,7 +9,7 @@ namespace CeylonHire.Application.Interfaces.IRepositories
         /// </summary>
         /// <param name="user">An object containing user details.</param>
         /// <param name="jobseekerProfile">An object containing jobseeker profile details.</param>
-        Task<int> RegisterNewJobseekerAsync(User user, JobSeekerProfile jobseekerProfile);
+        Task<int> RegisterNewJobseekerAsync(User user, JobSeekerProfile jobseekerProfile, List<int>? skills);
 
         /// <summary>
         /// Register a new company.
@@ -53,6 +53,6 @@ namespace CeylonHire.Application.Interfaces.IRepositories
         /// </summary>
         /// <param name="userId">The Id of the user to retrieve.</param>
         /// <returns>Returns the user details if found, otherwise null.</returns>
-        Task<User?> GetUserByUserIdAsync(int userId);
+        Task<User?> GetUserByUserIdAsync(int? userId);
     }
 }

@@ -87,7 +87,7 @@
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "CeylonHire.Application.DTOs.CompanyProfile.CompanyProfileDto",
+        "Type": "CeylonHire.Application.DTOs.CompanyProfile.CreateCompanyProfileDto",
         "IsRequired": true
       }
     ],
@@ -113,7 +113,7 @@
     "Parameters": [
       {
         "Name": "dto",
-        "Type": "CeylonHire.Api.Models.JobSeeker.JobSeekerProfileDto",
+        "Type": "CeylonHire.Api.Models.JobSeeker.CreateJobSeekerProfileDto",
         "IsRequired": true
       }
     ],
@@ -140,6 +140,52 @@
       {
         "Name": "dto",
         "Type": "CeylonHire.Application.DTOs.Auth.ResetPasswordDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "CeylonHire.Application.DTOs.ApiResponse.ApiResponse\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "CeylonHire.Api.Controllers.CompanyController",
+    "Method": "GetCurrentCompanyProfileAsync",
+    "RelativePath": "api/Company/profile/me",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "CeylonHire.Application.DTOs.ApiResponse.ApiResponse\u00601[[CeylonHire.Application.DTOs.CompanyProfile.CompanyProfileDto, CeylonHire.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "CeylonHire.Api.Controllers.CompanyController",
+    "Method": "UpdateCurrentCompanyProfileAsync",
+    "RelativePath": "api/Company/update-profile",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "CeylonHire.Application.DTOs.CompanyProfile.CompanyProfileDto",
         "IsRequired": true
       }
     ],
@@ -321,6 +367,144 @@
     "ReturnTypes": [
       {
         "Type": "CeylonHire.Application.DTOs.ApiResponse.ApiResponse\u00601[[System.Collections.Generic.IEnumerable\u00601[[CeylonHire.Application.DTOs.Job.JobDetailsDto, CeylonHire.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "CeylonHire.Api.Controllers.JobSeekerController",
+    "Method": "GetCurrentJobSeekerProfileAsync",
+    "RelativePath": "api/JobSeeker/profile/me",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "CeylonHire.Application.DTOs.ApiResponse.ApiResponse\u00601[[CeylonHire.Application.DTOs.JobSeeker.JobSeekerProfileDto, CeylonHire.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "CeylonHire.Api.Controllers.JobSeekerController",
+    "Method": "GetSavedJobsAsync",
+    "RelativePath": "api/JobSeeker/saved-jobs",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "CeylonHire.Application.DTOs.ApiResponse.ApiResponse\u00601[[System.Collections.Generic.IEnumerable\u00601[[CeylonHire.Application.DTOs.JobSeeker.SavedJobDetailsDto, CeylonHire.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "CeylonHire.Api.Controllers.JobSeekerController",
+    "Method": "SaveJobAsync",
+    "RelativePath": "api/JobSeeker/saved-jobs/{jobId}",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "jobId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "CeylonHire.Application.DTOs.ApiResponse.ApiResponse\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "CeylonHire.Api.Controllers.JobSeekerController",
+    "Method": "UnsaveJobAsync",
+    "RelativePath": "api/JobSeeker/unsaved-jobs/{jobId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "jobId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "CeylonHire.Application.DTOs.ApiResponse.ApiResponse\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "CeylonHire.Api.Controllers.JobSeekerController",
+    "Method": "UpdateCurrentJobSeekerProfileAsync",
+    "RelativePath": "api/JobSeeker/update-profile",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "CeylonHire.Application.DTOs.JobSeeker.UpdateJobSeekerProfileDto",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "CeylonHire.Application.DTOs.ApiResponse.ApiResponse\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "CeylonHire.Api.Controllers.MasterDataController",
+    "Method": "GetJobMasterDataAsync",
+    "RelativePath": "api/MasterData/job-master-date",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "CeylonHire.Application.DTOs.ApiResponse.ApiResponse\u00601[[CeylonHire.Domain.Entities.JobMasterDataResult, CeylonHire.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",

@@ -8,10 +8,22 @@
 
   <ItemGroup>
     <None Remove="Persistence\Sql\CompanyProfile\Insert_CompanyProfile.sql" />
+    <None Remove="Persistence\Sql\CompanyProfile\Select_CompanyProfileDetails.sql" />
+    <None Remove="Persistence\Sql\CompanyProfile\Update_CompanyProfile.sql" />
+    <None Remove="Persistence\Sql\JobSeeker\Insert_SavedJob.sql" />
+    <None Remove="Persistence\Sql\JobSeeker\Insert_UserSkill.sql" />
+    <None Remove="Persistence\Sql\JobSeeker\Select_ExistingUserSkills.sql" />
+    <None Remove="Persistence\Sql\JobSeeker\Select_JobByJobId.sql" />
+    <None Remove="Persistence\Sql\JobSeeker\Select_JobSeekerProfileById.sql" />
+    <None Remove="Persistence\Sql\JobSeeker\Select_JobSeekerProfileDetails.sql" />
+    <None Remove="Persistence\Sql\JobSeeker\Select_SavedJobAsync.sql" />
+    <None Remove="Persistence\Sql\JobSeeker\Select_SavedJobDetails.sql" />
+    <None Remove="Persistence\Sql\JobSeeker\Update_JobSeekerProfile.sql" />
+    <None Remove="Persistence\Sql\JobSeeker\Update_SavedJob.sql" />
+    <None Remove="Persistence\Sql\JobSeeker\Update_UserSkills.sql" />
     <None Remove="Persistence\Sql\Job\Insert_JobSkills.sql" />
     <None Remove="Persistence\Sql\Job\Insert_NewJob.sql" />
     <None Remove="Persistence\Sql\Job\Select_AllJobs.sql" />
-    <None Remove="Persistence\Sql\Job\Select_CompanyDetailsByUserId.sql" />
     <None Remove="Persistence\Sql\Job\Select_ExistingSkillIds.sql" />
     <None Remove="Persistence\Sql\Job\Select_JobByJobId.sql" />
     <None Remove="Persistence\Sql\Job\Select_JobDetailsByJobId.sql" />
@@ -22,6 +34,7 @@
     <None Remove="Persistence\Sql\Job\Update_JobSkills.sql" />
     <None Remove="Persistence\Sql\User\Insert_JobSeekerProfile.sql" />
     <None Remove="Persistence\Sql\User\Insert_NewUser.sql" />
+    <None Remove="Persistence\Sql\User\Insert_UserSkills.sql" />
     <None Remove="Persistence\Sql\User\Select_UserByEmail.sql" />
     <None Remove="Persistence\Sql\User\Select_UserByUserId.sql" />
     <None Remove="Persistence\Sql\User\Update_UserForResetPassword.sql" />
@@ -32,7 +45,46 @@
     <Content Include="Persistence\Sql\CompanyProfile\Insert_CompanyProfile.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Persistence\Sql\CompanyProfile\Select_CompanyProfileDetails.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\CompanyProfile\Update_CompanyProfile.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Persistence\Sql\JobSeeker\Insert_JobSeekerProfile.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\JobSeeker\Insert_SavedJob.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\JobSeeker\Insert_UserSkill.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\JobSeeker\Select_ExistingUserSkills.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\JobSeeker\Select_JobByJobId.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\JobSeeker\Select_JobSeekerProfileById.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\JobSeeker\Select_JobSeekerProfileDetails.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\JobSeeker\Select_SavedJobAsync.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\JobSeeker\Select_SavedJobDetails.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\JobSeeker\Update_JobSeekerProfile.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\JobSeeker\Update_SavedJob.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\JobSeeker\Update_UserSkills.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Persistence\Sql\Job\Insert_JobSkills.sql">
@@ -56,7 +108,7 @@
     <Content Include="Persistence\Sql\Job\Select_JobDetailsByJobId.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Persistence\Sql\Job\Select_JobMasterData.sql">
+    <Content Include="Persistence\Sql\MasterData\Select_JobMasterData.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Persistence\Sql\Job\Select_JobsByCompanyId.sql">
@@ -72,6 +124,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Persistence\Sql\User\Insert_NewUser.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\User\Insert_UserSkills.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Persistence\Sql\User\Select_UserByEmail.sql">
