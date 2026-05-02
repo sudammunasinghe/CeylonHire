@@ -1,5 +1,41 @@
 [
   {
+    "ContainingType": "CeylonHire.Api.Controllers.ApplicationController",
+    "Method": "ApplyJobAsync",
+    "RelativePath": "api/Application",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "JobId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "CVFile",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      },
+      {
+        "Name": "CoverLetterFile",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "CeylonHire.Application.DTOs.ApiResponse.ApiResponse\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "CeylonHire.Api.Controllers.AuthController",
     "Method": "ChangePasswordAsync",
     "RelativePath": "api/Auth/change-password",

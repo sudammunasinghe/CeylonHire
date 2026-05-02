@@ -1,4 +1,6 @@
-﻿using CeylonHire.Application.Interfaces.IServices;
+﻿using CeylonHire.Application.DTOs.ApiResponse;
+using CeylonHire.Application.DTOs.Application;
+using CeylonHire.Application.Interfaces.IServices;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CeylonHire.Api.Controllers
@@ -11,6 +13,31 @@ namespace CeylonHire.Api.Controllers
         public ApplicationController(IApplicationService applicationService)
         {
             _applicationService = applicationService;
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<ApiResponse<string>>> ApplyJobAsync([FromForm] JobApplicationRequest request)
+        {
+            var applicationDetails = new ApplicationDto
+            {
+                JobId = request.JobId,
+                CV = new FileDto
+                {
+                    FileStream = request?.CVFile?.OpenReadStream(),
+                    FileName = request?.CVFile?.FileName,
+                },
+                CoverLetter = request?.CoverLetterFile != null ? new FileDto
+                {
+                    FileStream = request?.CoverLetterFile?.OpenReadStream(),
+                    FileName = request?.CoverLetterFile?.FileName,
+                } : null
+            };
+            await _applicationService.ApplyJobAsync(applicationDetails);
+            return Ok(new ApiResponse<string>
+            {
+                Success = true,
+                Message = "Successfully applied to job."
+            });
         }
     }
 }

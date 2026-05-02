@@ -75,13 +75,14 @@
       },
       "Microsoft.AspNetCore.Http.Abstractions/2.3.9": {
         "dependencies": {
-          "Microsoft.AspNetCore.Http.Features": "2.3.0",
+          "Microsoft.AspNetCore.Http.Features": "5.0.17",
           "System.Text.Encodings.Web": "8.0.0"
         }
       },
-      "Microsoft.AspNetCore.Http.Features/2.3.0": {
+      "Microsoft.AspNetCore.Http.Features/5.0.17": {
         "dependencies": {
-          "Microsoft.Extensions.Primitives": "10.0.5"
+          "Microsoft.Extensions.Primitives": "10.0.5",
+          "System.IO.Pipelines": "5.0.2"
         }
       },
       "Microsoft.Bcl.Cryptography/8.0.0": {
@@ -476,6 +477,7 @@
           }
         }
       },
+      "System.IO.Pipelines/5.0.2": {},
       "System.Security.Cryptography.Pkcs/8.0.1": {
         "runtime": {
           "lib/net8.0/System.Security.Cryptography.Pkcs.dll": {
@@ -506,6 +508,7 @@
           "AWSSDK.Core": "4.0.3.32",
           "BCrypt.Net-Next": "4.1.0",
           "CeylonHire.Domain": "1.0.0",
+          "Microsoft.AspNetCore.Http.Features": "5.0.17",
           "Microsoft.Extensions.Caching.Abstractions": "8.0.0",
           "Microsoft.Extensions.Logging.Abstractions": "8.0.2",
           "SendGrid": "9.29.3"
@@ -599,12 +602,12 @@
       "path": "microsoft.aspnetcore.http.abstractions/2.3.9",
       "hashPath": "microsoft.aspnetcore.http.abstractions.2.3.9.nupkg.sha512"
     },
-    "Microsoft.AspNetCore.Http.Features/2.3.0": {
+    "Microsoft.AspNetCore.Http.Features/5.0.17": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-f10WUgcsKqrkmnz6gt8HeZ7kyKjYN30PO7cSic1lPtH7paPtnQqXPOveul/SIPI43PhRD4trttg4ywnrEmmJpA==",
-      "path": "microsoft.aspnetcore.http.features/2.3.0",
-      "hashPath": "microsoft.aspnetcore.http.features.2.3.0.nupkg.sha512"
+      "sha512": "sha512-3jG2xS+dx8DDCGV/F+STdPTg89lX3ao3dF/VEPvJaz3wzBIjuadipTtYNEXDIVuOPZwb6jdmhrX9jkzOIBm5cw==",
+      "path": "microsoft.aspnetcore.http.features/5.0.17",
+      "hashPath": "microsoft.aspnetcore.http.features.5.0.17.nupkg.sha512"
     },
     "Microsoft.Bcl.Cryptography/8.0.0": {
       "type": "package",
@@ -836,6 +839,13 @@
       "sha512": "sha512-rrs2u7DRMXQG2yh0oVyF/vLwosfRv20Ld2iEpYcKwQWXHjfV+gFXNQsQ9p008kR9Ou4pxBs68Q6/9zC8Gi1wjg==",
       "path": "system.identitymodel.tokens.jwt/8.16.0",
       "hashPath": "system.identitymodel.tokens.jwt.8.16.0.nupkg.sha512"
+    },
+    "System.IO.Pipelines/5.0.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Iew+dfa6FFiyvWBdRmXApixRY1db+beyutpIck4SOSe0NLM8FD/7AD54MscqVLhvfSMLHO7KadjTRT7fqxOGTA==",
+      "path": "system.io.pipelines/5.0.2",
+      "hashPath": "system.io.pipelines.5.0.2.nupkg.sha512"
     },
     "System.Security.Cryptography.Pkcs/8.0.1": {
       "type": "package",

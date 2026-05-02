@@ -5,6 +5,69 @@
     "version": "1.0"
   },
   "paths": {
+    "/api/Application": {
+      "post": {
+        "tags": [
+          "Application"
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "JobId": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "CVFile": {
+                    "type": "string",
+                    "format": "binary"
+                  },
+                  "CoverLetterFile": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "JobId": {
+                  "style": "form"
+                },
+                "CVFile": {
+                  "style": "form"
+                },
+                "CoverLetterFile": {
+                  "style": "form"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/StringApiResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Auth/register/jobseeker": {
       "post": {
         "tags": [

@@ -17,8 +17,4 @@
     <ProjectReference Include="..\CeylonHire.Infrastructure\CeylonHire.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
 </Project>

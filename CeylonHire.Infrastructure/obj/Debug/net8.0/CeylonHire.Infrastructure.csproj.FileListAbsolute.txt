@@ -50,3 +50,6 @@ D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\
 D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\Job\Select_CompanyDetailsByUserId.sql
 D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\JobSeeker\Select_JobByJobId.sql
 D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\MasterData\Select_JobMasterData.sql
+D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\Application\Insert_JobApplication.sql
+D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\Application\Select_JobApplication.sql
+D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\Application\Select_JobByJobId.sql
