@@ -1,6 +1,7 @@
 ﻿using CeylonHire.Application.DTOs.ApiResponse;
 using CeylonHire.Application.DTOs.Application;
 using CeylonHire.Application.Interfaces.IServices;
+using CeylonHire.Domain.Enums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CeylonHire.Api.Controllers
@@ -37,6 +38,17 @@ namespace CeylonHire.Api.Controllers
             {
                 Success = true,
                 Message = "Successfully applied to job."
+            });
+        }
+
+        [HttpPut("{applicationId}/{status}")]
+        public async Task<ActionResult<ApiResponse<string>>> ManageJobApplicationAsync(int applicationId, ApplicationStatusEnum status)
+        {
+            await _applicationService.ManageJobApplicationAsync(applicationId, status);
+            return Ok(new ApiResponse<string>
+            {
+                Success = true,
+                Message = "Application updated successfully."
             });
         }
     }

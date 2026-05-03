@@ -11,7 +11,7 @@ namespace CeylonHire.Application.Services
         private readonly ICurrentUserService _currentUserService;
         private readonly IMasterDataService _masterDataService;
         public JobSeekerService(
-            IJobSeekerRepository jobSeekerRepository, 
+            IJobSeekerRepository jobSeekerRepository,
             ICurrentUserService currentUserService,
             IMasterDataService masterDataService
             )
@@ -60,7 +60,7 @@ namespace CeylonHire.Application.Services
             if (profile == null)
                 throw new NotFoundException("Job seeker profile not found.");
 
-            if(loggedUser != profile.UserId)
+            if (loggedUser != profile.UserId)
                 throw new UnauthorizedAccessException("Access denied.");
 
             profile.Update(

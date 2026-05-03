@@ -3,11 +3,7 @@ using CeylonHire.Application.Exceptions;
 using CeylonHire.Application.Interfaces.IRepositories;
 using CeylonHire.Application.Interfaces.IServices;
 using CeylonHire.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using CeylonHire.Domain.Enums;
 
 namespace CeylonHire.Application.Services
 {
@@ -26,7 +22,7 @@ namespace CeylonHire.Application.Services
             if (dto?.CV == null)
                 throw new BadRequestException("CV is required.");
 
-            var loggedUser =_currentUserService.UserId;
+            var loggedUser = _currentUserService.UserId;
             if (loggedUser == null)
                 throw new UnauthorizedAccessException("Unauthorized");
 
@@ -45,7 +41,7 @@ namespace CeylonHire.Application.Services
             var newApplication = JobApplication.create(
                 job.Id,
                 loggedUser,
-                1,
+                ApplicationStatusEnum.Applied,
                 dto?.CV?.FileName,
                 dto?.CoverLetter?.FileName
             );
@@ -88,18 +84,44 @@ namespace CeylonHire.Application.Services
             }
             catch
             {
-                if(File.Exists(cvFullPath))
+                if (File.Exists(cvFullPath))
                     File.Delete(cvFullPath);
 
-                if(File.Exists(coverLetterFullPath))
+                if (File.Exists(coverLetterFullPath))
                     File.Delete(coverLetterFullPath);
                 throw;
             }
         }
 
+        public async Task ManageJobApplicationAsync(int applicationId, ApplicationStatusEnum newStatus)
+        {
+            var loggedUser = _currentUserService.UserId;
+            if (loggedUser == null)
+                throw new UnauthorizedAccessException("Unauthorized.");
+
+            if (string.IsNullOrWhiteSpace(newStatus.ToString()))
+                throw new BadRequestException("Status is required.");
+
+            var application =
+                await _applicationRepository.GetJobApplicationByApplicationIdAsync(applicationId);
+
+            if (application == null)
+                throw new NotFoundException("Application not found.");
+
+            var company =
+                await _applicationRepository.GetCompanyByJobIdAsync(application.JobId);
+
+            if (company.UserId == null || company.UserId != loggedUser)
+                throw new UnauthorizedAccessException("Access denied.");
+
+            application.ChangeStaus(newStatus);
+            application.LastModifiedDateTime = DateTime.Now;
+            await _applicationRepository.ManageJobApplicationAsync(loggedUser, application);
+        }
+
         private void GenerateFilePathAndUrl(
-            int jobId, 
-            string subFolder, 
+            int jobId,
+            string subFolder,
             string fileName,
             out string fullPath,
             out string fileUrl
@@ -107,7 +129,7 @@ namespace CeylonHire.Application.Services
         {
             var folder = Path.Combine("wwwroot", subFolder, jobId.ToString());
             var uniqueFileName = $"{Guid.NewGuid()}{Path.GetExtension(fileName)}";
-            if(!Directory.Exists(folder))
+            if (!Directory.Exists(folder))
                 Directory.CreateDirectory(folder);
             fullPath = Path.Combine(folder, uniqueFileName);
             fileUrl = $"{subFolder}/{jobId}/{uniqueFileName}";

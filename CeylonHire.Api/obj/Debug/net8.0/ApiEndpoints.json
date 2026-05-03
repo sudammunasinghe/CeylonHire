@@ -36,6 +36,37 @@
     ]
   },
   {
+    "ContainingType": "CeylonHire.Api.Controllers.ApplicationController",
+    "Method": "ManageJobApplicationAsync",
+    "RelativePath": "api/Application/{applicationId}/{status}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "applicationId",
+        "Type": "System.Int32",
+        "IsRequired": true
+      },
+      {
+        "Name": "status",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "CeylonHire.Application.DTOs.ApiResponse.ApiResponse\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "CeylonHire.Api.Controllers.AuthController",
     "Method": "ChangePasswordAsync",
     "RelativePath": "api/Auth/change-password",

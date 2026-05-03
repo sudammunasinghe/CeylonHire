@@ -1,14 +1,11 @@
 ﻿using CeylonHire.Application.DTOs.Application;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using CeylonHire.Domain.Enums;
 
 namespace CeylonHire.Application.Interfaces.IServices
 {
     public interface IApplicationService
     {
         Task ApplyJobAsync(ApplicationDto dto);
+        Task ManageJobApplicationAsync(int applicationId, ApplicationStatusEnum status);
     }
 }

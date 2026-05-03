@@ -10,7 +10,9 @@ VALUES
 (
 	@JobId, 
     @UserId,
-    @StatusId,
+    @Status,
     @CVUrl,
     @CoverLetterUrl
 );
+
+SELECT CAST(SCOPE_IDENTITY() AS INT);

@@ -1,9 +1,5 @@
 ﻿using CeylonHire.Domain.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using CeylonHire.Domain.Enums;
 
 namespace CeylonHire.Application.Interfaces.IRepositories
 {
@@ -12,5 +8,8 @@ namespace CeylonHire.Application.Interfaces.IRepositories
         Task<Job?> GetJobByJobIdAsync(int jobId);
         Task<JobApplication?> GetJobApplicationAsync(int? userId, int jobId);
         Task ApplyJobAsync(JobApplication jobApplication);
+        Task ManageJobApplicationAsync(int? userId, JobApplication updatedApplication);
+        Task<JobApplication?> GetJobApplicationByApplicationIdAsync(int applicationId);
+        Task<CompanyProfile?> GetCompanyByJobIdAsync(int? jobId);
     }
 }

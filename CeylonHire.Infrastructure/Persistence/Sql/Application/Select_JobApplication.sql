@@ -2,7 +2,7 @@
 	[Id],
     [JobId],
     [UserId],
-    [StatusId],
+    [StatusId] [Status],
     [CVUrl],
     [CoverLetterUrl],
     [IsActive],
