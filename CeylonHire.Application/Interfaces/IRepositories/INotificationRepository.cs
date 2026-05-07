@@ -8,5 +8,6 @@ namespace CeylonHire.Application.Interfaces.IRepositories
 {
     public interface INotificationRepository
     {
+        Task<int> GetUnreadNotificationCount(int? userId);
     }
 }

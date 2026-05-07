@@ -39,6 +39,7 @@
     <None Remove="Persistence\Sql\Job\Update_JobDetails.sql" />
     <None Remove="Persistence\Sql\Job\Update_JobForInactivation.sql" />
     <None Remove="Persistence\Sql\Job\Update_JobSkills.sql" />
+    <None Remove="Persistence\Sql\Notification\Select_NotificationCountByUserId.sql" />
     <None Remove="Persistence\Sql\User\Insert_JobSeekerProfile.sql" />
     <None Remove="Persistence\Sql\User\Insert_NewUser.sql" />
     <None Remove="Persistence\Sql\User\Insert_UserSkills.sql" />
@@ -149,6 +150,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Persistence\Sql\Job\Update_JobSkills.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\Notification\Select_NotificationCountByUserId.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Persistence\Sql\User\Insert_NewUser.sql">
