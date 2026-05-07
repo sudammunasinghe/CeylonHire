@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using CeylonHire.Domain.Entities;
 
 namespace CeylonHire.Application.Interfaces.IRepositories
 {
     public interface INotificationRepository
     {
-        Task<int> GetUnreadNotificationCount(int? userId);
+        Task<int> GetUnreadNotificationCountAsync(int? userId);
+        Task<NotificationRecipient?> GetNotificationRecipientByNotificationIdAsync(int id);
+        Task MarkNotificationsAsReadAsync(List<NotificationRecipient> updatedRecipient);
+        Task<IEnumerable<NotificationRecipient>> GetAllUnReadNotificationsByUserIdAsync(int? userId);
     }
 }

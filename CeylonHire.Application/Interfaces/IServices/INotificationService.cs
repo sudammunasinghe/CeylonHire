@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace CeylonHire.Application.Interfaces.IServices
+﻿namespace CeylonHire.Application.Interfaces.IServices
 {
     public interface INotificationService
     {
-        Task<int> GetUnreadNotificationCount();
+        Task<int> GetUnreadNotificationCountAsync();
+        Task MarkNotificationAsReadAsync(int id);
+        Task MarkAllNotificationsAsRead();
     }
 }

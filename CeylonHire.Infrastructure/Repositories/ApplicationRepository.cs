@@ -1,6 +1,5 @@
 ﻿using CeylonHire.Application.Interfaces.IRepositories;
 using CeylonHire.Domain.Entities;
-using CeylonHire.Domain.Enums;
 using CeylonHire.Infrastructure.Persistence;
 using CeylonHire.Infrastructure.Persistence.Sql.Helpers;
 using Dapper;
@@ -80,7 +79,8 @@ namespace CeylonHire.Infrastructure.Repositories
                 );
                 transaction.Commit();
             }
-            catch { 
+            catch
+            {
                 transaction.Rollback();
                 throw;
             }

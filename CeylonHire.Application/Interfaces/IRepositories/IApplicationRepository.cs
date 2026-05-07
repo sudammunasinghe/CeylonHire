@@ -1,5 +1,4 @@
 ﻿using CeylonHire.Domain.Entities;
-using CeylonHire.Domain.Enums;
 
 namespace CeylonHire.Application.Interfaces.IRepositories
 {
