@@ -8,4 +8,4 @@
     [LastModifiedDateTime]
 FROM [dbo].[NotificationRecipient]
 WHERE [NotificationId] = @NotificationId AND
-	[IsActive] = 1;
+	[RecipientUserId] = @RecipientUserId AND [IsActive] = 1;

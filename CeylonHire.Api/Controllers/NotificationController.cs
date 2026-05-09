@@ -47,5 +47,16 @@ namespace CeylonHire.Api.Controllers
                 Message = "All notifications marked as read successfully."
             });
         }
+
+        [HttpPut("{id}/remove")]
+        public async Task<ActionResult<ApiResponse<string>>> RemoveNotificationAsync(int id)
+        {
+            await _notificationService.RemoveNotificationAsync(id);
+            return Ok(new ApiResponse<string>
+            {
+                Success = true,
+                Message = "Notification is removed successfully."
+            });
+        }
     }
 }

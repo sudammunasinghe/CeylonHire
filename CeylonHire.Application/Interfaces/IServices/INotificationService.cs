@@ -5,5 +5,6 @@
         Task<int> GetUnreadNotificationCountAsync();
         Task MarkNotificationAsReadAsync(int id);
         Task MarkAllNotificationsAsRead();
+        Task RemoveNotificationAsync(int id);
     }
 }

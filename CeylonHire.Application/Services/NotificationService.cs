@@ -26,8 +26,12 @@ namespace CeylonHire.Application.Services
 
         public async Task MarkNotificationAsReadAsync(int id)
         {
+            var loggedUser = _currentUserService.UserId;
+            if (loggedUser == null)
+                throw new UnauthorizedAccessException("Unauthorized.");
+
             var notification =
-                await _notificationRepository.GetNotificationRecipientByNotificationIdAsync(id);
+                await _notificationRepository.GetNotificationRecipientByNotificationIdAsync(id, loggedUser);
 
             if (notification == null)
                 throw new BadRequestException("Invalid notification id.");
@@ -65,6 +69,23 @@ namespace CeylonHire.Application.Services
                 }).ToList();
 
             await _notificationRepository.MarkNotificationsAsReadAsync(updatedNotifications);
+        }
+
+        public async Task RemoveNotificationAsync(int id)
+        {
+            var loggedUser = _currentUserService.UserId;
+            if (loggedUser == null)
+                throw new UnauthorizedAccessException("Unauthorized.");
+
+            var notification =
+                await _notificationRepository.GetNotificationRecipientByNotificationIdAsync(id, loggedUser);
+
+            if (notification == null)
+                throw new BadRequestException("Invalid notification id.");
+
+            notification.IsActive = false;
+            notification.LastModifiedDateTime = DateTime.UtcNow;
+            await _notificationRepository.RemoveNotificationAsync(notification);
         }
     }
 }

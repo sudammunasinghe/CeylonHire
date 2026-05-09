@@ -5,8 +5,9 @@ namespace CeylonHire.Application.Interfaces.IRepositories
     public interface INotificationRepository
     {
         Task<int> GetUnreadNotificationCountAsync(int? userId);
-        Task<NotificationRecipient?> GetNotificationRecipientByNotificationIdAsync(int id);
+        Task<NotificationRecipient?> GetNotificationRecipientByNotificationIdAsync(int id, int? userId);
         Task MarkNotificationsAsReadAsync(List<NotificationRecipient> updatedRecipient);
         Task<IEnumerable<NotificationRecipient>> GetAllUnReadNotificationsByUserIdAsync(int? userId);
+        Task RemoveNotificationAsync(NotificationRecipient updatedRecipient);
     }
 }

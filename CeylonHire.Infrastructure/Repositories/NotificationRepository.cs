@@ -35,12 +35,16 @@ namespace CeylonHire.Infrastructure.Repositories
             );
         }
 
-        public async Task<NotificationRecipient?> GetNotificationRecipientByNotificationIdAsync(int id)
+        public async Task<NotificationRecipient?> GetNotificationRecipientByNotificationIdAsync(int id, int? userId)
         {
             using var db = _connectionFactory.CreateConnection();
             return await db.QueryFirstOrDefaultAsync<NotificationRecipient>(
                 _Select_NotificationByNotificationId,
-                new { NotificationId = id }
+                new 
+                { 
+                    NotificationId = id,
+                    RecipientUserId = userId
+                }
             );
         }
 
@@ -70,6 +74,15 @@ namespace CeylonHire.Infrastructure.Repositories
             return await db.QueryAsync<NotificationRecipient>(
                 _Select_AllNotificationsByUserId,
                 new { RecipientUserId = userId }
+            );
+        }
+
+        public async Task RemoveNotificationAsync(NotificationRecipient updatedRecipient)
+        {
+            using var db = _connectionFactory.CreateConnection();
+            await db.ExecuteAsync(
+                _Update_NotificationRecipient,
+                updatedRecipient
             );
         }
 
