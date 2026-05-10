@@ -583,26 +583,6 @@
   },
   {
     "ContainingType": "CeylonHire.Api.Controllers.NotificationController",
-    "Method": "GetUnreadNotificationCountAsync",
-    "RelativePath": "api/Notification",
-    "HttpMethod": "GET",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [],
-    "ReturnTypes": [
-      {
-        "Type": "CeylonHire.Application.DTOs.ApiResponse.ApiResponse\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "MediaTypes": [
-          "text/plain",
-          "application/json",
-          "text/json"
-        ],
-        "StatusCode": 200
-      }
-    ]
-  },
-  {
-    "ContainingType": "CeylonHire.Api.Controllers.NotificationController",
     "Method": "MarkNotificationAsReadAsync",
     "RelativePath": "api/Notification/{id}/read",
     "HttpMethod": "PUT",
@@ -655,6 +635,37 @@
   },
   {
     "ContainingType": "CeylonHire.Api.Controllers.NotificationController",
+    "Method": "GetNotificationsAsync",
+    "RelativePath": "api/Notification/all",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "pageNumber",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "pageSize",
+        "Type": "System.Int32",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "CeylonHire.Application.DTOs.ApiResponse.ApiResponse\u00601[[CeylonHire.Application.DTOs.PagedResult.PagedResult\u00601[[CeylonHire.Application.DTOs.Notification.NotificationDto, CeylonHire.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], CeylonHire.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "CeylonHire.Api.Controllers.NotificationController",
     "Method": "MarkAllNotificationsAsRead",
     "RelativePath": "api/Notification/read-all",
     "HttpMethod": "PUT",
@@ -664,6 +675,26 @@
     "ReturnTypes": [
       {
         "Type": "CeylonHire.Application.DTOs.ApiResponse.ApiResponse\u00601[[System.String, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "CeylonHire.Api.Controllers.NotificationController",
+    "Method": "GetUnreadNotificationCountAsync",
+    "RelativePath": "api/Notification/un-read",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "CeylonHire.Application.DTOs.ApiResponse.ApiResponse\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
         "MediaTypes": [
           "text/plain",
           "application/json",

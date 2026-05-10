@@ -24,8 +24,6 @@ namespace CeylonHire.Application.Services
         public async Task<JobSeekerProfileDto> GetCurrentJobSeekerProfileAsync()
         {
             var loggedUserId = _currentUserService.UserId;
-            if (loggedUserId == null)
-                throw new UnauthorizedAccessException("Unauthorized.");
 
             var profile =
                 await _jobSeekerRepository.GetCurrentJobSeekerProfileAsync(loggedUserId);
@@ -51,8 +49,6 @@ namespace CeylonHire.Application.Services
         public async Task UpdateCurrentJobSeekerProfileAsync(UpdateJobSeekerProfileDto dto)
         {
             var loggedUser = _currentUserService.UserId;
-            if (loggedUser == null)
-                throw new UnauthorizedAccessException("Unauthorized.");
 
             var profile =
                 await _jobSeekerRepository.GetJobSeekerByJobSeekerProfileIdAsync(dto.Id);
@@ -146,9 +142,6 @@ namespace CeylonHire.Application.Services
         private async Task<int?> GetJobSeekerIdAsync()
         {
             var loggedUserId = _currentUserService.UserId;
-            if (loggedUserId == null)
-                throw new UnauthorizedAccessException("Unauthorized.");
-
             var jobSeeker =
                 await _jobSeekerRepository.GetCurrentJobSeekerProfileAsync(loggedUserId);
             return jobSeeker.profileDetails?.Id;

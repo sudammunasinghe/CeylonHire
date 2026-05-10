@@ -1,4 +1,6 @@
-﻿using CeylonHire.Application.Exceptions;
+﻿using CeylonHire.Application.DTOs.Notification;
+using CeylonHire.Application.DTOs.PagedResult;
+using CeylonHire.Application.Exceptions;
 using CeylonHire.Application.Interfaces.IRepositories;
 using CeylonHire.Application.Interfaces.IServices;
 using CeylonHire.Domain.Entities;
@@ -15,21 +17,24 @@ namespace CeylonHire.Application.Services
             _currentUserService = currentUserService;
         }
 
+        public async Task<PagedResult<NotificationDto>> GetNotificationsAsync(int pageNumber, int pageSize)
+        {
+            if (pageNumber <= 0 || pageSize <= 0)
+                throw new BadRequestException("Invalid pagination parameters.");
+
+            var loggedUser = _currentUserService.UserId;
+            return await _notificationRepository.GetNotificationsAsync(pageNumber, pageSize, loggedUser);
+        }
+
         public async Task<int> GetUnreadNotificationCountAsync()
         {
             var loggedUser = _currentUserService.UserId;
-            if (loggedUser == null)
-                throw new UnauthorizedAccessException("Unauthorized.");
-
             return await _notificationRepository.GetUnreadNotificationCountAsync(loggedUser);
         }
 
         public async Task MarkNotificationAsReadAsync(int id)
         {
             var loggedUser = _currentUserService.UserId;
-            if (loggedUser == null)
-                throw new UnauthorizedAccessException("Unauthorized.");
-
             var notification =
                 await _notificationRepository.GetNotificationRecipientByNotificationIdAsync(id, loggedUser);
 
@@ -51,10 +56,7 @@ namespace CeylonHire.Application.Services
 
         public async Task MarkAllNotificationsAsRead()
         {
-            var loggedUser = _currentUserService?.UserId;
-            if (loggedUser == null)
-                throw new UnauthorizedAccessException("Unauthorized.");
-
+            var loggedUser = _currentUserService.UserId;
             var allNotifications =
                 await _notificationRepository.GetAllUnReadNotificationsByUserIdAsync(loggedUser);
 
@@ -62,10 +64,11 @@ namespace CeylonHire.Application.Services
                 throw new ConflictException("No any unread notification.");
 
             var updatedNotifications = allNotifications
-                .Select(x => new NotificationRecipient
+                .Select(x =>
                 {
-                    IsRead = true,
-                    LastModifiedDateTime = DateTime.UtcNow,
+                    x.IsRead = true;
+                    x.LastModifiedDateTime = DateTime.UtcNow;
+                    return x;
                 }).ToList();
 
             await _notificationRepository.MarkNotificationsAsReadAsync(updatedNotifications);
@@ -74,9 +77,6 @@ namespace CeylonHire.Application.Services
         public async Task RemoveNotificationAsync(int id)
         {
             var loggedUser = _currentUserService.UserId;
-            if (loggedUser == null)
-                throw new UnauthorizedAccessException("Unauthorized.");
-
             var notification =
                 await _notificationRepository.GetNotificationRecipientByNotificationIdAsync(id, loggedUser);
 

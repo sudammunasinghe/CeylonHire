@@ -23,9 +23,6 @@ namespace CeylonHire.Application.Services
                 throw new BadRequestException("CV is required.");
 
             var loggedUser = _currentUserService.UserId;
-            if (loggedUser == null)
-                throw new UnauthorizedAccessException("Unauthorized");
-
             var job =
                 await _applicationRepository.GetJobByJobIdAsync(dto.JobId);
 
@@ -96,8 +93,6 @@ namespace CeylonHire.Application.Services
         public async Task ManageJobApplicationAsync(int applicationId, ApplicationStatusEnum newStatus)
         {
             var loggedUser = _currentUserService.UserId;
-            if (loggedUser == null)
-                throw new UnauthorizedAccessException("Unauthorized.");
 
             if (string.IsNullOrWhiteSpace(newStatus.ToString()))
                 throw new BadRequestException("Status is required.");

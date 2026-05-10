@@ -227,9 +227,6 @@ namespace CeylonHire.Application.Services
         private async Task<int> GetCompanyIdByLoggedUser()
         {
             var loggedUser = _currentUserService.UserId;
-            if (loggedUser == null)
-                throw new UnauthorizedAccessException("Unauthorized.");
-
             var company =
                 await _jobRepository.GetCompanyDetailsByUserIdAsync(loggedUser);
 

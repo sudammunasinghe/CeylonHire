@@ -1,4 +1,6 @@
 ﻿using CeylonHire.Application.DTOs.ApiResponse;
+using CeylonHire.Application.DTOs.Notification;
+using CeylonHire.Application.DTOs.PagedResult;
 using CeylonHire.Application.Interfaces.IServices;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,7 +16,19 @@ namespace CeylonHire.Api.Controllers
             _notificationService = notificationService;
         }
 
-        [HttpGet]
+        [HttpGet("all")]
+        public async Task<ActionResult<ApiResponse<PagedResult<NotificationDto>>>> GetNotificationsAsync(int pageNumber = 1, int pageSize = 20)
+        {
+            var result = await _notificationService.GetNotificationsAsync(pageNumber, pageSize);
+            return Ok(new ApiResponse<PagedResult<NotificationDto>>
+            {
+                Success = true,
+                Data = result,
+                Message = "Notifications retrieved successfully."
+            });
+        }
+
+        [HttpGet("un-read")]
         public async Task<ActionResult<ApiResponse<int>>> GetUnreadNotificationCountAsync()
         {
             var count = await _notificationService.GetUnreadNotificationCountAsync();
