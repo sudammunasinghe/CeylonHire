@@ -4,6 +4,7 @@ using CeylonHire.Application.Interfaces.IRepositories;
 using CeylonHire.Application.Interfaces.IServices;
 using CeylonHire.Domain.Entities;
 using CeylonHire.Domain.Enums;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CeylonHire.Application.Services
 {
@@ -11,10 +12,16 @@ namespace CeylonHire.Application.Services
     {
         private readonly IApplicationRepository _applicationRepository;
         private readonly ICurrentUserService _currentUserService;
-        public ApplicationService(IApplicationRepository applicationRepository, ICurrentUserService currentUserService)
+        private readonly INotificationService _notificationService;
+        public ApplicationService(
+            IApplicationRepository applicationRepository, 
+            ICurrentUserService currentUserService,
+            INotificationService notificationService
+            )
         {
             _applicationRepository = applicationRepository;
             _currentUserService = currentUserService;
+            _notificationService = notificationService;
         }
 
         public async Task ApplyJobAsync(ApplicationDto dto)
@@ -67,17 +74,26 @@ namespace CeylonHire.Application.Services
                 );
             }
 
+            var company =
+                await _applicationRepository.GetCompanyByJobIdAsync(job.Id);
+
+            var title = "Application Receieved";
+            var message = $"Submitted application for job : {job.Title}";
+            var notificationTypeId = 1;
+            List<int> recipientUsers = new List<int> { company.UserId };
+
             try
             {
                 await SaveFileAsync(cvFullPath, dto.CV.FileStream);
                 newApplication.CVUrl = cvFileUrl;
-
+                
                 if (dto.CoverLetter != null)
                 {
                     await SaveFileAsync(coverLetterFullPath, dto.CoverLetter.FileStream);
                     newApplication.CoverLetterUrl = coverLetterFileUrl;
                 }
                 await _applicationRepository.ApplyJobAsync(newApplication);
+                await _notificationService.SendNotificationAsync(title, message, notificationTypeId, recipientUsers);
             }
             catch
             {
@@ -93,9 +109,8 @@ namespace CeylonHire.Application.Services
         public async Task ManageJobApplicationAsync(int applicationId, ApplicationStatusEnum newStatus)
         {
             var loggedUser = _currentUserService.UserId;
-
-            if (string.IsNullOrWhiteSpace(newStatus.ToString()))
-                throw new BadRequestException("Status is required.");
+            var title = "";
+            var message = "";
 
             var application =
                 await _applicationRepository.GetJobApplicationByApplicationIdAsync(applicationId);
@@ -103,15 +118,65 @@ namespace CeylonHire.Application.Services
             if (application == null)
                 throw new NotFoundException("Application not found.");
 
+            var job =
+                await _applicationRepository.GetJobByJobIdAsync(application.JobId);
+
+            if (job == null)
+                throw new NotFoundException("Job not found.");
+
             var company =
                 await _applicationRepository.GetCompanyByJobIdAsync(application.JobId);
 
-            if (company.UserId == null || company.UserId != loggedUser)
+            if (company == null)
+                throw new NotFoundException("Company not found.");
+
+            if (company.UserId != loggedUser)
                 throw new UnauthorizedAccessException("Access denied.");
+
+            switch (newStatus)
+            {
+                case ApplicationStatusEnum.UnderReview:
+                    title = "Application Under Review";
+                    message = $"Your application for the {job.Title} position at {company.CompanyName} is currently being reviewed.";
+                    break;
+
+                case ApplicationStatusEnum.Shortlisted:
+                    title = "Application Shortlisted";
+                    message = $"Congratulations! Your application for the {job.Title} position at {company.CompanyName} has been shortlisted.";
+                    break;
+
+                case ApplicationStatusEnum.Rejected:
+                    title = "Application Update";
+                    message = $"Thank you for your interest in the {job.Title} position at {company.CompanyName}. After careful consideration, we have decided not to proceed with your application at this time.";
+                    break;
+
+                case ApplicationStatusEnum.Hired:
+                    title = "Interview Scheduled";
+                    message = $"Congratulations! You have been selected for the {job.Title} position at {company.CompanyName}.";
+                    break;
+
+                case ApplicationStatusEnum.Interviewing:
+                    title = "Interview Invitation";
+                    message = $"Your interview for the {job.Title} position at {company.CompanyName} has been scheduled. Please check your email for the details.";
+                    break;
+
+                default:
+                    throw new BadRequestException("Invalid application status.");
+            }
 
             application.ChangeStaus(newStatus);
             application.LastModifiedDateTime = DateTime.Now;
+            var notificationTypeId = 1;
+            List<int> recipientUsers = new List<int> { (int)application.UserId };
+
             await _applicationRepository.ManageJobApplicationAsync(loggedUser, application);
+            await _notificationService.SendNotificationAsync(
+                title, 
+                message, 
+                notificationTypeId, 
+                recipientUsers
+            );
+
         }
 
         private void GenerateFilePathAndUrl(

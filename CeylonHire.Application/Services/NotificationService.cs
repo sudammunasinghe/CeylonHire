@@ -11,10 +11,43 @@ namespace CeylonHire.Application.Services
     {
         private readonly INotificationRepository _notificationRepository;
         private readonly ICurrentUserService _currentUserService;
-        public NotificationService(INotificationRepository notificationRepository, ICurrentUserService currentUserService)
+        private readonly IRealtimeNotificationService _realtimeNotificationService;
+        public NotificationService(
+            INotificationRepository notificationRepository, 
+            ICurrentUserService currentUserService,
+            IRealtimeNotificationService realtimeNotificationService
+            )
         {
             _notificationRepository = notificationRepository;
             _currentUserService = currentUserService;
+            _realtimeNotificationService = realtimeNotificationService;
+        }
+
+        public async Task SendNotificationAsync(
+            string title,
+            string message,
+            int notificationTypeId,
+            List<int> recipientUsers
+        )
+        {
+            //Save notification to DB
+            var loggedUser = _currentUserService.UserId;
+            var notification = new Notification
+            {
+                Title = title,
+                Message = message,
+                SentUserId = loggedUser,
+                NotificationTypeId = notificationTypeId
+            };
+            await _notificationRepository.SendNotificationAsync(notification, recipientUsers);
+
+            //Realtime update using SignalR
+            await _realtimeNotificationService.SendRealTimeNotificationAsync(
+                title, 
+                message, 
+                notificationTypeId, 
+                recipientUsers
+            );
         }
 
         public async Task<PagedResult<NotificationDto>> GetNotificationsAsync(int pageNumber, int pageSize)

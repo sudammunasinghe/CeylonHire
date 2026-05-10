@@ -5,6 +5,7 @@ namespace CeylonHire.Application.Interfaces.IServices
 {
     public interface INotificationService
     {
+        Task SendNotificationAsync(string title, string message, int notificationTypeId, List<int> recipientUsers);
         Task<PagedResult<NotificationDto>> GetNotificationsAsync(int pageNumber, int pageSize);
         Task<int> GetUnreadNotificationCountAsync();
         Task MarkNotificationAsReadAsync(int id);

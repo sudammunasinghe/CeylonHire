@@ -31,7 +31,7 @@ namespace CeylonHire.Infrastructure.Repositories
             _Select_CompanyByJobId = _queryLoader.Load("Application", "Select_CompanyByJobId.sql");
         }
 
-        public async Task<Job?> GetJobByJobIdAsync(int jobId)
+        public async Task<Job?> GetJobByJobIdAsync(int? jobId)
         {
             using var db = _connectionFactory.CreateConnection();
             return await db.QueryFirstOrDefaultAsync<Job>(

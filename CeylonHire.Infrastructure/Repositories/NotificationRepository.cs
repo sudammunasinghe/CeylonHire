@@ -18,6 +18,8 @@ namespace CeylonHire.Infrastructure.Repositories
         private readonly string _Update_NotificationRecipient;
         private readonly string _Select_UnReadNotificationsByUserId;
         private readonly string _Select_AllFiteredNotificationsByUserId;
+        private readonly string _Insert_Notification;
+        private readonly string _Insert_NotificationRecipient;
 
         public NotificationRepository(IDbConnectionFactory connectionFactory, ISqlQueryLoader queryLoader)
         {
@@ -28,6 +30,46 @@ namespace CeylonHire.Infrastructure.Repositories
             _Update_NotificationRecipient = _queryLoader.Load("Notification", "Update_NotificationRecipient.sql");
             _Select_UnReadNotificationsByUserId = _queryLoader.Load("Notification", "Select_UnReadNotificationsByUserId.sql");
             _Select_AllFiteredNotificationsByUserId = _queryLoader.Load("Notification", "Select_AllFiteredNotificationsByUserId.sql");
+            _Insert_Notification = _queryLoader.Load("Notification", "Insert_Notification.sql");
+            _Insert_NotificationRecipient = _queryLoader.Load("Notification", "Insert_NotificationRecipient.sql");
+        }
+
+        public async Task SendNotificationAsync(Notification notification, List<int> recipientUsers)
+        {
+            using var db = _connectionFactory.CreateConnection();
+            db.Open();
+            using var transaction = db.BeginTransaction();
+
+            try
+            {
+                var notificationId = await db.ExecuteScalarAsync<int>(
+                    _Insert_Notification,
+                    new
+                    {
+                        Title = notification.Title,
+                        Message = notification.Message,
+                        SentUserId = notification.SentUserId,
+                        NotificationTypeId = notification.NotificationTypeId
+                    },
+                    transaction
+                );
+
+                await db.ExecuteAsync(
+                    _Insert_NotificationRecipient,
+                    recipientUsers.Select(user => new
+                    {
+                        NotificationId = notificationId,
+                        RecipientUserId = user
+                    }),
+                    transaction
+                );
+                transaction.Commit();
+            }
+            catch
+            {
+                transaction.Rollback();
+                throw;
+            }
         }
 
         public async Task<PagedResult<NotificationDto>> GetNotificationsAsync(int pageNumber, int pageSize, int? userId)
