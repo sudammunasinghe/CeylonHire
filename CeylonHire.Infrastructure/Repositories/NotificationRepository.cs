@@ -111,8 +111,8 @@ namespace CeylonHire.Infrastructure.Repositories
             using var db = _connectionFactory.CreateConnection();
             return await db.QueryFirstOrDefaultAsync<NotificationRecipient>(
                 _Select_NotificationByNotificationId,
-                new 
-                { 
+                new
+                {
                     NotificationId = id,
                     RecipientUserId = userId
                 }

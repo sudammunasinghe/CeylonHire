@@ -13,7 +13,7 @@ namespace CeylonHire.Application.Services
         private readonly ICurrentUserService _currentUserService;
         private readonly IRealtimeNotificationService _realtimeNotificationService;
         public NotificationService(
-            INotificationRepository notificationRepository, 
+            INotificationRepository notificationRepository,
             ICurrentUserService currentUserService,
             IRealtimeNotificationService realtimeNotificationService
             )
@@ -43,9 +43,9 @@ namespace CeylonHire.Application.Services
 
             //Realtime update using SignalR
             await _realtimeNotificationService.SendRealTimeNotificationAsync(
-                title, 
-                message, 
-                notificationTypeId, 
+                title,
+                message,
+                notificationTypeId,
                 recipientUsers
             );
         }

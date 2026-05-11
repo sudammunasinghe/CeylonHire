@@ -4,7 +4,6 @@ using CeylonHire.Application.Interfaces.IRepositories;
 using CeylonHire.Application.Interfaces.IServices;
 using CeylonHire.Domain.Entities;
 using CeylonHire.Domain.Enums;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace CeylonHire.Application.Services
 {
@@ -14,7 +13,7 @@ namespace CeylonHire.Application.Services
         private readonly ICurrentUserService _currentUserService;
         private readonly INotificationService _notificationService;
         public ApplicationService(
-            IApplicationRepository applicationRepository, 
+            IApplicationRepository applicationRepository,
             ICurrentUserService currentUserService,
             INotificationService notificationService
             )
@@ -86,7 +85,7 @@ namespace CeylonHire.Application.Services
             {
                 await SaveFileAsync(cvFullPath, dto.CV.FileStream);
                 newApplication.CVUrl = cvFileUrl;
-                
+
                 if (dto.CoverLetter != null)
                 {
                     await SaveFileAsync(coverLetterFullPath, dto.CoverLetter.FileStream);
@@ -171,9 +170,9 @@ namespace CeylonHire.Application.Services
 
             await _applicationRepository.ManageJobApplicationAsync(loggedUser, application);
             await _notificationService.SendNotificationAsync(
-                title, 
-                message, 
-                notificationTypeId, 
+                title,
+                message,
+                notificationTypeId,
                 recipientUsers
             );
 

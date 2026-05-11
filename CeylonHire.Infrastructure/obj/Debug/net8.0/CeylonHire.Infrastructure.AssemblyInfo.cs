@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CeylonHire.Infrastructure")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c95f2c46134681aa17e6ece84dafb8954d386265")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+08589720404220174600ad24c9e126ccb57950df")]
 [assembly: System.Reflection.AssemblyProductAttribute("CeylonHire.Infrastructure")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CeylonHire.Infrastructure")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
