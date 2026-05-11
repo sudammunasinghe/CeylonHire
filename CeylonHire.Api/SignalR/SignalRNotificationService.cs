@@ -21,7 +21,7 @@ namespace CeylonHire.Api.SignalR
             foreach (var user in recipientUsers)
             {
                 await _hubContext.Clients
-                    .All
+                    .User(user.ToString())
                     .SendAsync("ReceiveNotification", new
                     {
                         Title = title,
