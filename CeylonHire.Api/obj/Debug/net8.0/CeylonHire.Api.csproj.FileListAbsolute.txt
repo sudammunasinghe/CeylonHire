@@ -145,3 +145,9 @@ D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Microsoft.Extensions.Di
 D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Microsoft.Extensions.Hosting.Abstractions.dll
 D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Microsoft.Extensions.ObjectPool.dll
 D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\System.Net.WebSockets.WebSocketProtocol.dll
+D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\Subscription\Insert_CompanySubscription.sql
+D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\Subscription\Select_CompanyByCompanyId.sql
+D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\Subscription\Select_CompanySubscription.sql
+D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\Subscription\Select_JobseekerByUserId.sql
+D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\Subscription\Update_CompanySubscription.sql
+D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\Subscription\Select_SubscribersByCompanyId.sql

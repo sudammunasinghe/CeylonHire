@@ -47,6 +47,8 @@ builder.Services.AddScoped<IMasterDataRepository, MasterDataRepository>();
 builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
 builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
 
+builder.Services.AddScoped<IJobNotificationService, JobNotificationService>();
+
 builder.Services.AddMemoryCache();
 
 builder.Services.AddHttpContextAccessor();

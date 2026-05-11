@@ -64,3 +64,9 @@ D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\
 D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\Notification\Select_UnReadNotificationsByUserId.sql
 D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\Notification\Insert_Notification.sql
 D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\Notification\Insert_NotificationRecipient.sql
+D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\Subscription\Insert_CompanySubscription.sql
+D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\Subscription\Select_CompanyByCompanyId.sql
+D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\Subscription\Select_CompanySubscription.sql
+D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\Subscription\Select_JobseekerByUserId.sql
+D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\Subscription\Update_CompanySubscription.sql
+D:\MyProjects\CeylonHire\CeylonHire.Infrastructure\bin\Debug\net8.0\Persistence\Sql\Subscription\Select_SubscribersByCompanyId.sql

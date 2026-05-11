@@ -3,7 +3,7 @@
 	NTF.[Title],
 	CASE
 		WHEN US.[RoleId] = 2 THEN CONCAT(JSP.[FirstName],' ', JSP.[LastName],' ',NTF.[Message])
-		WHEN US.[RoleId] = 3 THEN CONCAT(CP.[CompanyName],' ',NTF.[Message])
+		WHEN US.[RoleId] = 3 THEN NTF.[Message]
 		ELSE 'Unknown'
 	END AS [Message],
 	NTT.[Description] [NotificationType],

@@ -12,11 +12,17 @@ namespace CeylonHire.Application.Services
         private readonly IJobRepository _jobRepository;
         private readonly ICurrentUserService _currentUserService;
         private readonly IMasterDataService _masterDataService;
-        public JobService(IJobRepository jobRepository, ICurrentUserService currentUserService, IMasterDataService masterDataService)
+        private readonly IJobNotificationService _jobNotificationService;
+        public JobService(
+            IJobRepository jobRepository, 
+            ICurrentUserService currentUserService, 
+            IMasterDataService masterDataService,
+            IJobNotificationService jobNotificationService)
         {
             _jobRepository = jobRepository;
             _currentUserService = currentUserService;
             _masterDataService = masterDataService;
+            _jobNotificationService = jobNotificationService;
         }
 
         /// <summary>
@@ -28,11 +34,11 @@ namespace CeylonHire.Application.Services
         /// <exception cref="NotFoundException">Thrown when the company profile is not found.</exception>
         public async Task CreateJobPostAsync(CreateJobDetailsDto dto)
         {
-            var companyId = await GetCompanyIdByLoggedUser();
+            var company = await GetCompanyByLoggedUser();
             await ValidateJobMasterDataAsync(dto.JobTypeId, dto.JobModeId, dto.ExperienceLevelId, dto.SkillIds);
 
             var newJob = Job.Create(
-                companyId,
+                company.Id,
                 dto.Title,
                 dto.Description,
                 dto.Salary,
@@ -44,8 +50,8 @@ namespace CeylonHire.Application.Services
                 dto.ExperienceLevelId,
                 dto.DeadLine
             );
-
             await _jobRepository.CreateJobPostAsync(newJob, dto.SkillIds);
+            await _jobNotificationService.NotifyNewJobPostedAsync(dto.Title, company.Id, company.CompanyName);
         }
 
         /// <summary>
@@ -57,21 +63,21 @@ namespace CeylonHire.Application.Services
         /// <exception cref="NotFoundException">Thrown when the job or company profile is not found.</exception>
         public async Task UpdateJobAsync(UpdateJobDetailsDto dto)
         {
-            var companyId = await GetCompanyIdByLoggedUser();
+            var company = await GetCompanyByLoggedUser();
             var job =
                 await _jobRepository.GetJobByJobIdAsync(dto.Id);
 
             if (job == null)
                 throw new NotFoundException("Job not found.");
 
-            if (job.CompanyId != companyId)
+            if (job.CompanyId != company.Id)
                 throw new UnauthorizedAccessException("You are not allowed to update this job.");
 
             await ValidateJobMasterDataAsync(dto.JobTypeId, dto.JobModeId, dto.ExperienceLevelId, dto.SkillIds);
 
             job.Update(
                 dto.Id,
-                companyId,
+                company.Id,
                 dto.Title,
                 dto.Description,
                 dto.Salary,
@@ -96,14 +102,14 @@ namespace CeylonHire.Application.Services
         /// <exception cref="UnauthorizedAccessException">Thrown when the user is not authorized to inactivate the job.</exception>
         public async Task RemoveJobByIdAsync(int jobId)
         {
-            var companyId = await GetCompanyIdByLoggedUser();
+            var company = await GetCompanyByLoggedUser();
             var job =
                 await _jobRepository.GetJobByJobIdAsync(jobId);
 
             if (job == null)
                 throw new NotFoundException("Job not found.");
 
-            if (job.CompanyId != companyId)
+            if (job.CompanyId != company.Id)
                 throw new UnauthorizedAccessException("You are not allowed to remove this job.");
 
             await _jobRepository.RemoveJobByIdAsync(jobId);
@@ -115,8 +121,8 @@ namespace CeylonHire.Application.Services
         /// <returns>A list of <see cref="JobDetailsDto"/> objects representing the job posts.</returns>
         public async Task<IEnumerable<JobDetailsDto>> GetMyJobsAsync()
         {
-            var companyId = await GetCompanyIdByLoggedUser();
-            return await _jobRepository.GetMyJobsAsync(companyId);
+            var company = await GetCompanyByLoggedUser();
+            return await _jobRepository.GetMyJobsAsync(company.Id);
         }
 
         /// <summary>
@@ -221,10 +227,10 @@ namespace CeylonHire.Application.Services
         /// <summary>
         /// Retrieves the company Id associated with the currently logged-in user.
         /// </summary>
-        /// <returns>The company Id of the logged-in user.</returns>
+        /// <returns>A <see cref="CompanyProfile"/> object containing the company details, or null if not found.</returns>
         /// <exception cref="UnauthorizedAccessException">Thrown when the user is not authenticated.</exception>
         /// <exception cref="NotFoundException">Thrown when the company profile is not found.</exception>
-        private async Task<int> GetCompanyIdByLoggedUser()
+        private async Task<CompanyProfile> GetCompanyByLoggedUser()
         {
             var loggedUser = _currentUserService.UserId;
             var company =
@@ -232,7 +238,7 @@ namespace CeylonHire.Application.Services
 
             if (company == null)
                 throw new NotFoundException("Company profile not found.");
-            return company.Id;
+            return company;
         }
     }
 }
