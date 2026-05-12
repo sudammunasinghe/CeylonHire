@@ -44,6 +44,7 @@
     <None Remove="Persistence\Sql\Notification\Select_AllFiteredNotificationsByUserId.sql" />
     <None Remove="Persistence\Sql\Notification\Select_NotificationCountByUserId.sql" />
     <None Remove="Persistence\Sql\Notification\Update_NotificationRecipient.sql" />
+    <None Remove="Persistence\Sql\Recommendation\Select_RecommendedUsersByJobId.sql" />
     <None Remove="Persistence\Sql\Subscription\Insert_CompanySubscription.sql" />
     <None Remove="Persistence\Sql\Subscription\Select_CompanyByCompanyId.sql" />
     <None Remove="Persistence\Sql\Subscription\Select_CompanySubscription.sql" />
@@ -181,6 +182,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Persistence\Sql\Notification\Update_NotificationRecipient.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\Recommendation\Select_RecommendedUsersByJobId.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Persistence\Sql\Subscription\Insert_CompanySubscription.sql">

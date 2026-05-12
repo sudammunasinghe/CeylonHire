@@ -8,6 +8,6 @@ namespace CeylonHire.Application.Interfaces.IServices
 {
     public interface IJobNotificationService
     {
-        Task NotifyNewJobPostedAsync(string? jobTitle, int companyId, string? companyName);
+        Task NotifyNewJobPostedAsync(int jobId, string? jobTitle, int companyId, string? companyName, List<int> JobSkills);
     }
 }

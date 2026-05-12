@@ -50,8 +50,8 @@ namespace CeylonHire.Application.Services
                 dto.ExperienceLevelId,
                 dto.DeadLine
             );
-            await _jobRepository.CreateJobPostAsync(newJob, dto.SkillIds);
-            await _jobNotificationService.NotifyNewJobPostedAsync(dto.Title, company.Id, company.CompanyName);
+            var jobId = await _jobRepository.CreateJobPostAsync(newJob, dto.SkillIds);
+            await _jobNotificationService.NotifyNewJobPostedAsync(jobId, dto.Title, company.Id, company.CompanyName, dto.SkillIds.ToList());
         }
 
         /// <summary>

@@ -151,3 +151,4 @@ D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\Subscri
 D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\Subscription\Select_JobseekerByUserId.sql
 D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\Subscription\Update_CompanySubscription.sql
 D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\Subscription\Select_SubscribersByCompanyId.sql
+D:\MyProjects\CeylonHire\CeylonHire.APi\bin\Debug\net8.0\Persistence\Sql\Recommendation\Select_RecommendedUsersByJobId.sql
