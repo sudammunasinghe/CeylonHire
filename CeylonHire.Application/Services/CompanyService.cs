@@ -24,8 +24,6 @@ namespace CeylonHire.Application.Services
         public async Task<CompanyProfileDto> GetCurrentCompanyProfileAsync()
         {
             var loggedUserId = _currentUserService.UserId;
-            if (loggedUserId == null)
-                throw new UnauthorizedAccessException("Unauthorized.");
 
             var profile =
                 await _companyRepository.GetCompanyProfileDetailsAsync(loggedUserId, null);
@@ -54,8 +52,6 @@ namespace CeylonHire.Application.Services
         public async Task UpdateCurrentCompanyProfileAsync(CompanyProfileDto dto)
         {
             var loggedUser = _currentUserService.UserId;
-            if (loggedUser == null)
-                throw new UnauthorizedAccessException("User not logged In.");
 
             var profile =
                 await _companyRepository.GetCompanyProfileDetailsAsync(null, dto.Id);

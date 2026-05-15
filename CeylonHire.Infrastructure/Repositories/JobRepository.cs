@@ -60,7 +60,7 @@ namespace CeylonHire.Infrastructure.Repositories
         /// <param name="newJob">An object containing the details of the job to be created.</param>
         /// <param name="skillIds">A collection of skill IDs associated with the job.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
-        public async Task CreateJobPostAsync(Job newJob, ICollection<int> skillIds)
+        public async Task<int> CreateJobPostAsync(Job newJob, ICollection<int> skillIds)
         {
             using var db = _connectionFactory.CreateConnection();
             db.Open();
@@ -83,6 +83,7 @@ namespace CeylonHire.Infrastructure.Repositories
                     transaction
                 );
                 transaction.Commit();
+                return jobId;
             }
             catch
             {

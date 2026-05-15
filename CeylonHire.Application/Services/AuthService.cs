@@ -225,9 +225,6 @@ namespace CeylonHire.Application.Services
                 throw new BadRequestException("Current password and new password cannot be empty ...");
 
             var loggedUserId = _currentUserService.UserId;
-            if (loggedUserId == null)
-                throw new UnauthorizedAccessException("Unauthorized ...");
-
             var loggedUser =
                 await _userRepository.GetUserByUserIdAsync(loggedUserId);
 

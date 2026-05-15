@@ -19,7 +19,7 @@ namespace CeylonHire.Application.Interfaces.IRepositories
         /// <param name="newJob">An object containing the details of the job to be created.</param>
         /// <param name="skillIds">A collection of skill IDs associated with the job.</param>
         /// <returns>A task representing the asynchronous operation.</returns>
-        Task CreateJobPostAsync(Job newJob, ICollection<int>? skillIds);
+        Task<int> CreateJobPostAsync(Job newJob, ICollection<int>? skillIds);
 
         /// <summary>
         /// get job details by job id, including associated skills and company information.

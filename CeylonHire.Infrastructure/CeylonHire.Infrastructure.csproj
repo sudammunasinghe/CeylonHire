@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Persistence\Sql\Application\Insert_ApplicationHistory.sql" />
+    <None Remove="Persistence\Sql\Application\Insert_JobApplication.sql" />
+    <None Remove="Persistence\Sql\Application\Select_CompanyByJobId.sql" />
+    <None Remove="Persistence\Sql\Application\Select_JobApplication.sql" />
+    <None Remove="Persistence\Sql\Application\Select_JobApplicationByApplicationId.sql" />
+    <None Remove="Persistence\Sql\Application\Select_JobByJobId.sql" />
+    <None Remove="Persistence\Sql\Application\Update_JobApplication.sql" />
     <None Remove="Persistence\Sql\CompanyProfile\Insert_CompanyProfile.sql" />
     <None Remove="Persistence\Sql\CompanyProfile\Select_CompanyProfileDetails.sql" />
     <None Remove="Persistence\Sql\CompanyProfile\Update_CompanyProfile.sql" />
@@ -32,6 +39,18 @@
     <None Remove="Persistence\Sql\Job\Update_JobDetails.sql" />
     <None Remove="Persistence\Sql\Job\Update_JobForInactivation.sql" />
     <None Remove="Persistence\Sql\Job\Update_JobSkills.sql" />
+    <None Remove="Persistence\Sql\Notification\Insert_Notification.sql" />
+    <None Remove="Persistence\Sql\Notification\Insert_NotificationRecipient.sql" />
+    <None Remove="Persistence\Sql\Notification\Select_AllFiteredNotificationsByUserId.sql" />
+    <None Remove="Persistence\Sql\Notification\Select_NotificationCountByUserId.sql" />
+    <None Remove="Persistence\Sql\Notification\Update_NotificationRecipient.sql" />
+    <None Remove="Persistence\Sql\Recommendation\Select_RecommendedUsersByJobId.sql" />
+    <None Remove="Persistence\Sql\Subscription\Insert_CompanySubscription.sql" />
+    <None Remove="Persistence\Sql\Subscription\Select_CompanyByCompanyId.sql" />
+    <None Remove="Persistence\Sql\Subscription\Select_CompanySubscription.sql" />
+    <None Remove="Persistence\Sql\Subscription\Select_JobseekerByUserId.sql" />
+    <None Remove="Persistence\Sql\Subscription\Select_SubscribersByCompanyId.sql" />
+    <None Remove="Persistence\Sql\Subscription\Update_CompanySubscription.sql" />
     <None Remove="Persistence\Sql\User\Insert_JobSeekerProfile.sql" />
     <None Remove="Persistence\Sql\User\Insert_NewUser.sql" />
     <None Remove="Persistence\Sql\User\Insert_UserSkills.sql" />
@@ -42,6 +61,27 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Persistence\Sql\Application\Insert_ApplicationHistory.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\Application\Insert_JobApplication.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\Application\Select_CompanyByJobId.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\Application\Select_JobApplication.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\Application\Select_JobApplicationByApplicationId.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\Application\Select_JobByJobId.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\Application\Update_JobApplication.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Persistence\Sql\CompanyProfile\Insert_CompanyProfile.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -121,6 +161,48 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Persistence\Sql\Job\Update_JobSkills.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\Notification\Insert_Notification.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\Notification\Insert_NotificationRecipient.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\Notification\Select_AllFiteredNotificationsByUserId.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\Notification\Select_UnReadNotificationsByUserId.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\Notification\Select_NotificationCountByUserId.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\Notification\Select_NotificationByNotificationId.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\Notification\Update_NotificationRecipient.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\Recommendation\Select_RecommendedUsersByJobId.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\Subscription\Insert_CompanySubscription.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\Subscription\Select_CompanyByCompanyId.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\Subscription\Select_CompanySubscription.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\Subscription\Select_JobseekerByUserId.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\Subscription\Select_SubscribersByCompanyId.sql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Persistence\Sql\Subscription\Update_CompanySubscription.sql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Persistence\Sql\User\Insert_NewUser.sql">

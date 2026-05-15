@@ -1,3 +1,4 @@
+using CeylonHire.Api.SignalR;
 using CeylonHire.Application.Interfaces.IRepositories;
 using CeylonHire.Application.Interfaces.IServices;
 using CeylonHire.Application.Services;
@@ -20,6 +21,7 @@ builder.Services.AddScoped<IHashingService, HashingService>();
 builder.Services.AddScoped<ITokenGeneratorService, TokenGeneratorService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<ICurrentUserService, CurrentUserService>();
+builder.Services.AddScoped<IRealtimeNotificationService, SignalRNotificationService>();
 
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -33,14 +35,41 @@ builder.Services.AddScoped<IJobSeekerRepository, JobSeekerRepository>();
 builder.Services.AddScoped<ICompanyService, CompanyService>();
 builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
 
+builder.Services.AddScoped<IApplicationService, ApplicationService>();
+builder.Services.AddScoped<IApplicationRepository, ApplicationRepository>();
+
+builder.Services.AddScoped<INotificationService, NotificationService>();
+builder.Services.AddScoped<INotificationRepository, NotificationRepository>();
+
 builder.Services.AddScoped<IMasterDataService, MasterDataService>();
 builder.Services.AddScoped<IMasterDataRepository, MasterDataRepository>();
+
+builder.Services.AddScoped<ISubscriptionService, SubscriptionService>();
+builder.Services.AddScoped<ISubscriptionRepository, SubscriptionRepository>();
+
+builder.Services.AddScoped<IJobNotificationService, JobNotificationService>();
+builder.Services.AddScoped<IRecommendationRepository, RecommendationRepository>();
 
 builder.Services.AddMemoryCache();
 
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddControllers();
+
+builder.Services.AddSignalR();
+
+// ================================== CORS ================================================================
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", policy =>
+    {
+        policy.SetIsOriginAllowed(_ => true)
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
+});
 
 //===================================== JWT Authetication ==================================================
 
@@ -60,6 +89,25 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
             IssuerSigningKey = new SymmetricSecurityKey(
                 Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
+        };
+
+        // SignalR JWT Authentication
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                var accessToken = context.Request.Query["access_token"];
+
+                var path = context.HttpContext.Request.Path;
+
+                if (!string.IsNullOrEmpty(accessToken) &&
+                    path.StartsWithSegments("/notificationHub"))
+                {
+                    context.Token = accessToken;
+                }
+
+                return Task.CompletedTask;
+            }
         };
     });
 
@@ -133,6 +181,8 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseCors("CorsPolicy");
+
 app.UseAuthentication();
 
 app.UseAuthorization();
@@ -140,5 +190,7 @@ app.UseAuthorization();
 app.UseRateLimiter();
 
 app.MapControllers();
+
+app.MapHub<NotificationHub>("/notificationHub");
 
 app.Run();
